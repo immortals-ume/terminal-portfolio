@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/terminal/TerminalCommands.test.tsx">
+    <testCase name="TerminalCommands createCommands creates all expected commands" duration="11"/>
+    <testCase name="TerminalCommands createCommands returns component output for component commands" duration="1"/>
+    <testCase name="TerminalCommands createCommands returns text output for text commands" duration="1"/>
+    <testCase name="TerminalCommands createCommands returns __CLEAR__ for clear command" duration="0"/>
+    <testCase name="TerminalCommands createCommands calls setCursorType for cursor selection commands" duration="1"/>
+    <testCase name="TerminalCommands createCommands returns appropriate text for cursor selection" duration="0"/>
+    <testCase name="TerminalCommands parseCommand returns normalized command as-is for exact matches" duration="1"/>
+    <testCase name="TerminalCommands parseCommand handles aliases correctly" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles project aliases" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles cursor commands" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles contact aliases" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles github aliases" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles timeline aliases" duration="1"/>
+    <testCase name="TerminalCommands parseCommand handles education aliases" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles certification aliases" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles performance aliases" duration="0"/>
+    <testCase name="TerminalCommands parseCommand returns original command for unknown commands" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles case insensitive input" duration="0"/>
+    <testCase name="TerminalCommands parseCommand handles whitespace in input" duration="0"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/ui/ClickableLink.test.tsx">
+    <testCase name="ClickableLink Component renders with URL as text when no text provided" duration="17"/>
+    <testCase name="ClickableLink Component renders with custom text when provided" duration="4"/>
+    <testCase name="ClickableLink Component handles click events" duration="7"/>
+    <testCase name="ClickableLink Component has proper styling and attributes" duration="3"/>
+    <testCase name="ClickableLink Component applies custom className when provided" duration="2"/>
+    <testCase name="ClickableLink Component has proper inline styles" duration="14"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/terminal/TerminalOutput.test.tsx">
+    <testCase name="TerminalOutput Component renders submitted commands" duration="17"/>
+    <testCase name="TerminalOutput Component renders text output items" duration="6"/>
+    <testCase name="TerminalOutput Component renders component output items" duration="4"/>
+    <testCase name="TerminalOutput Component renders both submitted commands and output" duration="2"/>
+    <testCase name="TerminalOutput Component handles empty submitted array" duration="4"/>
+    <testCase name="TerminalOutput Component handles empty output array" duration="1"/>
+    <testCase name="TerminalOutput Component handles both empty arrays" duration="0"/>
+    <testCase name="TerminalOutput Component preserves order of submitted commands" duration="1"/>
+    <testCase name="TerminalOutput Component preserves order of output items" duration="2"/>
+    <testCase name="TerminalOutput Component handles complex component elements" duration="4"/>
+    <testCase name="TerminalOutput Component handles mixed text and component output" duration="3"/>
+    <testCase name="TerminalOutput Component handles multiline text output" duration="1"/>
+    <testCase name="TerminalOutput Component handles empty text values" duration="3"/>
+    <testCase name="TerminalOutput Component uses unique keys for output items" duration="6"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/terminal/TerminalCursor.test.tsx">
+    <testCase name="TerminalCursor Component renders cursor with correct position" duration="16"/>
+    <testCase name="TerminalCursor Component renders block cursor" duration="4"/>
+    <testCase name="TerminalCursor Component renders underscore cursor" duration="3"/>
+    <testCase name="TerminalCursor Component renders pipe cursor" duration="2"/>
+    <testCase name="TerminalCursor Component renders dot cursor" duration="2"/>
+    <testCase name="TerminalCursor Component renders different cursor types" duration="4"/>
+    <testCase name="TerminalCursor Component defaults to block cursor for unknown type" duration="0"/>
+    <testCase name="useCursorType hook returns default cursor type" duration="1"/>
+    <testCase name="useCursorType hook updates cursor type" duration="2"/>
+    <testCase name="useCursorType hook persists cursor type in localStorage" duration="3"/>
+    <testCase name="useCursorType hook loads cursor type from localStorage" duration="2"/>
+    <testCase name="useCursorType hook handles localStorage errors gracefully" duration="11"/>
+    <testCase name="useCursorBlink hook returns initial blink state" duration="1"/>
+    <testCase name="useCursorBlink hook toggles blink state over time" duration="2"/>
+    <testCase name="useCursorBlink hook cleans up interval on unmount" duration="2"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/terminal/CommandSuggestions.test.tsx">
+    <testCase name="CommandSuggestions Component renders when visible" duration="2"/>
+    <testCase name="CommandSuggestions Component does not render when not visible" duration="1"/>
+    <testCase name="CommandSuggestions Component renders all suggestions" duration="1"/>
+    <testCase name="CommandSuggestions Component calls onSuggestionSelect when suggestion is clicked" duration="9"/>
+    <testCase name="CommandSuggestions Component handles empty suggestions" duration="1"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/Timeline.test.tsx">
+    <testCase name="Timeline Component renders timeline content" duration="9"/>
+    <testCase name="Timeline Component renders work experience" duration="3"/>
+    <testCase name="Timeline Component renders career growth" duration="6"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/terminal/TerminalInput.test.tsx">
+    <testCase name="TerminalInput Component renders input with prompt" duration="60"/>
+    <testCase name="TerminalInput Component displays current input value" duration="5"/>
+    <testCase name="TerminalInput Component calls setCurrent when input changes" duration="58"/>
+    <testCase name="TerminalInput Component submits command on Enter key" duration="8"/>
+    <testCase name="TerminalInput Component does not submit empty command" duration="19"/>
+    <testCase name="TerminalInput Component shows command history on ArrowUp" duration="8"/>
+    <testCase name="TerminalInput Component navigates through history with ArrowDown" duration="5"/>
+    <testCase name="TerminalInput Component handles Tab key for autocompletion" duration="9"/>
+    <testCase name="TerminalInput Component shows suggestions for multiple matches" duration="19"/>
+    <testCase name="TerminalInput Component handles Escape key to close popups" duration="6"/>
+    <testCase name="TerminalInput Component closes popups on regular key input" duration="8"/>
+    <testCase name="TerminalInput Component renders command history when visible" duration="3"/>
+    <testCase name="TerminalInput Component renders command suggestions when visible" duration="4"/>
+    <testCase name="TerminalInput Component handles command selection from history" duration="4"/>
+    <testCase name="TerminalInput Component handles suggestion selection" duration="4"/>
+    <testCase name="TerminalInput Component renders terminal cursor" duration="1"/>
+    <testCase name="TerminalInput Component has proper accessibility attributes" duration="4"/>
+    <testCase name="TerminalInput Component auto focuses when autoFocus is true" duration="7"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/Skills.test.tsx">
+    <testCase name="Skills Component renders skills header" duration="65">
+      <failure message="TestingLibraryElementError: Unable to find an element with the text: 💻 Technical Skills. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible."><![CDATA[TestingLibraryElementError: Unable to find an element with the text: 💻 Technical Skills. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-4"
+    >
+      <div
+        animate="[object Object]"
+        initial="[object Object]"
+        transition="[object Object]"
+      >
+        <div
+          class="text-green-400 font-bold mb-2 flex items-center"
+        >
+          <span
+            class="mr-2"
+          >
+            ▶
+          </span>
+          Programming Languages
+          :
+        </div>
+        <div
+          class="flex flex-wrap gap-2 ml-6"
+        >
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-green-300 text-green-200"
+            initial="[object Object]"
+            title="Java 17 - Expert"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Java 17
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★★
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-yellow-400 text-yellow-300"
+            initial="[object Object]"
+            title="JavaScript - Advanced"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            JavaScript
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="HTML5 - Intermediate"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            HTML5
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★☆☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="CSS - Intermediate"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            CSS
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★☆☆
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        animate="[object Object]"
+        initial="[object Object]"
+        transition="[object Object]"
+      >
+        <div
+          class="text-green-400 font-bold mb-2 flex items-center"
+        >
+          <span
+            class="mr-2"
+          >
+            ▶
+          </span>
+          Frameworks & Libraries
+          :
+        </div>
+        <div
+          class="flex flex-wrap gap-2 ml-6"
+        >
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-green-300 text-green-200"
+            initial="[object Object]"
+            title="Spring Boot - Expert"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Spring Boot
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★★
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="Spring Cloud - Intermediate"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Spring Cloud
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★☆☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-yellow-400 text-yellow-300"
+            initial="[object Object]"
+            title="Spring Security - Advanced"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Spring Security
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="Spring Batch - Intermediate"
+            transition="[object Object]"
+    ...
+    at Object.getElementError (/Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/config.js:37:19)
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+    at Object.getByText (/Users/ks/terminal-portfolio/__tests__/components/commands/Skills.test.tsx:15:19)
+    at Promise.then.completed (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/testWorker.js:106:12)]]></failure>
+    </testCase>
+    <testCase name="Skills Component renders all skill categories" duration="25"/>
+    <testCase name="Skills Component renders skills with different levels" duration="14">
+      <failure message="TestingLibraryElementError: Found multiple elements with the text: /★★★/"><![CDATA[TestingLibraryElementError: Found multiple elements with the text: /★★★/
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+<span
+  class="ml-1 text-xs opacity-60"
+>
+  ★★★
+</span>
+
+Ignored nodes: comments, script, style
+<span
+  class="ml-1 text-xs opacity-60"
+>
+  ★★★
+</span>
+
+Ignored nodes: comments, script, style
+<span
+  class="ml-1 text-xs opacity-60"
+>
+  ★★★
+</span>
+
+Ignored nodes: comments, script, style
+<span
+  class="ml-1 text-xs opacity-60"
+>
+  ★★★
+</span>
+
+Ignored nodes: comments, script, style
+<span
+  class="ml-1 text-xs opacity-60"
+>
+  ★★★
+</span>
+
+Ignored nodes: comments, script, style
+<div
+  animate="[object Object]"
+  class="mt-4 text-green-400 text-sm"
+  initial="[object Object]"
+  transition="[object Object]"
+>
+  ★★★ Expert | ★★☆ Advanced | ★☆☆ Intermediate
+</div>
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-4"
+    >
+      <div
+        animate="[object Object]"
+        initial="[object Object]"
+        transition="[object Object]"
+      >
+        <div
+          class="text-green-400 font-bold mb-2 flex items-center"
+        >
+          <span
+            class="mr-2"
+          >
+            ▶
+          </span>
+          Programming Languages
+          :
+        </div>
+        <div
+          class="flex flex-wrap gap-2 ml-6"
+        >
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-green-300 text-green-200"
+            initial="[object Object]"
+            title="Java 17 - Expert"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Java 17
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★★
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-yellow-400 text-yellow-300"
+            initial="[object Object]"
+            title="JavaScript - Advanced"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            JavaScript
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="HTML5 - Intermediate"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            HTML5
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★☆☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="CSS - Intermediate"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            CSS
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★☆☆
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        animate="[object Object]"
+        initial="[object Object]"
+        transition="[object Object]"
+      >
+        <div
+          class="text-green-400 font-bold mb-2 flex items-center"
+        >
+          <span
+            class="mr-2"
+          >
+            ▶
+          </span>
+          Frameworks & Libraries
+          :
+        </div>
+        <div
+          class="flex flex-wrap gap-2 ml-6"
+        >
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-green-300 text-green-200"
+            initial="[object Object]"
+            title="Spring Boot - Expert"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Spring Boot
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★★
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="Spring Cloud - Intermediate"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Spring Cloud
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★☆☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-yellow-400 text-yellow-300"
+            initial="[object Object]"
+            title="Spring Security - Advanced"
+            transition="[object Object]"
+            whilehover="[object Object]"
+          >
+            Spring Security
+            <span
+              class="ml-1 text-xs opacity-60"
+            >
+              ★★☆
+            </span>
+          </div>
+          <div
+            animate="[object Object]"
+            class="px-3 py-1 border rounded text-sm cursor-pointer transition-all duration-200 border-blue-400 text-blue-300"
+            initial="[object Object]"
+            title="Spring Batch - Intermediate"
+            transition="[object Object]"
+    ...
+    at Object.getElementError (/Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/config.js:37:19)
+    at getElementError (/Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:20:35)
+    at getMultipleElementsFoundError (/Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:23:10)
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+    at Object.getByText (/Users/ks/terminal-portfolio/__tests__/components/commands/Skills.test.tsx:31:19)
+    at Promise.then.completed (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/testWorker.js:106:12)]]></failure>
+    </testCase>
+    <testCase name="Skills Component renders skill legend" duration="10"/>
+    <testCase name="Skills Component has proper structure" duration="10"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/System.test.tsx">
+    <testCase name="System Component renders system information" duration="138"/>
+    <testCase name="System Component renders current time" duration="1"/>
+    <testCase name="System Component renders system status" duration="11"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/terminal/LoadingScreen.test.tsx">
+    <testCase name="LoadingScreen Component renders loading screen initially" duration="8"/>
+    <testCase name="LoadingScreen Component shows initial loading message" duration="4"/>
+    <testCase name="LoadingScreen Component displays initial progress" duration="4"/>
+    <testCase name="LoadingScreen Component calls onComplete after loading duration" duration="140"/>
+    <testCase name="LoadingScreen Component updates progress over time" duration="36"/>
+    <testCase name="LoadingScreen Component updates loading messages as progress increases" duration="35"/>
+    <testCase name="LoadingScreen Component shows system ready message when complete" duration="59">
+      <failure message="TestingLibraryElementError: Unable to find an element with the text: System ready!. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible."><![CDATA[TestingLibraryElementError: Unable to find an element with the text: System ready!. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="fixed inset-0 bg-black flex items-center justify-center z-50"
+    >
+      <div
+        class="text-center space-y-6"
+      >
+        <div
+          class="text-green-400 font-mono text-3xl font-bold"
+        >
+          <div
+            class="mb-2"
+          >
+            &gt;
+            _PORTFOLIO
+          </div>
+          <div
+            class="text-sm text-green-600"
+          >
+            Matrix Terminal v2.1.0
+          </div>
+        </div>
+        <div
+          class="w-64 mx-auto"
+        >
+          <div
+            class="bg-gray-800 rounded-full h-1 mb-3"
+          >
+            <div
+              class="bg-green-400 h-1 rounded-full transition-all duration-200 ease-out"
+              style="width: 0%;"
+            />
+          </div>
+          <div
+            class="text-green-400 font-mono text-xs"
+          >
+            Initializing Matrix Terminal...
+          </div>
+          <div
+            class="text-green-600 font-mono text-xs mt-1 opacity-60"
+          >
+            0
+            %
+          </div>
+        </div>
+        <div
+          class="flex justify-center space-x-1"
+        >
+          <div
+            class="w-2 h-2 bg-green-400 rounded-full transition-opacity duration-300 
+                                opacity-100"
+          />
+          <div
+            class="w-2 h-2 bg-green-400 rounded-full transition-opacity duration-300 
+                                opacity-30"
+          />
+          <div
+            class="w-2 h-2 bg-green-400 rounded-full transition-opacity duration-300 
+                                opacity-30"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+    at Object.getElementError (/Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/config.js:37:19)
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+    at Object.getByText (/Users/ks/terminal-portfolio/__tests__/components/terminal/LoadingScreen.test.tsx:85:19)
+    at Promise.then.completed (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/testWorker.js:106:12)]]></failure>
+    </testCase>
+    <testCase name="LoadingScreen Component has proper styling classes" duration="5"/>
+    <testCase name="LoadingScreen Component displays loading animation dots" duration="3"/>
+    <testCase name="LoadingScreen Component cleans up timer on unmount" duration="11"/>
+    <testCase name="LoadingScreen Component handles progress bar width correctly" duration="61"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/Home.test.tsx">
+    <testCase name="Home Component renders welcome message" duration="6"/>
+    <testCase name="Home Component renders role information" duration="4"/>
+    <testCase name="Home Component renders quick navigation" duration="23"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/Projects.test.tsx">
+    <testCase name="Projects Component renders loading state initially" duration="78"/>
+    <testCase name="Projects Component renders component without crashing" duration="43">
+      <failure message="Error: expect(received).toBeInTheDocument()"><![CDATA[Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  object
+Received has value: Loading projects from GitHub...
+    at __EXTERNAL_MATCHER_TRAP__ (/Users/ks/terminal-portfolio/node_modules/expect/build/index.js:325:30)
+    at Object.throwingMatcher [as toBeInTheDocument] (/Users/ks/terminal-portfolio/node_modules/expect/build/index.js:326:15)
+    at Object.toBeInTheDocument (/Users/ks/terminal-portfolio/__tests__/components/commands/Projects.test.tsx:20:34)
+    at Promise.then.completed (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/testWorker.js:106:12)]]></failure>
+    </testCase>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/Education.test.tsx">
+    <testCase name="Education Component renders education header" duration="7">
+      <failure message="TestingLibraryElementError: Unable to find an element with the text: 🎓 Education. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible."><![CDATA[TestingLibraryElementError: Unable to find an element with the text: 🎓 Education. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    Education & Professional Development:
+    
+
+    
+
+    🎓 FORMAL EDUCATION:
+    
+
+    ┌─ 
+    Bachelor of Technology (BTech) in Computer Science and Engineering
+    
+
+    │  🏫 Institution: 
+    SRM Institute of Science and Technology
+    
+
+    │  📅 Duration: 
+    May 2016 - Jun 2020
+    
+
+    │  📊 GPA: 
+    Good Academic Standing
+    
+
+    │  📚 Key Courses:
+    
+
+    │     • 
+    Data Structures & Algorithms
+    
+
+    │     • 
+    Software Engineering
+    
+
+    │     • 
+    Database Management Systems
+    
+
+    │     • 
+    Computer Networks
+    
+
+    │     • 
+    Operating Systems
+    
+
+    │     • 
+    Object-Oriented Programming
+    
+
+    │  💻 Notable Projects:
+    
+
+    │     • 
+    Terminal Portfolio
+     - 
+    Interactive Matrix-themed portfolio with command-line interface built with Next.js and React
+    
+
+    │     • 
+    HDFC Net-Banking Platform
+     - 
+    Scalable online banking platform enhancing digital payment experience and transaction reliability for retail customers (Professional Project)
+    
+
+    
+
+    🏅 PROFESSIONAL CERTIFICATIONS:
+    
+
+    • 
+    IBM Machine Learning with Python
+    
+
+      Issuer: 
+    IBM
+     | Year: 
+    Aug 2025
+    
+
+      Credential ID: 
+    IBM-ML-2025
+    
+
+    
+
+    🌐 LANGUAGES:
+    
+
+    • 
+    Hindi - Native
+    
+
+    • 
+    English - Professional
+    
+
+    
+
+    📈 Total Certifications: 
+    1
+    
+
+    🎯 Focus: Backend Engineering, System Design, and Scalable Applications
+  </div>
+</body>
+    at Object.getElementError (/Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/config.js:37:19)
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+    at /Users/ks/terminal-portfolio/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+    at Object.getByText (/Users/ks/terminal-portfolio/__tests__/components/commands/Education.test.tsx:8:19)
+    at Promise.then.completed (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/ks/terminal-portfolio/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/ks/terminal-portfolio/node_modules/jest-runner/build/testWorker.js:106:12)]]></failure>
+    </testCase>
+    <testCase name="Education Component renders degree information" duration="2"/>
+    <testCase name="Education Component renders institution" duration="4"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/lib/github.test.ts">
+    <testCase name="GitHubService constructor creates service with username and token" duration="0"/>
+    <testCase name="GitHubService constructor creates service without token" duration="0"/>
+    <testCase name="GitHubService getUser fetches user data successfully" duration="1"/>
+    <testCase name="GitHubService getUser handles 404 error" duration="8"/>
+    <testCase name="GitHubService getUser handles 403 rate limit error" duration="1"/>
+    <testCase name="GitHubService getUser handles network errors" duration="1"/>
+    <testCase name="GitHubService getUser handles other HTTP errors" duration="0"/>
+    <testCase name="GitHubService getRepositories fetches and filters repositories" duration="1"/>
+    <testCase name="GitHubService getRepositories prioritizes featured repositories" duration="0"/>
+    <testCase name="GitHubService getRepositories sorts by stars and update time" duration="0"/>
+    <testCase name="GitHubService getRepositories limits results to 6 repositories" duration="1"/>
+    <testCase name="GitHubService getLanguageStats aggregates language statistics" duration="0"/>
+    <testCase name="GitHubService getLanguageStats handles repositories without language" duration="1"/>
+    <testCase name="GitHubService caching caches API responses" duration="1"/>
+    <testCase name="GitHubService caching expires cache after duration" duration="1"/>
+    <testCase name="GitHubService authentication includes Authorization header when token provided" duration="0"/>
+    <testCase name="GitHubService authentication omits Authorization header when no token provided" duration="1"/>
+    <testCase name="createGitHubService creates service with environment variables" duration="1"/>
+    <testCase name="createGitHubService uses default username when env var not set" duration="0"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/Help.test.tsx">
+    <testCase name="Help Component renders available commands text" duration="8"/>
+    <testCase name="Help Component renders home command" duration="18"/>
+    <testCase name="Help Component renders help command" duration="5"/>
+    <testCase name="Help Component renders skills command" duration="10"/>
+    <testCase name="Help Component renders projects command" duration="6"/>
+    <testCase name="Help Component renders education command" duration="25"/>
+    <testCase name="Help Component renders timeline command" duration="5"/>
+    <testCase name="Help Component renders certifications command" duration="4"/>
+    <testCase name="Help Component renders contact command" duration="5"/>
+    <testCase name="Help Component renders github command" duration="11"/>
+    <testCase name="Help Component renders stats command" duration="2"/>
+    <testCase name="Help Component renders performance command" duration="21"/>
+    <testCase name="Help Component renders system command" duration="5"/>
+    <testCase name="Help Component renders cursor command" duration="2"/>
+    <testCase name="Help Component renders clear command" duration="2"/>
+    <testCase name="Help Component renders navigation tips" duration="7"/>
+    <testCase name="Help Component renders try it message" duration="5"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/commands/Contact.test.tsx">
+    <testCase name="Contact Component renders professional contact information header" duration="5"/>
+    <testCase name="Contact Component renders name information" duration="4"/>
+    <testCase name="Contact Component renders email information" duration="2"/>
+    <testCase name="Contact Component renders phone information" duration="3"/>
+    <testCase name="Contact Component renders location information" duration="2"/>
+    <testCase name="Contact Component renders portfolio link" duration="27"/>
+    <testCase name="Contact Component renders GitHub link" duration="14"/>
+    <testCase name="Contact Component renders LinkedIn link" duration="3"/>
+    <testCase name="Contact Component renders LeetCode link" duration="4"/>
+    <testCase name="Contact Component renders help hint" duration="2"/>
+    <testCase name="Contact Component renders all clickable links" duration="2"/>
+    <testCase name="Contact Component has proper structure" duration="12"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/api/health.test.ts">
+    <testCase name="/api/health returns healthy status with correct data structure" duration="6"/>
+    <testCase name="/api/health returns service configuration status" duration="1"/>
+    <testCase name="/api/health returns not configured when env vars are missing" duration="0"/>
+    <testCase name="/api/health handles errors gracefully" duration="1"/>
+    <testCase name="/api/health returns correct timestamp format" duration="1"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/app/page.test.tsx">
+    <testCase name="Page Component renders loading screen initially" duration="15"/>
+    <testCase name="Page Component shows matrix background and terminal after loading" duration="8"/>
+    <testCase name="Page Component has proper structure after loading" duration="7"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/MatrixBackground.test.tsx">
+    <testCase name="MatrixBackground Component renders canvas element" duration="12"/>
+    <testCase name="MatrixBackground Component sets canvas dimensions on mount" duration="2"/>
+    <testCase name="MatrixBackground Component handles window resize" duration="15"/>
+    <testCase name="MatrixBackground Component starts animation on mount" duration="2"/>
+    <testCase name="MatrixBackground Component cleans up on unmount" duration="2"/>
+    <testCase name="MatrixBackground Component draws matrix characters" duration="1"/>
+    <testCase name="MatrixBackground Component uses correct font settings" duration="2"/>
+    <testCase name="MatrixBackground Component applies glow effect randomly" duration="2"/>
+    <testCase name="MatrixBackground Component resets drops when they go off screen" duration="2"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/api/credly.test.ts">
+    <testCase name="/api/credly GET returns 400 when userId is missing" duration="1"/>
+    <testCase name="/api/credly GET fetches data from Credly API successfully" duration="0"/>
+    <testCase name="/api/credly GET handles Credly API failure gracefully" duration="4"/>
+    <testCase name="/api/credly GET handles network errors" duration="4"/>
+    <testCase name="/api/credly GET transforms response data correctly" duration="1"/>
+    <testCase name="/api/credly POST handles refresh requests" duration="0"/>
+  </file>
+  <file path="/Users/ks/terminal-portfolio/__tests__/components/Terminal.test.tsx">
+    <testCase name="Terminal Component renders system initializer when initializing" duration="6"/>
+    <testCase name="Terminal Component shows terminal interface after initialization" duration="9"/>
+    <testCase name="Terminal Component handles command execution" duration="50"/>
+    <testCase name="Terminal Component handles clear command" duration="59"/>
+    <testCase name="Terminal Component handles unknown commands" duration="44"/>
+    <testCase name="Terminal Component handles empty commands" duration="8"/>
+    <testCase name="Terminal Component sets viewport height CSS variable on resize" duration="3"/>
+    <testCase name="Terminal Component cleans up event listeners on unmount" duration="1"/>
+  </file>
+</testExecutions>

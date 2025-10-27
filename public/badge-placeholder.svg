@@ -1,0 +1,6 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="24" cy="24" r="22" fill="#1f2937" stroke="#3b82f6" stroke-width="2"/>
+  <path d="M24 8L27.09 17.26L37 14L33.74 23.26L43 26L33.74 28.74L37 38L27.09 34.74L24 44L20.91 34.74L11 38L14.26 28.74L5 26L14.26 23.26L11 14L20.91 17.26L24 8Z" fill="#3b82f6"/>
+  <circle cx="24" cy="24" r="6" fill="#1f2937"/>
+  <text x="24" y="28" text-anchor="middle" fill="#3b82f6" font-size="8" font-family="monospace">CERT</text>
+</svg>

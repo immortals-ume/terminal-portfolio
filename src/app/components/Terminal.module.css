@@ -1,0 +1,139 @@
+.wrap {
+  position: fixed;     
+  inset: 0;               
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid var(--neon);
+  border-radius: 0;       
+  background: var(--panel-bg);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 10px rgba(0,255,156,0.1);
+  
+}
+/* If you still want rounded corners and a border gap, use:
+.wrap { inset: 12px; border-radius: 12px; }
+*/
+
+ .header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--neon-soft);
+  background: linear-gradient(180deg, rgba(0,255,156,0.1), rgba(0,0,0,0));
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+.title {
+  margin-left: auto;
+  opacity: .8;
+}
+
+.body {
+  flex: 1;               
+  overflow: auto;       
+  padding: 16px;
+  line-height: 1.6;
+  text-shadow: 0 0 2px rgba(0,255,156,0.8);
+}
+
+
+.promptLine { color: var(--text-soft); white-space: pre-wrap; }
+.outputLine { white-space: pre-wrap; animation: fadeIn .12s ease-out; }
+
+.inputRow { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.prompt { color: var(--neon); }
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e3ffe6;
+  caret-color: transparent;
+  font: inherit;
+}
+.cursor {
+  opacity: 0;
+  transition: opacity .15s;
+  pointer-events: none;
+}
+.cursorVisible { opacity: 1; }
+
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+.wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,255,156,0.027),
+    rgba(0,255,156,0.027) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Glitch heading above the window */
+.glitch {
+  position: absolute;
+  top: -42px;                 /* sits above the terminal frame */
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--neon);
+  letter-spacing: 2px;
+  filter: drop-shadow(0 0 8px rgba(0,255,156,0.5));
+  user-select: none;
+  pointer-events: none;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0; top: 0; width: 100%;
+  overflow: hidden;
+  clip-path: inset(0 0 0 0);
+}
+.glitch::before {
+  left: 1px; text-shadow: -1px 0 #ff00c1;
+  animation: glitchTop 2s infinite linear alternate-reverse;
+}
+.glitch::after {
+  left: -1px; text-shadow: 1px 0 #00fff9;
+  animation: glitchBottom 1.8s infinite linear alternate-reverse;
+}
+@keyframes glitchTop {
+  0% { clip-path: inset(0 0 85% 0) }
+  20% { clip-path: inset(0 0 60% 0) }
+  40% { clip-path: inset(0 0 70% 0) }
+  60% { clip-path: inset(0 0 40% 0) }
+  80% { clip-path: inset(0 0 50% 0) }
+  100% { clip-path: inset(0 0 85% 0) }
+}
+@keyframes glitchBottom {
+  0% { clip-path: inset(85% 0 0 0) }
+  20% { clip-path: inset(60% 0 0 0) }
+  40% { clip-path: inset(70% 0 0 0) }
+  60% { clip-path: inset(40% 0 0 0) }
+  80% { clip-path: inset(50% 0 0 0) }
+  100% { clip-path: inset(85% 0 0 0) }
+}
+
+:root { --vh: 1vh; }
+
+@media (max-width: 768px) {
+  .wrap {
+    height: calc(var(--vh, 1vh) * 100);
+  }
+}
