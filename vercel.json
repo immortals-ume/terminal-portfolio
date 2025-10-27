@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "name": "terminal-portfolio",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_GITHUB_USERNAME": "@next_public_github_username",
+    "NEXT_PUBLIC_CREDLY_USER_ID": "@next_public_credly_user_id"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_GITHUB_USERNAME": "@next_public_github_username",
+      "NEXT_PUBLIC_CREDLY_USER_ID": "@next_public_credly_user_id"
+    }
+  },
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+}

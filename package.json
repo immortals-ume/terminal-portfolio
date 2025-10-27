@@ -19,7 +19,10 @@
     "test:api": "jest --config jest.config.cjs --testPathPattern=__tests__/api",
     "quality": "npm run type-check && npm run lint && npm run test:ci",
     "docker:build": "docker build -t terminal-portfolio .",
-    "docker:run": "docker run -p 3000:3000 --env-file .env terminal-portfolio"
+    "docker:run": "docker run -p 3000:3000 --env-file .env terminal-portfolio",
+    "vercel:dev": "vercel dev",
+    "vercel:build": "vercel build",
+    "vercel:deploy": "vercel --prod"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
