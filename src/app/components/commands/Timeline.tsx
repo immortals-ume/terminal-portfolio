@@ -15,22 +15,18 @@ export default function Timeline() {
 
     return () => clearInterval(timer);
   }, []);
-  // Enhanced JSON serialization with comprehensive null checks and error handling
+
+  
   const safeJsonStringify = (obj: any, indent: number = 2): string => {
     const replacer = (key: string, value: any) => {
-      // Handle null and undefined
       if (value === null || value === undefined) return null;
-      
-      // Handle empty strings
+    
       if (typeof value === 'string' && value.trim() === '') return null;
       
-      // Handle empty arrays (keep them for structure)
       if (Array.isArray(value) && value.length === 0) return [];
       
-      // Handle empty objects
       if (typeof value === 'object' && value !== null && Object.keys(value).length === 0) return {};
       
-      // Handle NaN and Infinity
       if (typeof value === 'number' && (!isFinite(value) || isNaN(value))) return null;
       
       return value;
