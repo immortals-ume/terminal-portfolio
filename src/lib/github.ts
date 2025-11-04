@@ -58,7 +58,6 @@ export class GitHubService {
   }
 
   private async fetchGitHub(endpoint: string): Promise<any> {
-    // Check cache first
     const cachedData = this.getCachedData(endpoint);
     if (cachedData) {
       return cachedData;
@@ -107,28 +106,33 @@ export class GitHubService {
   async getRepositories(featured?: string[]): Promise<GitHubRepo[]> {
     const repos = await this.fetchGitHub(`/users/${this.username}/repos?sort=updated&per_page=100&type=public`);
 
-
     const filteredRepos = repos
-      .filter((repo: GitHubRepo) =>
-        !repo.fork && 
-        !repo.private && 
-        repo.size > 0 && 
-        repo.description && 
-        repo.name !== repo.owner?.login
-      )
+      .filter((repo: GitHubRepo) => {
+        return !repo.fork && 
+               !repo.private && 
+               repo.size > 0 && 
+               repo.description && 
+               repo.description.trim().length > 0 &&
+               repo.name !== repo.owner?.login &&
+               !repo.name.toLowerCase().includes('config') &&
+               !repo.name.toLowerCase().includes('dotfiles');
+      })
       .sort((a: GitHubRepo, b: GitHubRepo) => {
-        if (featured) {
+        if (featured && featured.length > 0) {
           const aFeatured = featured.includes(a.name);
           const bFeatured = featured.includes(b.name);
           if (aFeatured && !bFeatured) return -1;
           if (!aFeatured && bFeatured) return 1;
         }
-        const aScore = a.stargazers_count * 2 + (new Date(a.updated_at).getTime() / 1000000000);
-        const bScore = b.stargazers_count * 2 + (new Date(b.updated_at).getTime() / 1000000000);
+        
+        const aScore = (a.stargazers_count * 3) + (a.forks_count * 2) + 
+                      (new Date(a.updated_at).getTime() / 1000000000000);
+        const bScore = (b.stargazers_count * 3) + (b.forks_count * 2) + 
+                      (new Date(b.updated_at).getTime() / 1000000000000);
         return bScore - aScore;
       });
 
-    return filteredRepos.slice(0, 6);
+    return filteredRepos.slice(0, 8);
   }
 
   async getLanguageStats(): Promise<Record<string, number>> {
@@ -145,8 +149,10 @@ export class GitHubService {
   }
 }
 
+import { personalInfo } from '../data/portfolio';
+
 export const createGitHubService = () => {
-  const username = process.env.NEXT_PUBLIC_GITHUB_USERNAME || 'immortals-ume';
+  const username = personalInfo.github;
   const token = process.env.GITHUB_TOKEN; 
 
   return new GitHubService(username, token);

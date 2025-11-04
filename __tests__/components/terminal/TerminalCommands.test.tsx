@@ -11,8 +11,7 @@ jest.mock('@/app/components/commands/Education', () => () => <div>Education Comp
 jest.mock('@/app/components/commands/Timeline', () => () => <div>Timeline Component</div>);
 jest.mock('@/app/components/commands/System', () => () => <div>System Component</div>);
 jest.mock('@/app/components/commands/GitHub', () => () => <div>GitHub Component</div>);
-jest.mock('@/app/components/commands/Performance', () => () => <div>Performance Component</div>);
-jest.mock('@/app/components/commands/Stats', () => () => <div>Stats Component</div>);
+
 jest.mock('@/app/components/commands/Certifications', () => () => <div>Certifications Component</div>);
 jest.mock('@/app/components/commands/Cursor', () => {
   return function MockCursor({ _onCursorChange, currentCursor }: any) {
@@ -26,17 +25,20 @@ describe('TerminalCommands', () => {
 
   beforeEach(() => {
     setCursorType = jest.fn();
-    commands = createCommands(setCursorType, 'block');
+    const setTheme = jest.fn();
+    commands = createCommands(setCursorType, 'block', setTheme, 'matrix');
   });
 
   describe('createCommands', () => {
     it('creates all expected commands', () => {
       const expectedCommands = [
         'home', 'help', 'show skills', 'projects', 'education', 'timeline',
-        'open project1', 'open project2', 'contact', 'github', 'stats',
-        'performance', 'system', 'certifications', 'cursor', 'clear',
+        'open project1', 'open project2', 'contact', 'github',
+        'system', 'certifications', 'cursor', 'theme', 'clear',
         'cursor-select-0', 'cursor-select-1', 'cursor-select-2', 'cursor-select-3',
-        'cursor-select-4', 'cursor-select-5', 'cursor-select-6', 'cursor-select-7'
+        'cursor-select-4', 'cursor-select-5', 'cursor-select-6', 'cursor-select-7',
+        'cursor-select-8', 'cursor-select-9', 'theme-select-0', 'theme-select-1',
+        'theme-select-2', 'theme-select-3', 'theme-select-4', 'theme-select-5'
       ];
 
       expectedCommands.forEach(cmd => {

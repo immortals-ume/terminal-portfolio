@@ -8,54 +8,54 @@ interface CommandHistoryProps {
   isVisible: boolean;
 }
 
+let inMemoryHistory: string[] = [];
+let historyUpdateListeners: (() => void)[] = [];
+
+const notifyHistoryUpdate = () => {
+  historyUpdateListeners.forEach(listener => listener());
+};
+
 export default function CommandHistory({ onCommandSelect, currentInput, isVisible }: CommandHistoryProps) {
   const [history, setHistory] = useState<string[]>([]);
   const [filteredHistory, setFilteredHistory] = useState<string[]>([]);
-  const [isFirstTime, setIsFirstTime] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(true);
 
-  // Suggested commands for first-time users
   const suggestedCommands = ['home', 'help', 'skills', 'projects', 'contact', 'timeline'];
 
   useEffect(() => {
-    // Load history from sessionStorage
-    const savedHistory = sessionStorage.getItem('terminal-command-history');
-    const hasVisited = sessionStorage.getItem('terminal-has-visited');
-    
-    if (savedHistory && savedHistory !== '[]') {
-      // User has previous command history
-      setHistory(JSON.parse(savedHistory));
-      setIsFirstTime(false);
-    } else {
-      // First-time user or no previous commands
-      setIsFirstTime(true);
-      if (!hasVisited) {
-        sessionStorage.setItem('terminal-has-visited', 'true');
-      }
-    }
+    setHistory(inMemoryHistory);
+    setIsFirstTime(inMemoryHistory.length === 0);
+
+    const updateHistory = () => {
+      setHistory([...inMemoryHistory]);
+      setIsFirstTime(inMemoryHistory.length === 0);
+    };
+
+    historyUpdateListeners.push(updateHistory);
+
+    return () => {
+      historyUpdateListeners = historyUpdateListeners.filter(listener => listener !== updateHistory);
+    };
   }, []);
 
   useEffect(() => {
-    // Filter history based on current input
     if (currentInput.trim()) {
       if (isFirstTime || history.length === 0) {
-        // Show suggested commands for first-time users
-        const filtered = suggestedCommands.filter(cmd => 
+
+        const filtered = suggestedCommands.filter(cmd =>
           cmd.toLowerCase().includes(currentInput.toLowerCase())
         ).slice(0, 5);
         setFilteredHistory(filtered);
       } else {
-        // Show actual command history
-        const filtered = history.filter(cmd => 
+        const filtered = history.filter(cmd =>
           cmd.toLowerCase().includes(currentInput.toLowerCase())
         ).slice(0, 5);
         setFilteredHistory(filtered);
       }
     } else {
       if (isFirstTime || history.length === 0) {
-        // Show top suggested commands for new users
         setFilteredHistory(suggestedCommands.slice(0, 5));
       } else {
-        // Show recent command history
         setFilteredHistory(history.slice(0, 5));
       }
     }
@@ -83,31 +83,31 @@ export default function CommandHistory({ onCommandSelect, currentInput, isVisibl
       <div className="text-green-400 text-xs mb-1">
         {isFirstTime || history.length === 0 ? 'Suggested Commands:' : 'Command History:'}
       </div>
-      {filteredHistory.map((cmd, index) => (
+      {filteredHistory && filteredHistory.length > 0 ? filteredHistory.map((cmd, index) => (
         <div
           key={index}
-          onClick={() => onCommandSelect(cmd)}
+          onClick={() => cmd && onCommandSelect(cmd)}
           className="text-green-300 text-sm cursor-pointer hover:bg-green-900 hover:bg-opacity-20 px-2 py-1 rounded"
         >
-          {cmd}
+          {cmd || "Unknown command"}
           {isFirstTime || history.length === 0 ? (
             <span className="text-green-600 text-xs ml-2">→ try this</span>
           ) : null}
         </div>
-      ))}
+      )) : (
+        <div className="text-green-600 text-xs">No commands available</div>
+      )}
     </div>
   );
 }
 
-// Export the addToHistory function for external use
 export const useCommandHistory = () => {
   const addToHistory = (command: string) => {
     if (!command.trim()) return;
-    
-    const savedHistory = sessionStorage.getItem('terminal-command-history');
-    const history = savedHistory ? JSON.parse(savedHistory) : [];
-    const newHistory = [command, ...history.filter((cmd: string) => cmd !== command)].slice(0, 50);
-    sessionStorage.setItem('terminal-command-history', JSON.stringify(newHistory));
+
+    inMemoryHistory = [command, ...inMemoryHistory.filter((cmd: string) => cmd !== command)].slice(0, 50);
+
+    notifyHistoryUpdate();
   };
 
   return { addToHistory };

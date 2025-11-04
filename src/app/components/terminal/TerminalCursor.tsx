@@ -13,11 +13,13 @@ function getCursorSymbol(cursorType: string): string {
     "block": "█",
     "underscore": "_",
     "pipe": "|",
+    "beam": "I",
     "dot": "●",
     "arrow": "▶",
     "diamond": "◆",
     "star": "★",
-    "heart": "♥"
+    "heart": "♥",
+    "lightning": "⚡"
   };
   return cursorMap[cursorType] || "█";
 }
@@ -26,13 +28,14 @@ export default function TerminalCursor({ cursorType, cursorVisible, currentInput
   return (
     <span 
       className={`${styles.cursor} ${cursorVisible ? styles.cursorVisible : ""}`}
+      data-cursor={cursorType}
       style={{ 
         position: 'absolute',
         left: `${currentInput.length * 0.6}em`,
         top: 0
       }}
     >
-      {getCursorSymbol(cursorType)}
+      {cursorType === "block" ? getCursorSymbol(cursorType) : ""}
     </span>
   );
 }

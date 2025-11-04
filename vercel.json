@@ -14,13 +14,11 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_GITHUB_USERNAME": "@next_public_github_username",
-    "NEXT_PUBLIC_CREDLY_USER_ID": "@next_public_credly_user_id"
+    "NEXT_PUBLIC_GITHUB_USERNAME": "@next_public_github_username"
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_GITHUB_USERNAME": "@next_public_github_username",
-      "NEXT_PUBLIC_CREDLY_USER_ID": "@next_public_credly_user_id"
+      "NEXT_PUBLIC_GITHUB_USERNAME": "@next_public_github_username"
     }
   },
   "functions": {

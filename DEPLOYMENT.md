@@ -31,12 +31,10 @@ Set these in your Vercel dashboard or via CLI:
 
 ```bash
 vercel env add NEXT_PUBLIC_GITHUB_USERNAME
-vercel env add NEXT_PUBLIC_CREDLY_USER_ID
 ```
 
 ### Required Environment Variables:
 - `NEXT_PUBLIC_GITHUB_USERNAME` - Your GitHub username for fetching repositories
-- `NEXT_PUBLIC_CREDLY_USER_ID` - Your Credly user ID for certifications
 
 ## GitHub Actions Deployment
 

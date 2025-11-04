@@ -13,7 +13,6 @@ jest.mock('next/navigation', () => ({
 
 // Mock environment variables
 process.env.NEXT_PUBLIC_GITHUB_USERNAME = 'test-user';
-process.env.NEXT_PUBLIC_CREDLY_USER_ID = 'test-credly-id';
 
 // Mock Canvas API
 HTMLCanvasElement.prototype.getContext = jest.fn(() => ({

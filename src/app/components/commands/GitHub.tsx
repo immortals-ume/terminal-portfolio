@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { createGitHubService, GitHubUser } from "../../../lib/github";
+import { personalInfo } from "../../../data/portfolio";
+import ClickableLink from "../ui/ClickableLink";
 
 export default function GitHub() {
   const [user, setUser] = useState<GitHubUser | null>(null);
@@ -45,7 +47,7 @@ export default function GitHub() {
       <>
         Error loading GitHub data: {error}
         {"\n"}Please check your GitHub username in configuration.
-        {"\n"}Current username: {process.env.NEXT_PUBLIC_GITHUB_USERNAME || 'not-configured'}
+        {"\n"}Current username: {personalInfo.github}
       </>
     );
   }
@@ -92,7 +94,7 @@ export default function GitHub() {
       )}
       {user.blog && (
         <>
-          {"\n"}   Website: {user.blog}
+          {"\n"}   Website: <ClickableLink url={user.blog} />
         </>
       )}
       {"\n"}   Member since: {formatDate(user.created_at)}
@@ -113,7 +115,7 @@ export default function GitHub() {
           {"\n"}
         </>
       )}
-      {"\n"}🔗 Profile: https://github.com/{user.login}
+      {"\n"}🔗 Profile: <ClickableLink url={`https://github.com/${user.login}`} />
       {"\n"}
       {"\n"}Use 'projects' command to see detailed repository information.
     </>

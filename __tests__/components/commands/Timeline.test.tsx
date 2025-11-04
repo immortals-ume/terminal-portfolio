@@ -13,8 +13,8 @@ describe('Timeline Component', () => {
     expect(screen.getByText(/LENSKART/)).toBeInTheDocument();
   });
 
-  it('renders career growth', () => {
+  it('renders career progression', () => {
     render(<Timeline />);
-    expect(screen.getByText(/Career Growth/)).toBeInTheDocument();
+    expect(screen.getByText(/Career Progression/)).toBeInTheDocument();
   });
 });

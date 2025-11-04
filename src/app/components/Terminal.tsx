@@ -1,31 +1,73 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Terminal.module.css";
-import SystemInitializer from "./terminal/SystemInitializer";
+
 import TerminalHeader from "./terminal/TerminalHeader";
 import TerminalOutput from "./terminal/TerminalOutput";
 import TerminalInput from "./terminal/TerminalInput";
 import { useCursorType, useCursorBlink } from "./terminal/TerminalCursor";
 import { createCommands, parseCommand, OutputItem } from "./terminal/TerminalCommands";
+import { useTheme } from "./ThemeProvider";
+import { useViewportHeight } from "../hooks/useViewportHeight";
 
 export default function Terminal() {
-  const [isInitializing, setIsInitializing] = useState(true);
   const [output, setOutput] = useState<OutputItem[]>([]);
   const [submitted, setSubmitted] = useState<string[]>([]);
   const [current, setCurrent] = useState("");
   const [showHistory, setShowHistory] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [inlineHistory, setInlineHistory] = useState<string[]>([]);
 
   const { cursorType, setCursorType } = useCursorType();
+  const { theme, setTheme } = useTheme();
   const cursorVisible = useCursorBlink();
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const COMMANDS = createCommands(setCursorType, cursorType);
+  useViewportHeight();
+
+  const COMMANDS = createCommands(setCursorType, cursorType, setTheme, theme);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    const scrollToBottom = () => {
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+
+        const container = scrollRef.current?.parentElement?.parentElement;
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
+      }, 150);
+
+      setTimeout(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    };
+
+    scrollToBottom();
   }, [output, submitted]);
+
+
+  useEffect(() => {
+    const focusInput = () => {
+      inputRef.current?.focus();
+    };
+
+    focusInput(); 
+
+    const handleClick = (e: MouseEvent) => {
+
+      const target = e.target as HTMLElement;
+      if (!target.closest('a') && !target.closest('button')) {
+        focusInput();
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
 
   useEffect(() => {
     const setVH = () => {
@@ -36,6 +78,36 @@ export default function Terminal() {
     window.addEventListener("resize", setVH);
     return () => window.removeEventListener("resize", setVH);
   }, []);
+
+  const forceScroll = () => {
+
+    const scrollStrategies = [
+      () => scrollRef.current?.scrollIntoView({ behavior: "smooth" }),
+      () => {
+        const container = scrollRef.current?.parentElement;
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
+      },
+      () => {
+        const outputContainer = document.querySelector(`.${styles.outputContainer}`);
+        if (outputContainer) {
+          outputContainer.scrollTop = outputContainer.scrollHeight;
+        }
+      },
+      () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+    ];
+
+    scrollStrategies.forEach((strategy, index) => {
+      setTimeout(strategy, index * 100);
+    });
+
+    setTimeout(() => {
+      scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, 600);
+  };
 
   const runCommand = (raw: string) => {
     const key = parseCommand(raw);
@@ -49,6 +121,9 @@ export default function Terminal() {
           { type: "text", value: `Command not found: ${raw}. Type 'help'.` },
         ]);
       }
+      // Force scroll and refocus
+      forceScroll();
+      setTimeout(() => inputRef.current?.focus(), 100);
       return;
     }
 
@@ -56,9 +131,13 @@ export default function Terminal() {
     if (result === "__CLEAR__") {
       setOutput([]);
       setSubmitted([]);
+      setTimeout(() => inputRef.current?.focus(), 100);
       return;
     }
+
     setOutput((prev) => [...prev, ...result]);
+    forceScroll();
+    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   return (
@@ -66,31 +145,31 @@ export default function Terminal() {
       <TerminalHeader />
 
       <div className={styles.body}>
-        {isInitializing ? (
-          <SystemInitializer onComplete={() => setIsInitializing(false)} />
-        ) : (
-          <>
-            <TerminalOutput submitted={submitted} output={output} />
+        <div className={styles.outputContainer}>
+          <TerminalOutput submitted={submitted} output={output} inlineHistory={inlineHistory} />
+          <div ref={scrollRef} />
+        </div>
 
-            <TerminalInput
-              current={current}
-              setCurrent={setCurrent}
-              onSubmit={runCommand}
-              commands={COMMANDS}
-              cursorType={cursorType}
-              cursorVisible={cursorVisible}
-              showHistory={showHistory}
-              setShowHistory={setShowHistory}
-              showSuggestions={showSuggestions}
-              setShowSuggestions={setShowSuggestions}
-              suggestions={suggestions}
-              setSuggestions={setSuggestions}
-              autoFocus={!isInitializing}
-            />
-          </>
-        )}
-
-        <div ref={scrollRef} />
+        <div className={styles.inputContainer}>
+          <TerminalInput
+            ref={inputRef}
+            current={current}
+            setCurrent={setCurrent}
+            onSubmit={runCommand}
+            commands={COMMANDS}
+            cursorType={cursorType}
+            cursorVisible={cursorVisible}
+            showHistory={showHistory}
+            setShowHistory={setShowHistory}
+            showSuggestions={showSuggestions}
+            setShowSuggestions={setShowSuggestions}
+            suggestions={suggestions}
+            setSuggestions={setSuggestions}
+            inlineHistory={inlineHistory}
+            setInlineHistory={setInlineHistory}
+            autoFocus={true}
+          />
+        </div>
       </div>
     </div>
   );

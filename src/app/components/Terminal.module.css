@@ -6,24 +6,19 @@
   display: flex;
   flex-direction: column;
 
-  border: 1px solid var(--neon);
+  border: none;
   border-radius: 0;       
-  background: var(--panel-bg);
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 0 10px rgba(0,255,156,0.1);
-  
+  background: var(--bg-primary);
+  overflow: hidden;
 }
-/* If you still want rounded corners and a border gap, use:
-.wrap { inset: 12px; border-radius: 12px; }
-*/
 
- .header {
+.header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--neon-soft);
-  background: linear-gradient(180deg, rgba(0,255,156,0.1), rgba(0,0,0,0));
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bg-secondary);
+  background: var(--bg-secondary);
 }
 .dot {
   width: 10px;
@@ -35,105 +30,271 @@
 .green { background: #27c93f; }
 .title {
   margin-left: auto;
-  opacity: .8;
+  opacity: 0.8;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .body {
   flex: 1;               
-  overflow: auto;       
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  line-height: 1.4;
+  background: var(--bg-primary);
+}
+
+.outputContainer {
+  flex: 1;
+  overflow: auto;
   padding: 16px;
-  line-height: 1.6;
-  text-shadow: 0 0 2px rgba(0,255,156,0.8);
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
+}
+
+.inputContainer {
+  padding: 8px 16px 16px 16px;
+  border-top: 1px solid var(--bg-secondary);
+  background: var(--bg-primary);
 }
 
 
-.promptLine { color: var(--text-soft); white-space: pre-wrap; }
-.outputLine { white-space: pre-wrap; animation: fadeIn .12s ease-out; }
+.promptLine { 
+  color: var(--text-secondary); 
+  white-space: pre-wrap; 
+}
+.outputLine { 
+  white-space: pre-wrap; 
+  animation: fadeIn 0.2s ease-out; 
+  color: var(--text-primary);
+}
 
-.inputRow { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-.prompt { color: var(--neon); }
+.inputRow { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+.prompt { 
+  color: var(--accent); 
+  font-weight: 500;
+}
 .input {
   background: transparent;
   border: none;
   outline: none;
-  color: #e3ffe6;
+  color: var(--text-primary);
   caret-color: transparent;
   font: inherit;
+  flex: 1;
 }
 .cursor {
   opacity: 0;
-  transition: opacity .15s;
+  transition: opacity 0.15s ease;
   pointer-events: none;
+  color: var(--accent);
 }
-.cursorVisible { opacity: 1; }
-
-@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-
-.wrap::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0,255,156,0.027),
-    rgba(0,255,156,0.027) 2px,
-    transparent 2px,
-    transparent 4px
-  );
-  pointer-events: none;
-  border-radius: inherit;
+.cursorVisible { 
+  opacity: 1; 
 }
 
-/* Glitch heading above the window */
-.glitch {
-  position: absolute;
-  top: -42px;                 /* sits above the terminal frame */
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--neon);
-  letter-spacing: 2px;
-  filter: drop-shadow(0 0 8px rgba(0,255,156,0.5));
-  user-select: none;
-  pointer-events: none;
+@keyframes fadeIn { 
+  from { opacity: 0; transform: translateY(2px); } 
+  to { opacity: 1; transform: translateY(0); } 
 }
 
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0; top: 0; width: 100%;
-  overflow: hidden;
-  clip-path: inset(0 0 0 0);
-}
-.glitch::before {
-  left: 1px; text-shadow: -1px 0 #ff00c1;
-  animation: glitchTop 2s infinite linear alternate-reverse;
-}
-.glitch::after {
-  left: -1px; text-shadow: 1px 0 #00fff9;
-  animation: glitchBottom 1.8s infinite linear alternate-reverse;
-}
-@keyframes glitchTop {
-  0% { clip-path: inset(0 0 85% 0) }
-  20% { clip-path: inset(0 0 60% 0) }
-  40% { clip-path: inset(0 0 70% 0) }
-  60% { clip-path: inset(0 0 40% 0) }
-  80% { clip-path: inset(0 0 50% 0) }
-  100% { clip-path: inset(0 0 85% 0) }
-}
-@keyframes glitchBottom {
-  0% { clip-path: inset(85% 0 0 0) }
-  20% { clip-path: inset(60% 0 0 0) }
-  40% { clip-path: inset(70% 0 0 0) }
-  60% { clip-path: inset(40% 0 0 0) }
-  80% { clip-path: inset(50% 0 0 0) }
-  100% { clip-path: inset(85% 0 0 0) }
+/* Performance optimizations */
+.wrap {
+  contain: layout style paint;
+  transform: translateZ(0); /* Force GPU acceleration */
 }
 
-:root { --vh: 1vh; }
+.outputContainer {
+  contain: layout style;
+  will-change: scroll-position;
+}
 
-@media (max-width: 768px) {
+.inputRow {
+  contain: layout style;
+}
+
+
+
+/* Mobile devices (phones) */
+@media (max-width: 480px) {
   .wrap {
     height: calc(var(--vh, 1vh) * 100);
+    font-size: 11px;
+  }
+  
+  .header {
+    padding: 8px 12px;
+  }
+  
+  .outputContainer {
+    padding: 12px;
+    padding-bottom: 6px;
+  }
+  
+  .inputContainer {
+    padding: 6px 12px 12px 12px;
+  }
+  
+  .inputRow {
+    gap: 4px;
+  }
+  
+  .prompt {
+    font-size: 11px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+  .wrap {
+    height: calc(var(--vh, 1vh) * 100);
+    font-size: 12px;
+  }
+  
+  .header {
+    padding: 10px 14px;
+  }
+  
+  .outputContainer {
+    padding: 14px;
+    padding-bottom: 7px;
+  }
+  
+  .inputContainer {
+    padding: 7px 14px 14px 14px;
+  }
+}
+
+/* Large tablets and small laptops */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .wrap {
+    font-size: 13px;
+  }
+}
+
+/* Desktop and larger screens */
+@media (min-width: 1025px) {
+  .wrap {
+    font-size: 13px;
+  }
+}
+
+/* Enhanced cursor styles for macOS-like experience */
+.cursor[data-cursor="block"] { 
+  background: var(--accent); 
+  color: var(--bg-primary); 
+  padding: 0 1px;
+}
+.cursor[data-cursor="underscore"]::after { 
+  content: "_"; 
+  position: absolute; 
+  bottom: -2px; 
+  left: 0;
+}
+.cursor[data-cursor="pipe"]::after { 
+  content: "|"; 
+  font-weight: bold;
+}
+.cursor[data-cursor="beam"]::after { 
+  content: "I"; 
+  font-weight: bold;
+  font-style: italic;
+}
+.cursor[data-cursor="dot"]::after { 
+  content: "●"; 
+  font-size: 8px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.cursor[data-cursor="arrow"]::after { 
+  content: "▶"; 
+  font-size: 12px;
+}
+.cursor[data-cursor="diamond"]::after { 
+  content: "◆"; 
+  font-size: 12px;
+}
+.cursor[data-cursor="star"]::after { 
+  content: "★"; 
+  font-size: 12px;
+}
+.cursor[data-cursor="heart"]::after { 
+  content: "♥"; 
+  font-size: 12px;
+  color: #ff3b30;
+}
+.cursor[data-cursor="lightning"]::after { 
+  content: "⚡"; 
+  font-size: 12px;
+}
+
+/* macOS-like scrollbar for better integration */
+.outputContainer::-webkit-scrollbar { 
+  width: 12px; 
+}
+.outputContainer::-webkit-scrollbar-track { 
+  background: var(--bg-primary); 
+}
+.outputContainer::-webkit-scrollbar-thumb { 
+  background: var(--bg-secondary); 
+  border-radius: 6px; 
+  border: 2px solid var(--bg-primary);
+}
+.outputContainer::-webkit-scrollbar-thumb:hover { 
+  background: var(--text-secondary); 
+}
+
+/* Touch and mobile optimizations */
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  caret-color: transparent;
+  font: inherit;
+  flex: 1;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 768px) {
+  .dot {
+    width: 12px;
+    height: 12px;
+    margin: 2px;
+  }
+  
+  .title {
+    font-size: 12px;
+  }
+}
+
+/* Prevent zoom on input focus on iOS */
+@media screen and (max-width: 768px) {
+  .input {
+    font-size: 16px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .header {
+    padding: 6px 12px;
+  }
+  
+  .outputContainer {
+    padding: 8px 12px 4px 12px;
+  }
+  
+  .inputContainer {
+    padding: 4px 12px 8px 12px;
   }
 }

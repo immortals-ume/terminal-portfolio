@@ -30,15 +30,6 @@ NEXT_PUBLIC_EMAIL="your.email@example.com"
 NEXT_PUBLIC_GITHUB_USERNAME="your-github-username"
 ```
 
-### Credly Integration
-```env
-NEXT_PUBLIC_CREDLY_USER_ID="your-credly-user-id"
-```
-
-**How to find your Credly User ID:**
-1. Go to your Credly profile
-2. Copy the ID from the URL: `https://www.credly.com/users/YOUR_ID_HERE`
-
 ## Optional but Recommended
 
 ### GitHub Token
@@ -106,9 +97,8 @@ NEXT_PUBLIC_TERMINAL_TYPING_SPEED="50"  # Milliseconds
 ### Common Issues
 
 **Certifications not loading?**
-- Check your `NEXT_PUBLIC_CREDLY_USER_ID`
-- Ensure your Credly profile is public
-- Verify the user ID format
+- Check your portfolio.ts certifications data
+- Ensure certification URLs are valid
 
 **GitHub stats not showing?**
 - Add a `GITHUB_TOKEN` for better rate limits
@@ -126,7 +116,7 @@ Run these commands in your terminal to test:
 
 ```bash
 # Test certifications
-curl "http://localhost:3000/api/credly?userId=your-user-id"
+# Certifications are now loaded from portfolio.ts data
 
 # Check environment variables are loaded
 npm run dev
@@ -155,7 +145,6 @@ Refer to your platform's documentation for environment variable configuration.
 NEXT_PUBLIC_FULL_NAME="John Doe"
 NEXT_PUBLIC_EMAIL="john@example.com"
 NEXT_PUBLIC_GITHUB_USERNAME="johndoe"
-NEXT_PUBLIC_CREDLY_USER_ID="john-doe.123abc"
 NEXT_PUBLIC_WEBSITE="https://johndoe.dev"
 ```
 
@@ -171,5 +160,4 @@ NEXT_PUBLIC_GITHUB_USERNAME="janesmith-techcorp"
 ## Need Help?
 
 - Check the [README.md](../README.md) for general setup
-- Review [credly-setup.md](../credly-setup.md) for certification integration
 - Open an issue on GitHub for specific problems

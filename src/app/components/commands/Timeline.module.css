@@ -1,0 +1,179 @@
+.timelineContainer {
+  font-family: inherit;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.timelineHeader {
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.timeline {
+  position: relative;
+}
+
+.timelineItem {
+  display: flex;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.timelineMarker {
+  position: relative;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timelineDot {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: var(--bg-primary);
+  z-index: 2;
+}
+
+.timelineLine {
+  width: 2px;
+  height: 100%;
+  background: var(--accent);
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 150px;
+}
+
+.timelineContent {
+  flex: 1;
+  padding-left: 10px;
+}
+
+.timelinePeriod {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.timelineRole {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+  color: var(--accent);
+}
+
+.timelineDetails {
+  margin-left: 10px;
+}
+
+.detailItem {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  color: var(--text-primary);
+}
+
+.detailIcon {
+  margin-right: 8px;
+  min-width: 20px;
+}
+
+.achievements {
+  margin-top: 15px;
+}
+
+.achievementsHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.achievementsList {
+  margin: 0;
+  padding-left: 30px;
+  list-style: none;
+}
+
+.achievementItem {
+  margin-bottom: 6px;
+  position: relative;
+  padding-left: 15px;
+  color: var(--text-primary);
+}
+
+.achievementItem::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.timelineFooter {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--accent);
+  color: var(--text-secondary);
+}
+
+.timelineFooter > div {
+  margin-bottom: 5px;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 480px) {
+  .timelineItem {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .timelineMarker {
+    flex-direction: row;
+    margin-right: 0;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  
+  .timelineLine {
+    display: none;
+  }
+  
+  .timelineContent {
+    padding-left: 0;
+  }
+  
+  .timelineDetails {
+    margin-left: 0;
+  }
+  
+  .detailItem {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  
+  .detailIcon {
+    margin-bottom: 4px;
+  }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 481px) and (max-width: 768px) {
+  .timelineItem {
+    margin-bottom: 25px;
+  }
+  
+  .timelineMarker {
+    margin-right: 15px;
+  }
+  
+  .timelineContent {
+    padding-left: 8px;
+  }
+}
+

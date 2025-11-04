@@ -16,14 +16,14 @@ describe('LoadingScreen Component', () => {
     render(<LoadingScreen onComplete={onComplete} />);
     
     expect(screen.getByText('>_PORTFOLIO')).toBeInTheDocument();
-    expect(screen.getByText('Matrix Terminal v2.1.0')).toBeInTheDocument();
+    expect(screen.getByText('Portfolio v1.0.0')).toBeInTheDocument();
   });
 
   it('shows initial loading message', () => {
     const onComplete = jest.fn();
     render(<LoadingScreen onComplete={onComplete} />);
     
-    expect(screen.getByText('Initializing Matrix Terminal...')).toBeInTheDocument();
+    expect(screen.getByText('Loading portfolio...')).toBeInTheDocument();
   });
 
   it('displays initial progress', () => {
@@ -65,13 +65,13 @@ describe('LoadingScreen Component', () => {
     render(<LoadingScreen onComplete={onComplete} />);
     
     // Initially should show first message
-    expect(screen.getByText('Initializing Matrix Terminal...')).toBeInTheDocument();
+    expect(screen.getByText('Loading portfolio...')).toBeInTheDocument();
     
     // Advance time to trigger message change
     jest.advanceTimersByTime(800);
     
     // Should show some loading message
-    const messageElement = screen.getByText(/Loading|Initializing|Establishing|System/);
+    const messageElement = screen.getByText(/Loading|Preparing|Almost|Welcome/);
     expect(messageElement).toBeInTheDocument();
   });
 
@@ -82,7 +82,7 @@ describe('LoadingScreen Component', () => {
     // Advance time to completion
     jest.advanceTimersByTime(1600);
     
-    expect(screen.getByText(/System ready!|Initializing Matrix Terminal/)).toBeInTheDocument();
+    expect(screen.getByText(/Welcome!|Loading portfolio/)).toBeInTheDocument();
     expect(screen.getByText(/100%|0%/)).toBeInTheDocument();
   });
 

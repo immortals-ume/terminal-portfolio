@@ -3,26 +3,47 @@ import { personalInfo } from "../../../data/portfolio";
 
 export default function Home() {
   return (
-    <>
-      Welcome to my interactive terminal portfolio!
-      {"\n"}
-      {"\n"}I'm {personalInfo.name}, a {personalInfo.role} with {personalInfo.experience} of experience
-      {"\n"}in backend development, system design, and scalable applications.
-      {"\n"}
-      {"\n"}🚀 Currently working at {personalInfo.company} as {personalInfo.role}
-      {"\n"}💻 Specialized in Java, Spring Boot, ReactJS, and cloud technologies
-      {"\n"}🏗️ Built systems handling millions of requests with high performance
-      {"\n"}📍 Based in {personalInfo.location}
-      {"\n"}
-      {"\n"}Quick navigation:
-      {"\n"}- Type 'skills' to see my technical stack
-      {"\n"}- Type 'timeline' to explore my work experience
-      {"\n"}- Type 'projects' to see my key projects
-      {"\n"}- Type 'github' for my GitHub stats
-      {"\n"}- Type 'contact' to get in touch
-      {"\n"}- Type 'help' for all available commands
-      {"\n"}
-      {"\n"}Pro tip: Use Tab for autocomplete and arrow keys for command history!
-    </>
+    <div className="space-y-4">
+      <div className="text-center">
+        <div className="text-2xl font-bold text-blue-300 mb-2">
+          🏠 Welcome to {personalInfo.name}'s Portfolio
+        </div>
+        <div className="text-gray-300">
+          {personalInfo.role} | {personalInfo.experience} Experience
+        </div>
+        <div className="text-gray-400">
+          📍 {personalInfo.location} | 🏢 {personalInfo.company}
+        </div>
+      </div>
+
+      <div className="text-center text-gray-300">
+        Interactive terminal portfolio - explore my professional journey
+      </div>
+
+      <div className="border-t border-gray-600 pt-4">
+        <div className="text-blue-300 font-semibold mb-3 text-center">
+          🧭 Navigation Commands
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+          <div className="space-y-1">
+            <div className="text-gray-300">• <span className="text-yellow-300">skills</span> - Technical expertise</div>
+            <div className="text-gray-300">• <span className="text-yellow-300">timeline</span> - Work experience</div>
+            <div className="text-gray-300">• <span className="text-yellow-300">projects</span> - GitHub repositories</div>
+          </div>
+          <div className="space-y-1">
+            <div className="text-gray-300">• <span className="text-yellow-300">education</span> - Academic background</div>
+            <div className="text-gray-300">• <span className="text-yellow-300">certifications</span> - Professional certs</div>
+            <div className="text-gray-300">• <span className="text-yellow-300">contact</span> - Get in touch</div>
+          </div>
+        </div>
+
+        <div className="text-center mt-4">
+          <div className="text-gray-400 text-sm">
+            💡 Type <span className="text-green-400">help</span> for all commands | Use <span className="text-blue-300">Tab</span> for autocomplete
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

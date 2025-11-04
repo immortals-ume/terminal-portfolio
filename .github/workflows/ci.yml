@@ -12,7 +12,6 @@ env:
   NEXT_PUBLIC_CREDLY_USER_ID: ${{ secrets.NEXT_PUBLIC_CREDLY_USER_ID }}
 
 jobs:
-  # Test and Build
   test-and-build:
     name: Test & Build
     runs-on: ubuntu-latest
@@ -55,7 +54,6 @@ jobs:
           name: coverage
           path: coverage/
 
-  # Deploy to Vercel (only on main branch)
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
@@ -96,7 +94,6 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-  # Notification
   notify:
     name: Notify Results
     runs-on: ubuntu-latest

@@ -1,20 +1,119 @@
 @import "tailwindcss";
 
 * { box-sizing: border-box; }
-html, body {
+html {
+  /* macOS Terminal fonts in order of preference */
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", 
+               ui-monospace, SFMono-Regular, Menlo, "Courier New", monospace;
+  font-size: clamp(11px, 2.5vw, 13px);
+  font-weight: 400;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
   height: 100%;
   margin: 0;
-  background: #000;
-  color: #e3ffe6;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
-
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 :root {
+  /* Default theme - Pro (Dark blue professional) */
+  --neon: #007aff;
+  --neon-soft: rgba(0,122,255,0.25);
+  --panel-bg: rgba(30,30,30,0.95);
+  --text-soft: #b0b0b0;
+  
+  /* Pro theme as default */
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --accent: #007aff;
+  --success: #34c759;
+  --warning: #ff9500;
+  --error: #ff3b30;
+}
+
+/* Matrix Green theme (default) - with matrix rain */
+[data-theme="matrix"] {
+  --bg-primary: #000000;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #00ff9c;
+  --text-secondary: #9fffd1;
+  --accent: #00ff9c;
   --neon: #00ff9c;
   --neon-soft: rgba(0,255,156,0.25);
-  --panel-bg: rgba(0,0,0,0.65);
+  --panel-bg: rgba(0,0,0,0.9);
   --text-soft: #9fffd1;
+}
+
+/* macOS Basic theme */
+[data-theme="basic"] {
+  --bg-primary: #000000;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --accent: #ffffff;
+  --neon: #ffffff;
+  --neon-soft: rgba(255,255,255,0.25);
+  --panel-bg: rgba(0,0,0,0.9);
+  --text-soft: #cccccc;
+}
+
+/* macOS Pro theme */
+[data-theme="pro"] {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --accent: #007aff;
+  --neon: #007aff;
+  --neon-soft: rgba(0,122,255,0.25);
+  --panel-bg: rgba(30,30,30,0.95);
+  --text-soft: #b0b0b0;
+}
+
+/* macOS Ocean theme */
+[data-theme="ocean"] {
+  --bg-primary: #0a1a2e;
+  --bg-secondary: #1a2a3e;
+  --text-primary: #00d4ff;
+  --text-secondary: #0099cc;
+  --accent: #00d4ff;
+  --neon: #00d4ff;
+  --neon-soft: rgba(0,212,255,0.25);
+  --panel-bg: rgba(10,26,46,0.9);
+  --text-soft: #88d4ff;
+}
+
+/* macOS Red Sands theme */
+[data-theme="red-sands"] {
+  --bg-primary: #2e1a0a;
+  --bg-secondary: #3e2a1a;
+  --text-primary: #ff6b35;
+  --text-secondary: #cc5522;
+  --accent: #ff6b35;
+  --neon: #ff6b35;
+  --neon-soft: rgba(255,107,53,0.25);
+  --panel-bg: rgba(46,26,10,0.9);
+  --text-soft: #ff9966;
+}
+
+/* macOS Silver Aerogel theme */
+[data-theme="silver"] {
+  --bg-primary: #2a2a2a;
+  --bg-secondary: #3a3a3a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --accent: #c0c0c0;
+  --neon: #c0c0c0;
+  --neon-soft: rgba(192,192,192,0.25);
+  --panel-bg: rgba(42,42,42,0.95);
+  --text-soft: #d0d0d0;
 }
 #__next, body > div:first-child {
   height: 100%;
@@ -36,6 +135,25 @@ html, body {
 }
 
 
-*::-webkit-scrollbar { width: 8px; height: 8px; }
-*::-webkit-scrollbar-thumb { background: rgba(0,255,156,0.25); border-radius: 8px; }
+/* Global scrollbar theming */
+*::-webkit-scrollbar { 
+  width: 8px; 
+  height: 8px; 
+}
+*::-webkit-scrollbar-thumb { 
+  background: var(--neon-soft); 
+  border-radius: 8px; 
+  transition: background-color 0.3s ease;
+}
+*::-webkit-scrollbar-track { 
+  background: var(--bg-secondary); 
+}
+
+/* Smooth transitions for all theme-aware elements */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Viewport height variable for mobile */
+:root { --vh: 1vh; }
 
