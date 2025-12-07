@@ -1,64 +1,103 @@
-import React from "react";
-import { education } from "../../../data/portfolio";
+/**
+ * Education Component
+ *
+ * Displays educational background including degrees, institutions, duration,
+ * GPA, and relevant coursework in a card-based layout.
+ *
+ * Features:
+ * - Card-based layout for each degree using EducationCard component
+ * - Institution and duration information
+ * - Academic standing (GPA) display
+ * - Relevant courses listing
+ * - Theme-aware styling
+ * - Empty state handling with screen reader support
+ * - Memoized for performance optimization
+ * - Accessible with proper ARIA roles
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Education />
+ * ```
+ */
 
-export default function Education() {
+'use client'
+
+import React from "react";
+import { education } from "@/data/portfolio";
+import { useThemeColors } from "@/hooks/useThemeColors";
+import EducationCard from "./EducationCard";
+import type { Education as EducationType } from "@/lib/types";
+
+/**
+ * Props for the Education component
+ * Empty object type as it uses data from portfolio
+ */
+export type EducationProps = Record<string, never>;
+
+/**
+ * Education component - displays educational background
+ * Memoized to prevent unnecessary re-renders
+ */
+const Education: React.FC<EducationProps> = React.memo(() => {
+  const colors = useThemeColors();
+
+  // Type-safe education data
+  const educationData: EducationType[] = education || [];
+  const hasEducation = educationData.length > 0;
+
   return (
-    <div className="space-y-4">
-      <div className="text-blue-300 font-semibold">
+    <div 
+      className="space-y-4"
+      style={{
+        '--color-accent': colors.accent,
+        '--color-warning': colors.warning,
+        '--color-text-secondary': colors.textSecondary,
+      } as React.CSSProperties}
+    >
+      <div 
+        className="font-semibold text-[var(--color-accent)]"
+        role="heading"
+        aria-level={2}
+      >
         🎓 Educational Background
       </div>
-      
-      {education && education.length > 0 ? (
-        <div className="space-y-4">
-          {education.map((edu, index) => (
-            <div key={index} className="p-3 border border-gray-600 rounded bg-gray-800/30">
-              <div className="font-semibold text-green-400 mb-2">
-                {edu.degree}
-              </div>
-              
-              <div className="space-y-1 text-sm">
-                <div className="text-gray-300">
-                  🏫 <span className="font-medium">Institution:</span> {edu.institution}
-                </div>
-                <div className="text-gray-300">
-                  📅 <span className="font-medium">Duration:</span> {edu.period}
-                </div>
-                
-                {edu.gpa && (
-                  <div className="text-gray-300">
-                    📊 <span className="font-medium">Academic Standing:</span> {edu.gpa}
-                  </div>
-                )}
-                
-                {edu.description && (
-                  <div className="text-gray-400 mt-2">
-                    {edu.description}
-                  </div>
-                )}
-                
-                {edu.relevantCourses && edu.relevantCourses.length > 0 && (
-                  <div className="mt-3">
-                    <div className="text-gray-300 font-medium mb-2">📚 Key Courses:</div>
-                    <div className="grid grid-cols-1 gap-1">
-                      {edu.relevantCourses.map((course, courseIndex) => (
-                        <div key={courseIndex} className="text-gray-400 text-xs ml-4">
-                          • {course}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+
+      {hasEducation ? (
+        <div 
+          className="space-y-4" 
+          role="list"
+          aria-label="Educational qualifications"
+        >
+          {educationData.map((edu, index) => (
+            <EducationCard
+              key={`education-${index}-${edu.degree}`}
+              education={edu}
+              index={index}
+              colors={colors}
+            />
           ))}
         </div>
       ) : (
-        <div className="text-yellow-400">No education data available.</div>
+        <div 
+          className="text-[var(--color-warning)]"
+          role="status"
+          aria-live="polite"
+        >
+          No education data available. Add your educational background to showcase your academic achievements.
+        </div>
       )}
-      
-      <div className="text-gray-400 text-sm mt-4">
+
+      <div 
+        className="text-sm mt-4 text-[var(--color-text-secondary)]"
+        role="note"
+      >
         💡 Use 'certifications' for professional certifications and 'projects' for project portfolio
       </div>
     </div>
   );
-}
+});
+
+Education.displayName = 'Education';
+
+export default Education;

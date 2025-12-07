@@ -5,12 +5,12 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
     {
         ignores: [
-            "node_modules/**", 
-            ".next/**", 
-            "out/**", 
-            "coverage/**", 
-            "playwright-report/**", 
-            "test-results/**", 
+            "node_modules/**",
+            ".next/**",
+            "out/**",
+            "coverage/**",
+            "playwright-report/**",
+            "test-results/**",
             ".jest-cache/**",
             "public/sw.js",
             "*.config.js",
@@ -38,7 +38,7 @@ export default tseslint.config(
         },
         rules: {
             "react/react-in-jsx-scope": "off",
-            "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+            "@typescript-eslint/no-unused-vars": ["warn", {"argsIgnorePattern": "^_"}],
             "@typescript-eslint/no-explicit-any": "off",
             "no-console": "off",
             "prefer-const": "error",

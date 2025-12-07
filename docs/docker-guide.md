@@ -186,6 +186,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t terminal-portfolio .
 ### 2. Layer Caching
 
 The Dockerfile is optimized for layer caching:
+
 - Dependencies are installed first
 - Source code is copied last
 - Only rebuilds when necessary
@@ -195,6 +196,7 @@ The Dockerfile is optimized for layer caching:
 Current optimized image size: ~200MB
 
 To further reduce:
+
 ```dockerfile
 # Use distroless base image
 FROM gcr.io/distroless/nodejs18-debian11 AS runner
@@ -205,6 +207,7 @@ FROM gcr.io/distroless/nodejs18-debian11 AS runner
 ### Common Issues
 
 **Build fails with "ENOENT" error:**
+
 ```bash
 # Clear Docker cache
 docker system prune -a
@@ -212,6 +215,7 @@ docker build --no-cache -t terminal-portfolio .
 ```
 
 **Container exits immediately:**
+
 ```bash
 # Check logs
 docker logs container-name
@@ -221,6 +225,7 @@ docker run -it terminal-portfolio sh
 ```
 
 **Port already in use:**
+
 ```bash
 # Use different port
 docker run -p 8080:3000 terminal-portfolio
@@ -254,6 +259,7 @@ Sensitive data is provided at runtime, not baked into the image.
 ### 4. Security Headers
 
 The application includes security headers:
+
 - X-Frame-Options: DENY
 - X-Content-Type-Options: nosniff
 - Referrer-Policy: origin-when-cross-origin
@@ -273,6 +279,7 @@ docker exec terminal-portfolio-app ps aux
 ### Application Metrics
 
 The health endpoint provides basic metrics:
+
 - Memory usage
 - Uptime
 - Service status
@@ -320,6 +327,7 @@ jobs:
 ## Support
 
 For issues with Docker deployment:
+
 1. Check the logs: `docker logs container-name`
 2. Verify environment variables
 3. Test health endpoint

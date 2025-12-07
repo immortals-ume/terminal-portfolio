@@ -1,300 +1,333 @@
 .wrap {
-  position: fixed;     
-  inset: 0;               
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 
-  border: none;
-  border-radius: 0;       
-  background: var(--bg-primary);
-  overflow: hidden;
+    border: none;
+    border-radius: 0;
+    background: var(--bg-primary);
+    overflow: hidden;
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--bg-secondary);
-  background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--bg-secondary);
+    background: var(--bg-secondary);
 }
+
 .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
 }
-.red { background: #ff5f56; }
-.yellow { background: #ffbd2e; }
-.green { background: #27c93f; }
+
+.red {
+    background: #ff5f56;
+}
+
+.yellow {
+    background: #ffbd2e;
+}
+
+.green {
+    background: #27c93f;
+}
+
 .title {
-  margin-left: auto;
-  opacity: 0.8;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
+    margin-left: auto;
+    opacity: 0.8;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
 }
 
 .body {
-  flex: 1;               
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  line-height: 1.4;
-  background: var(--bg-primary);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    line-height: 1.4;
+    background: var(--bg-primary);
 }
 
 .outputContainer {
-  flex: 1;
-  overflow: auto;
-  padding: 16px;
-  padding-bottom: 8px;
-  scroll-behavior: smooth;
+    flex: 1;
+    overflow: auto;
+    padding: 16px;
+    padding-bottom: 8px;
+    scroll-behavior: smooth;
 }
 
 .inputContainer {
-  padding: 8px 16px 16px 16px;
-  border-top: 1px solid var(--bg-secondary);
-  background: var(--bg-primary);
+    padding: 8px 16px 16px 16px;
+    border-top: 1px solid var(--bg-secondary);
+    background: var(--bg-primary);
 }
 
 
-.promptLine { 
-  color: var(--text-secondary); 
-  white-space: pre-wrap; 
-}
-.outputLine { 
-  white-space: pre-wrap; 
-  animation: fadeIn 0.2s ease-out; 
-  color: var(--text-primary);
+.promptLine {
+    color: var(--text-secondary);
+    white-space: pre-wrap;
 }
 
-.inputRow { 
-  display: flex; 
-  align-items: center; 
-  gap: 8px; 
+.outputLine {
+    white-space: pre-wrap;
+    animation: fadeIn 0.2s ease-out;
+    color: var(--text-primary);
 }
-.prompt { 
-  color: var(--accent); 
-  font-weight: 500;
+
+.inputRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
+.prompt {
+    color: var(--accent);
+    font-weight: 500;
+}
+
 .input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text-primary);
-  caret-color: transparent;
-  font: inherit;
-  flex: 1;
-}
-.cursor {
-  opacity: 0;
-  transition: opacity 0.15s ease;
-  pointer-events: none;
-  color: var(--accent);
-}
-.cursorVisible { 
-  opacity: 1; 
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    caret-color: transparent;
+    font: inherit;
+    flex: 1;
 }
 
-@keyframes fadeIn { 
-  from { opacity: 0; transform: translateY(2px); } 
-  to { opacity: 1; transform: translateY(0); } 
+.cursor {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+    color: var(--accent);
+}
+
+.cursorVisible {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Performance optimizations */
 .wrap {
-  contain: layout style paint;
-  transform: translateZ(0); /* Force GPU acceleration */
+    contain: layout style paint;
+    transform: translateZ(0); /* Force GPU acceleration */
 }
 
 .outputContainer {
-  contain: layout style;
-  will-change: scroll-position;
+    contain: layout style;
+    will-change: scroll-position;
 }
 
 .inputRow {
-  contain: layout style;
+    contain: layout style;
 }
-
 
 
 /* Mobile devices (phones) */
 @media (max-width: 480px) {
-  .wrap {
-    height: calc(var(--vh, 1vh) * 100);
-    font-size: 11px;
-  }
-  
-  .header {
-    padding: 8px 12px;
-  }
-  
-  .outputContainer {
-    padding: 12px;
-    padding-bottom: 6px;
-  }
-  
-  .inputContainer {
-    padding: 6px 12px 12px 12px;
-  }
-  
-  .inputRow {
-    gap: 4px;
-  }
-  
-  .prompt {
-    font-size: 11px;
-  }
+    .wrap {
+        height: calc(var(--vh, 1vh) * 100);
+        font-size: 11px;
+    }
+
+    .header {
+        padding: 8px 12px;
+    }
+
+    .outputContainer {
+        padding: 12px;
+        padding-bottom: 6px;
+    }
+
+    .inputContainer {
+        padding: 6px 12px 12px 12px;
+    }
+
+    .inputRow {
+        gap: 4px;
+    }
+
+    .prompt {
+        font-size: 11px;
+    }
 }
 
 /* Tablets */
 @media (min-width: 481px) and (max-width: 768px) {
-  .wrap {
-    height: calc(var(--vh, 1vh) * 100);
-    font-size: 12px;
-  }
-  
-  .header {
-    padding: 10px 14px;
-  }
-  
-  .outputContainer {
-    padding: 14px;
-    padding-bottom: 7px;
-  }
-  
-  .inputContainer {
-    padding: 7px 14px 14px 14px;
-  }
+    .wrap {
+        height: calc(var(--vh, 1vh) * 100);
+        font-size: 12px;
+    }
+
+    .header {
+        padding: 10px 14px;
+    }
+
+    .outputContainer {
+        padding: 14px;
+        padding-bottom: 7px;
+    }
+
+    .inputContainer {
+        padding: 7px 14px 14px 14px;
+    }
 }
 
 /* Large tablets and small laptops */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .wrap {
-    font-size: 13px;
-  }
+    .wrap {
+        font-size: 13px;
+    }
 }
 
 /* Desktop and larger screens */
 @media (min-width: 1025px) {
-  .wrap {
-    font-size: 13px;
-  }
+    .wrap {
+        font-size: 13px;
+    }
 }
 
 /* Enhanced cursor styles for macOS-like experience */
-.cursor[data-cursor="block"] { 
-  background: var(--accent); 
-  color: var(--bg-primary); 
-  padding: 0 1px;
+.cursor[data-cursor="block"] {
+    background: var(--accent);
+    color: var(--bg-primary);
+    padding: 0 1px;
 }
-.cursor[data-cursor="underscore"]::after { 
-  content: "_"; 
-  position: absolute; 
-  bottom: -2px; 
-  left: 0;
+
+.cursor[data-cursor="underscore"]::after {
+    content: "_";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
 }
-.cursor[data-cursor="pipe"]::after { 
-  content: "|"; 
-  font-weight: bold;
+
+.cursor[data-cursor="pipe"]::after {
+    content: "|";
+    font-weight: bold;
 }
-.cursor[data-cursor="beam"]::after { 
-  content: "I"; 
-  font-weight: bold;
-  font-style: italic;
+
+.cursor[data-cursor="beam"]::after {
+    content: "I";
+    font-weight: bold;
+    font-style: italic;
 }
-.cursor[data-cursor="dot"]::after { 
-  content: "●"; 
-  font-size: 8px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+
+.cursor[data-cursor="dot"]::after {
+    content: "●";
+    font-size: 8px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
-.cursor[data-cursor="arrow"]::after { 
-  content: "▶"; 
-  font-size: 12px;
+
+.cursor[data-cursor="arrow"]::after {
+    content: "▶";
+    font-size: 12px;
 }
-.cursor[data-cursor="diamond"]::after { 
-  content: "◆"; 
-  font-size: 12px;
+
+.cursor[data-cursor="diamond"]::after {
+    content: "◆";
+    font-size: 12px;
 }
-.cursor[data-cursor="star"]::after { 
-  content: "★"; 
-  font-size: 12px;
+
+.cursor[data-cursor="star"]::after {
+    content: "★";
+    font-size: 12px;
 }
-.cursor[data-cursor="heart"]::after { 
-  content: "♥"; 
-  font-size: 12px;
-  color: #ff3b30;
+
+.cursor[data-cursor="heart"]::after {
+    content: "♥";
+    font-size: 12px;
+    color: #ff3b30;
 }
-.cursor[data-cursor="lightning"]::after { 
-  content: "⚡"; 
-  font-size: 12px;
+
+.cursor[data-cursor="lightning"]::after {
+    content: "⚡";
+    font-size: 12px;
 }
 
 /* macOS-like scrollbar for better integration */
-.outputContainer::-webkit-scrollbar { 
-  width: 12px; 
+.outputContainer::-webkit-scrollbar {
+    width: 12px;
 }
-.outputContainer::-webkit-scrollbar-track { 
-  background: var(--bg-primary); 
+
+.outputContainer::-webkit-scrollbar-track {
+    background: var(--bg-primary);
 }
-.outputContainer::-webkit-scrollbar-thumb { 
-  background: var(--bg-secondary); 
-  border-radius: 6px; 
-  border: 2px solid var(--bg-primary);
+
+.outputContainer::-webkit-scrollbar-thumb {
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border: 2px solid var(--bg-primary);
 }
-.outputContainer::-webkit-scrollbar-thumb:hover { 
-  background: var(--text-secondary); 
+
+.outputContainer::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
 }
 
 /* Touch and mobile optimizations */
 .input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text-primary);
-  caret-color: transparent;
-  font: inherit;
-  flex: 1;
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    caret-color: transparent;
+    font: inherit;
+    flex: 1;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 /* Improve touch targets on mobile */
 @media (max-width: 768px) {
-  .dot {
-    width: 12px;
-    height: 12px;
-    margin: 2px;
-  }
-  
-  .title {
-    font-size: 12px;
-  }
+    .dot {
+        width: 12px;
+        height: 12px;
+        margin: 2px;
+    }
+
+    .title {
+        font-size: 12px;
+    }
 }
 
 /* Prevent zoom on input focus on iOS */
 @media screen and (max-width: 768px) {
-  .input {
-    font-size: 16px;
-  }
+    .input {
+        font-size: 16px;
+    }
 }
 
 /* Landscape orientation adjustments */
 @media screen and (max-height: 500px) and (orientation: landscape) {
-  .header {
-    padding: 6px 12px;
-  }
-  
-  .outputContainer {
-    padding: 8px 12px 4px 12px;
-  }
-  
-  .inputContainer {
-    padding: 4px 12px 8px 12px;
-  }
+    .header {
+        padding: 6px 12px;
+    }
+
+    .outputContainer {
+        padding: 8px 12px 4px 12px;
+    }
+
+    .inputContainer {
+        padding: 4px 12px 8px 12px;
+    }
 }

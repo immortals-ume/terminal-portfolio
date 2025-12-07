@@ -97,7 +97,7 @@ jobs:
   notify:
     name: Notify Results
     runs-on: ubuntu-latest
-    needs: [test-and-build, deploy]
+    needs: [ test-and-build, deploy ]
     if: always()
     steps:
       - name: Notify success

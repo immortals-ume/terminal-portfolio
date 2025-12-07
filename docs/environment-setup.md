@@ -8,7 +8,7 @@ This guide helps you set up environment variables for your Terminal Portfolio.
    ```bash
    cp .env.local.example .env.local
    ```
-   
+
    Or for minimal setup:
    ```bash
    cp .env.local.minimal .env.local
@@ -24,6 +24,7 @@ This guide helps you set up environment variables for your Terminal Portfolio.
 ## Required Variables
 
 ### Personal Information
+
 ```env
 NEXT_PUBLIC_FULL_NAME="Your Full Name"
 NEXT_PUBLIC_EMAIL="your.email@example.com"
@@ -33,22 +34,26 @@ NEXT_PUBLIC_GITHUB_USERNAME="your-github-username"
 ## Optional but Recommended
 
 ### GitHub Token
+
 ```env
 GITHUB_TOKEN="ghp_your_token_here"
 ```
 
 **Benefits:**
+
 - Higher API rate limits (5000 vs 60 requests/hour)
 - Access to private repository stats
 - More reliable GitHub integration
 
 **How to create:**
+
 1. Go to [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
 2. Click "Generate new token (classic)"
 3. Select scopes: `public_repo`, `read:user`
 4. Copy the generated token
 
 ### Featured Repositories
+
 ```env
 NEXT_PUBLIC_FEATURED_REPOS="terminal-portfolio,awesome-project,cool-app"
 ```
@@ -56,11 +61,13 @@ NEXT_PUBLIC_FEATURED_REPOS="terminal-portfolio,awesome-project,cool-app"
 ## Environment Variable Types
 
 ### Public Variables (`NEXT_PUBLIC_*`)
+
 - Exposed to the browser
 - Used for client-side functionality
 - Safe for non-sensitive data
 
 ### Private Variables
+
 - Server-side only
 - Used for API keys and sensitive data
 - Never exposed to the browser
@@ -97,15 +104,18 @@ NEXT_PUBLIC_TERMINAL_TYPING_SPEED="50"  # Milliseconds
 ### Common Issues
 
 **Certifications not loading?**
+
 - Check your portfolio.ts certifications data
 - Ensure certification URLs are valid
 
 **GitHub stats not showing?**
+
 - Add a `GITHUB_TOKEN` for better rate limits
 - Check your GitHub username is correct
 - Ensure repositories are public
 
 **Environment variables not updating?**
+
 - Restart your development server
 - Clear browser cache
 - Check for typos in variable names
@@ -126,21 +136,25 @@ npm run dev
 ## Deployment
 
 ### Vercel
+
 1. Go to your project settings
 2. Add environment variables in the "Environment Variables" section
 3. Redeploy your application
 
 ### Netlify
+
 1. Go to Site settings > Environment variables
 2. Add your variables
 3. Trigger a new deploy
 
 ### Other Platforms
+
 Refer to your platform's documentation for environment variable configuration.
 
 ## Example Configurations
 
 ### Personal Portfolio
+
 ```env
 NEXT_PUBLIC_FULL_NAME="John Doe"
 NEXT_PUBLIC_EMAIL="john@example.com"
@@ -149,6 +163,7 @@ NEXT_PUBLIC_WEBSITE="https://johndoe.dev"
 ```
 
 ### Company Portfolio
+
 ```env
 NEXT_PUBLIC_FULL_NAME="Jane Smith"
 NEXT_PUBLIC_EMAIL="jane.smith@company.com"

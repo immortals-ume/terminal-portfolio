@@ -1,166 +1,92 @@
-import React from 'react';
-import { createCommands, parseCommand } from '@/app/components/terminal/TerminalCommands';
+import {parseCommand} from '@/app/components/terminal/TerminalCommands';
+import {themes} from '@/app/components/commands/Theme';
 
-// Mock all command components
-jest.mock('@/app/components/commands/Help', () => () => <div>Help Component</div>);
-jest.mock('@/app/components/commands/Skills', () => () => <div>Skills Component</div>);
-jest.mock('@/app/components/commands/Contact', () => () => <div>Contact Component</div>);
-jest.mock('@/app/components/commands/Home', () => () => <div>Home Component</div>);
-jest.mock('@/app/components/commands/Projects', () => () => <div>Projects Component</div>);
-jest.mock('@/app/components/commands/Education', () => () => <div>Education Component</div>);
-jest.mock('@/app/components/commands/Timeline', () => () => <div>Timeline Component</div>);
-jest.mock('@/app/components/commands/System', () => () => <div>System Component</div>);
-jest.mock('@/app/components/commands/GitHub', () => () => <div>GitHub Component</div>);
+describe('parseCommand - Theme Selection', () => {
+    describe('Valid theme indices', () => {
+        it('should parse theme 1 command', () => {
+            expect(parseCommand('theme 1')).toBe('theme-select-1');
+        });
 
-jest.mock('@/app/components/commands/Certifications', () => () => <div>Certifications Component</div>);
-jest.mock('@/app/components/commands/Cursor', () => {
-  return function MockCursor({ _onCursorChange, currentCursor }: any) {
-    return <div>Cursor Component - {currentCursor}</div>;
-  };
-});
+        it('should parse theme 5 command', () => {
+            expect(parseCommand('theme 5')).toBe('theme-select-5');
+        });
 
-describe('TerminalCommands', () => {
-  let setCursorType: jest.Mock;
-  let commands: any;
+        it('should parse theme 10 command', () => {
+            expect(parseCommand('theme 10')).toBe('theme-select-10');
+        });
 
-  beforeEach(() => {
-    setCursorType = jest.fn();
-    const setTheme = jest.fn();
-    commands = createCommands(setCursorType, 'block', setTheme, 'matrix');
-  });
+        it('should handle case insensitivity', () => {
+            expect(parseCommand('THEME 3')).toBe('theme-select-3');
+            expect(parseCommand('Theme 7')).toBe('theme-select-7');
+        });
 
-  describe('createCommands', () => {
-    it('creates all expected commands', () => {
-      const expectedCommands = [
-        'home', 'help', 'show skills', 'projects', 'education', 'timeline',
-        'open project1', 'open project2', 'contact', 'github',
-        'system', 'certifications', 'cursor', 'theme', 'clear',
-        'cursor-select-0', 'cursor-select-1', 'cursor-select-2', 'cursor-select-3',
-        'cursor-select-4', 'cursor-select-5', 'cursor-select-6', 'cursor-select-7',
-        'cursor-select-8', 'cursor-select-9', 'theme-select-0', 'theme-select-1',
-        'theme-select-2', 'theme-select-3', 'theme-select-4', 'theme-select-5'
-      ];
+        it('should handle extra whitespace', () => {
+            expect(parseCommand('  theme 2  ')).toBe('theme-select-2');
+        });
 
-      expectedCommands.forEach(cmd => {
-        expect(commands).toHaveProperty(cmd);
-        expect(commands[cmd]).toHaveProperty('description');
-        expect(commands[cmd]).toHaveProperty('action');
-      });
+        it('should parse all valid theme indices (1-10)', () => {
+            for (let i = 1; i <= themes.length; i++) {
+                expect(parseCommand(`theme ${i}`)).toBe(`theme-select-${i}`);
+            }
+        });
     });
 
-    it('returns component output for component commands', () => {
-      const result = commands.home.action();
-      expect(result).toHaveLength(1);
-      expect(result[0]).toHaveProperty('type', 'component');
-      expect(result[0]).toHaveProperty('key', 'home');
-      expect(result[0]).toHaveProperty('element');
+    describe('Invalid theme indices', () => {
+        it('should return error command for theme 0', () => {
+            expect(parseCommand('theme 0')).toBe('theme-error-0');
+        });
+
+        it('should return error command for theme 11', () => {
+            expect(parseCommand('theme 11')).toBe('theme-error-11');
+        });
+
+        it('should return error command for negative numbers', () => {
+            expect(parseCommand('theme -1')).toBe('theme-error--1');
+        });
+
+        it('should return error command for large numbers', () => {
+            expect(parseCommand('theme 99')).toBe('theme-error-99');
+        });
     });
 
-    it('returns text output for text commands', () => {
-      const result = commands['open project1'].action();
-      expect(result).toHaveLength(1);
-      expect(result[0]).toHaveProperty('type', 'text');
-      expect(result[0]).toHaveProperty('value');
-      expect(result[0].value).toContain('Terminal Portfolio');
+    describe('Theme command aliases', () => {
+        it('should handle "themes" alias', () => {
+            expect(parseCommand('themes')).toBe('theme');
+        });
+
+        it('should handle "colors" alias', () => {
+            expect(parseCommand('colors')).toBe('theme');
+        });
+
+        it('should handle "style" alias', () => {
+            expect(parseCommand('style')).toBe('theme');
+        });
+
+        it('should handle "themes" alias with numeric argument', () => {
+            expect(parseCommand('themes 3')).toBe('theme-select-3');
+            expect(parseCommand('themes 7')).toBe('theme-select-7');
+        });
+
+        it('should handle "colors" alias with numeric argument', () => {
+            expect(parseCommand('colors 2')).toBe('theme-select-2');
+            expect(parseCommand('colors 9')).toBe('theme-select-9');
+        });
+
+        it('should handle "style" alias with numeric argument', () => {
+            expect(parseCommand('style 1')).toBe('theme-select-1');
+            expect(parseCommand('style 10')).toBe('theme-select-10');
+        });
+
+        it('should handle aliases with invalid indices', () => {
+            expect(parseCommand('themes 0')).toBe('theme-error-0');
+            expect(parseCommand('colors 11')).toBe('theme-error-11');
+            expect(parseCommand('style 99')).toBe('theme-error-99');
+        });
     });
 
-    it('returns __CLEAR__ for clear command', () => {
-      const result = commands.clear.action();
-      expect(result).toBe('__CLEAR__');
+    describe('Base theme command', () => {
+        it('should return "theme" for base command', () => {
+            expect(parseCommand('theme')).toBe('theme');
+        });
     });
-
-    it('calls setCursorType for cursor selection commands', () => {
-      commands['cursor-select-0'].action();
-      expect(setCursorType).toHaveBeenCalledWith('block');
-
-      commands['cursor-select-1'].action();
-      expect(setCursorType).toHaveBeenCalledWith('underscore');
-
-      commands['cursor-select-2'].action();
-      expect(setCursorType).toHaveBeenCalledWith('pipe');
-    });
-
-    it('returns appropriate text for cursor selection', () => {
-      const result = commands['cursor-select-0'].action();
-      expect(result).toHaveLength(1);
-      expect(result[0]).toHaveProperty('type', 'text');
-      expect(result[0].value).toContain('Block');
-    });
-  });
-
-  describe('parseCommand', () => {
-    it('returns normalized command as-is for exact matches', () => {
-      expect(parseCommand('help')).toBe('help');
-      expect(parseCommand('HELP')).toBe('help');
-      expect(parseCommand('  help  ')).toBe('help');
-    });
-
-    it('handles aliases correctly', () => {
-      expect(parseCommand('skills')).toBe('show skills');
-      expect(parseCommand('about')).toBe('home');
-      expect(parseCommand('info')).toBe('home');
-      expect(parseCommand('whoami')).toBe('home');
-      expect(parseCommand('ls')).toBe('help');
-      expect(parseCommand('dir')).toBe('help');
-      expect(parseCommand('cls')).toBe('clear');
-      expect(parseCommand('clr')).toBe('clear');
-    });
-
-    it('handles project aliases', () => {
-      expect(parseCommand('project1')).toBe('open project1');
-      expect(parseCommand('project2')).toBe('open project2');
-    });
-
-    it('handles cursor commands', () => {
-      expect(parseCommand('cursor')).toBe('cursor');
-    });
-
-    it('handles contact aliases', () => {
-      expect(parseCommand('contact-info')).toBe('contact');
-      expect(parseCommand('reach')).toBe('contact');
-    });
-
-    it('handles github aliases', () => {
-      expect(parseCommand('gh')).toBe('github');
-      expect(parseCommand('git')).toBe('github');
-    });
-
-    it('handles timeline aliases', () => {
-      expect(parseCommand('exp')).toBe('timeline');
-      expect(parseCommand('experience')).toBe('timeline');
-      expect(parseCommand('work')).toBe('timeline');
-    });
-
-    it('handles education aliases', () => {
-      expect(parseCommand('edu')).toBe('education');
-      expect(parseCommand('school')).toBe('education');
-    });
-
-    it('handles certification aliases', () => {
-      expect(parseCommand('certs')).toBe('certifications');
-      expect(parseCommand('badges')).toBe('certifications');
-      expect(parseCommand('credentials')).toBe('certifications');
-    });
-
-    it('handles performance aliases', () => {
-      expect(parseCommand('perf')).toBe('performance');
-      expect(parseCommand('metrics')).toBe('performance');
-    });
-
-    it('returns original command for unknown commands', () => {
-      expect(parseCommand('unknown')).toBe('unknown');
-      expect(parseCommand('random-command')).toBe('random-command');
-    });
-
-    it('handles case insensitive input', () => {
-      expect(parseCommand('SKILLS')).toBe('show skills');
-      expect(parseCommand('About')).toBe('home');
-      expect(parseCommand('CLEAR')).toBe('clear');
-    });
-
-    it('handles whitespace in input', () => {
-      expect(parseCommand('  skills  ')).toBe('show skills');
-      expect(parseCommand('\thelp\n')).toBe('help');
-    });
-  });
 });

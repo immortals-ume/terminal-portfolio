@@ -1,226 +1,395 @@
+/**
+ * Terminal Commands Module
+ * 
+ * Defines all available terminal commands, their actions, and command parsing logic.
+ * Handles command aliases, theme/cursor selection, and project shortcuts.
+ * 
+ * @module TerminalCommands
+ */
+
 "use client";
 import React from "react";
 import Help from "../commands/Help";
-import Skills from "../commands/Skills";
 import Contact from "../commands/Contact";
 import Home from "../commands/Home";
 import Projects from "../commands/Projects";
 import Education from "../commands/Education";
 import Timeline from "../commands/Timeline";
-import System from "../commands/System";
-import GitHub from "../commands/GitHub";
 
 import Certifications from "../commands/Certifications";
-import Cursor, { cursorOptions } from "../commands/Cursor";
-import Theme, { themes } from "../commands/Theme";
-import { projectService } from "../../../lib/projectService";
+import Achievements from "../commands/Achievements";
+import Blog from "../commands/Blog";
+import Cursor, {cursorOptions} from "../commands/Cursor";
+import Theme, {themes} from "../commands/Theme";
+import Stack from "../commands/Stack";
+import Skills from "../commands/Skills";
+import {projectService} from "../../../lib/projectService";
 
+/** Fallback theme count if import fails */
+const THEME_COUNT = 10;
+
+/**
+ * Represents a single output item that can be either text or a React component
+ */
 export type OutputItem =
-  | { type: "text"; value: string }
-  | { type: "component"; key: string; element: React.ReactNode };
+    | { type: "text"; value: string }
+    | { type: "component"; key: string; element: React.ReactNode };
 
+/**
+ * Function type for command actions
+ * @returns Array of output items or "__CLEAR__" to clear the terminal
+ */
 export type CommandAction = () => OutputItem[] | "__CLEAR__";
+
+/**
+ * Definition of a single command with description and action
+ */
 export type CommandDef = { description: string; action: CommandAction };
+
+/**
+ * Map of command names to their definitions
+ */
 export type CommandsMap = Record<string, CommandDef>;
 
+/**
+ * Creates the complete command map with all available commands
+ * 
+ * @param {Function} setCursorType - Function to update cursor type
+ * @param {string} cursorType - Current cursor type
+ * @param {Function} setTheme - Function to update theme
+ * @param {string} currentTheme - Current theme ID
+ * @returns {CommandsMap} Complete map of all available commands
+ * 
+ * @example
+ * ```tsx
+ * const commands = createCommands(setCursor, 'block', setTheme, 'essence_01');
+ * const helpCommand = commands['help'];
+ * const output = helpCommand.action();
+ * ```
+ */
 export const createCommands = (
-  setCursorType: (type: string) => void, 
-  cursorType: string,
-  setTheme: (theme: string) => void,
-  currentTheme: string
+    setCursorType: (type: string) => void,
+    cursorType: string,
+    setTheme: (theme: string) => void,
+    currentTheme: string
 ): CommandsMap => {
-  // Get dynamic project commands
-  const projectCommands = projectService.getProjectCommands();
-  
-  return {
-  home: {
-    description: "About and quick start",
-    action: () => [{ type: "component", key: "home", element: <Home /> }],
-  },
-  help: {
-    description: "Show available commands",
-    action: () => [{ type: "component", key: "help", element: <Help /> }],
-  },
-  "show skills": {
-    description: "List skills",
-    action: () => [{ type: "component", key: "skills", element: <Skills /> }],
-  },
-  projects: {
-    description: "List projects with GitHub links",
-    action: () => [{ type: "component", key: "projects", element: <Projects /> }],
-  },
-  education: {
-    description: "Education details",
-    action: () => [{ type: "component", key: "education", element: <Education /> }],
-  },
-  timeline: {
-    description: "Work/career timeline",
-    action: () => [{ type: "component", key: "timeline", element: <Timeline /> }],
-  },
-  // Dynamic project commands will be added below
-  contact: {
-    description: "Contact information",
-    action: () => [{ type: "component", key: "contact", element: <Contact /> }],
-  },
-  github: {
-    description: "Show GitHub profile statistics",
-    action: () => [{ type: "component", key: "github", element: <GitHub /> }],
-  },
+    const projectCommands = projectService.getProjectCommands();
+    const themeErrorCommands: CommandsMap = {};
+    for (let i = -10; i <= 100; i++) {
+        if (i < 1 || i > themes.length) {
+            themeErrorCommands[`theme-error-${i}`] = {
+                description: "Invalid theme index",
+                action: () => [{
+                    type: "text",
+                    value: `❌ Invalid theme index: ${i}. Please choose a number between 1 and ${themes.length}. Type 'theme' to see available themes.`
+                }],
+            };
+        }
+    }
 
-  system: {
-    description: "Show system information",
-    action: () => [{ type: "component", key: "system", element: <System /> }],
-  },
-  certifications: {
-    description: "Show professional certifications",
-    action: () => [{ type: "component", key: "certifications", element: <Certifications /> }],
-  },
-  cursor: {
-    description: "Change cursor style",
-    action: () => [{ type: "component", key: "cursor", element: <Cursor onCursorChange={setCursorType} currentCursor={cursorType} /> }],
-  },
-  theme: {
-    description: "Change terminal theme",
-    action: () => [{ type: "component", key: "theme", element: <Theme onThemeChange={setTheme} currentTheme={currentTheme} /> }],
-  },
-  "cursor-select-0": {
-    description: "Select block cursor",
-    action: () => { setCursorType("block"); return [{ type: "text", value: "Cursor changed to: Block █" }]; },
-  },
-  "cursor-select-1": {
-    description: "Select underscore cursor",
-    action: () => { setCursorType("underscore"); return [{ type: "text", value: "Cursor changed to: Underscore _" }]; },
-  },
-  "cursor-select-2": {
-    description: "Select pipe cursor",
-    action: () => { setCursorType("pipe"); return [{ type: "text", value: "Cursor changed to: Pipe |" }]; },
-  },
-  "cursor-select-3": {
-    description: "Select dot cursor",
-    action: () => { setCursorType("dot"); return [{ type: "text", value: "Cursor changed to: Dot ●" }]; },
-  },
-  "cursor-select-4": {
-    description: "Select arrow cursor",
-    action: () => { setCursorType("arrow"); return [{ type: "text", value: "Cursor changed to: Arrow ▶" }]; },
-  },
-  "cursor-select-5": {
-    description: "Select diamond cursor",
-    action: () => { setCursorType("diamond"); return [{ type: "text", value: "Cursor changed to: Diamond ◆" }]; },
-  },
-  "cursor-select-6": {
-    description: "Select star cursor",
-    action: () => { setCursorType("star"); return [{ type: "text", value: "Cursor changed to: Star ★" }]; },
-  },
-  "cursor-select-7": {
-    description: "Select star cursor",
-    action: () => { setCursorType("star"); return [{ type: "text", value: "Cursor changed to: Star ★" }]; },
-  },
-  "cursor-select-8": {
-    description: "Select heart cursor",
-    action: () => { setCursorType("heart"); return [{ type: "text", value: "Cursor changed to: Heart ♥" }]; },
-  },
-  "cursor-select-9": {
-    description: "Select lightning cursor",
-    action: () => { setCursorType("lightning"); return [{ type: "text", value: "Cursor changed to: Lightning ⚡" }]; },
-  },
-  "theme-select-0": {
-    description: "Select Matrix theme",
-    action: () => { setTheme("matrix"); return [{ type: "text", value: "Theme changed to: Matrix Green 🟢" }]; },
-  },
-  "theme-select-1": {
-    description: "Select Basic theme",
-    action: () => { setTheme("basic"); return [{ type: "text", value: "Theme changed to: Basic ⚪" }]; },
-  },
-  "theme-select-2": {
-    description: "Select Pro theme",
-    action: () => { setTheme("pro"); return [{ type: "text", value: "Theme changed to: Pro 🔵" }]; },
-  },
-  "theme-select-3": {
-    description: "Select Ocean theme",
-    action: () => { setTheme("ocean"); return [{ type: "text", value: "Theme changed to: Ocean 🌊" }]; },
-  },
-  "theme-select-4": {
-    description: "Select Red Sands theme",
-    action: () => { setTheme("red-sands"); return [{ type: "text", value: "Theme changed to: Red Sands 🏜️" }]; },
-  },
-  "theme-select-5": {
-    description: "Select Silver theme",
-    action: () => { setTheme("silver"); return [{ type: "text", value: "Theme changed to: Silver Aerogel ⚪" }]; },
-  },
-  clear: {
-    description: "Clear the screen",
-    action: () => "__CLEAR__",
-  },
-  // Merge dynamic project commands
-  ...projectCommands,
-};
+    return {
+        home: {
+            description: "About and quick start",
+            action: () => [{type: "component", key: "home", element: <Home/>}],
+        },
+        help: {
+            description: "Show available commands",
+            action: () => [{type: "component", key: "help", element: <Help/>}],
+        },
+        skills: {
+            description: "Show technical skills by category",
+            action: () => [{type: "component", key: "skills", element: <Skills/>}],
+        },
+        stack: {
+            description: "Show daily tech stack",
+            action: () => [{type: "component", key: "stack", element: <Stack/>}],
+        },
+        projects: {
+            description: "List projects with GitHub links",
+            action: () => [{type: "component", key: "projects", element: <Projects/>}],
+        },
+        education: {
+            description: "Education details",
+            action: () => [{type: "component", key: "education", element: <Education/>}],
+        },
+        timeline: {
+            description: "Work/career timeline",
+            action: () => [{type: "component", key: "timeline", element: <Timeline/>}],
+        },
+        contact: {
+            description: "Contact information",
+            action: () => [{type: "component", key: "contact", element: <Contact/>}],
+        },
+        certifications: {
+            description: "Show professional certifications",
+            action: () => [{type: "component", key: "certifications", element: <Certifications/>}],
+        },
+        achievements: {
+            description: "Show key achievements and milestones",
+            action: () => [{type: "component", key: "achievements", element: <Achievements/>}],
+        },
+        blog: {
+            description: "View blog posts and articles",
+            action: () => [{type: "component", key: "blog", element: <Blog/>}],
+        },
+        cursor: {
+            description: "Change cursor style",
+            action: () => [{
+                type: "component",
+                key: "cursor",
+                element: <Cursor onCursorChange={setCursorType} currentCursor={cursorType}/>
+            }],
+        },
+        theme: {
+            description: "Change terminal theme",
+            action: () => [{
+                type: "component",
+                key: "theme",
+                element: <Theme onThemeChange={setTheme} currentTheme={currentTheme}/>
+            }],
+        },
+        "cursor-select-0": {
+            description: "Select block cursor",
+            action: () => {
+                setCursorType("block");
+                return [{type: "text", value: "Cursor changed to: Block █"}];
+            },
+        },
+        "cursor-select-1": {
+            description: "Select underscore cursor",
+            action: () => {
+                setCursorType("underscore");
+                return [{type: "text", value: "Cursor changed to: Underscore _"}];
+            },
+        },
+        "cursor-select-2": {
+            description: "Select pipe cursor",
+            action: () => {
+                setCursorType("pipe");
+                return [{type: "text", value: "Cursor changed to: Pipe |"}];
+            },
+        },
+        "cursor-select-3": {
+            description: "Select dot cursor",
+            action: () => {
+                setCursorType("dot");
+                return [{type: "text", value: "Cursor changed to: Dot ●"}];
+            },
+        },
+        "cursor-select-4": {
+            description: "Select arrow cursor",
+            action: () => {
+                setCursorType("arrow");
+                return [{type: "text", value: "Cursor changed to: Arrow ▶"}];
+            },
+        },
+        "cursor-select-5": {
+            description: "Select diamond cursor",
+            action: () => {
+                setCursorType("diamond");
+                return [{type: "text", value: "Cursor changed to: Diamond ◆"}];
+            },
+        },
+        "cursor-select-6": {
+            description: "Select star cursor",
+            action: () => {
+                setCursorType("star");
+                return [{type: "text", value: "Cursor changed to: Star ★"}];
+            },
+        },
+        "cursor-select-7": {
+            description: "Select star cursor",
+            action: () => {
+                setCursorType("star");
+                return [{type: "text", value: "Cursor changed to: Star ★"}];
+            },
+        },
+        "cursor-select-8": {
+            description: "Select heart cursor",
+            action: () => {
+                setCursorType("heart");
+                return [{type: "text", value: "Cursor changed to: Heart ♥"}];
+            },
+        },
+        "cursor-select-9": {
+            description: "Select lightning cursor",
+            action: () => {
+                setCursorType("lightning");
+                return [{type: "text", value: "Cursor changed to: Lightning ⚡"}];
+            },
+        },
+        "theme-select-1": {
+            description: "Select Essence 01 theme",
+            action: () => {
+                setTheme("essence_01");
+                return [{type: "text", value: "✅ Theme changed to: Essence 01 - Celestial Waters"}];
+            },
+        },
+        "theme-select-2": {
+            description: "Select Essence 02 theme",
+            action: () => {
+                setTheme("essence_02");
+                return [{type: "text", value: "✅ Theme changed to: Essence 02 - Void of Silence"}];
+            },
+        },
+        "theme-select-3": {
+            description: "Select Essence 03 theme",
+            action: () => {
+                setTheme("essence_03");
+                return [{type: "text", value: "✅ Theme changed to: Essence 03 - Crimson Whispers"}];
+            },
+        },
+        "theme-select-4": {
+            description: "Select Essence 04 theme",
+            action: () => {
+                setTheme("essence_04");
+                return [{type: "text", value: "✅ Theme changed to: Essence 04 - Radiant Dawn"}];
+            },
+        },
+        "theme-select-5": {
+            description: "Select Essence 05 theme",
+            action: () => {
+                setTheme("essence_05");
+                return [{type: "text", value: "✅ Theme changed to: Essence 05 - Scarlet Flame"}];
+            },
+        },
+        "theme-select-6": {
+            description: "Select Essence 06 theme",
+            action: () => {
+                setTheme("essence_06");
+                return [{type: "text", value: "✅ Theme changed to: Essence 06 - Shadow's Edge"}];
+            },
+        },
+        "theme-select-7": {
+            description: "Select Essence 07 theme",
+            action: () => {
+                setTheme("essence_07");
+                return [{type: "text", value: "✅ Theme changed to: Essence 07 - Twilight Mist"}];
+            },
+        },
+        "theme-select-8": {
+            description: "Select Essence 08 theme",
+            action: () => {
+                setTheme("essence_08");
+                return [{type: "text", value: "✅ Theme changed to: Essence 08 - Solar Glow"}];
+            },
+        },
+        "theme-select-9": {
+            description: "Select Essence 09 theme",
+            action: () => {
+                setTheme("essence_09");
+                return [{type: "text", value: "✅ Theme changed to: Essence 09 - Emerald Pulse"}];
+            },
+        },
+        "theme-select-10": {
+            description: "Select Essence 10 theme",
+            action: () => {
+                setTheme("essence_10");
+                return [{type: "text", value: "✅ Theme changed to: Essence 10 - Lotus Bloom"}];
+            },
+        },
+        clear: {
+            description: "Clear the screen",
+            action: () => "__CLEAR__",
+        },
+        ...projectCommands,
+        ...themeErrorCommands,
+    };
 };
 
+/**
+ * Parses user input and converts it to a command key
+ * 
+ * Handles:
+ * - Command aliases (e.g., "skills" → "show skills")
+ * - Numeric shortcuts (e.g., "cursor 3" → "cursor-select-2")
+ * - Theme selection (e.g., "theme 5" → "theme-select-5")
+ * - Project shortcuts (e.g., "p1" → "project1")
+ * - Case-insensitive matching
+ * 
+ * @param {string} input - Raw user input from terminal
+ * @returns {string} Parsed command key that matches a command in CommandsMap
+ * 
+ * @example
+ * ```tsx
+ * parseCommand("skills") // Returns "show skills"
+ * parseCommand("theme 3") // Returns "theme-select-3"
+ * parseCommand("p1") // Returns "project1"
+ * parseCommand("HELP") // Returns "help"
+ * ```
+ */
 export function parseCommand(input: string): string {
-  const normalized = input.trim().toLowerCase();
+    const normalized = input.trim().toLowerCase();
 
-  const cursorMatch = normalized.match(/^cursor\s+(\d+)$/);
-  if (cursorMatch && cursorMatch[1]) {
-    const cursorIndex = parseInt(cursorMatch[1]) - 1;
-    if (cursorOptions && cursorIndex >= 0 && cursorIndex < cursorOptions.length) {
-      return `cursor-select-${cursorIndex}`;
+    const cursorMatch = normalized.match(/^cursor\s+(\d+)$/);
+    if (cursorMatch && cursorMatch[1]) {
+        const cursorIndex = parseInt(cursorMatch[1]) - 1;
+        if (cursorOptions && cursorIndex >= 0 && cursorIndex < cursorOptions.length) {
+            return `cursor-select-${cursorIndex}`;
+        }
     }
-  }
 
-  const themeMatch = normalized.match(/^theme\s+(\d+)$/);
-  if (themeMatch && themeMatch[1]) {
-    const themeIndex = parseInt(themeMatch[1]) - 1;
-    if (themes && themeIndex >= 0 && themeIndex < themes.length) {
-      return `theme-select-${themeIndex}`;
+    const themeMatch = normalized.match(/^(theme|themes|colors|style)\s+(-?\d+)$/);
+    if (themeMatch && themeMatch[2]) {
+        const themeNumber = parseInt(themeMatch[2]);
+        const maxThemes = themes?.length || THEME_COUNT;
+        if (themeNumber >= 1 && themeNumber <= maxThemes) {
+            return `theme-select-${themeNumber}`;
+        }
+        return `theme-error-${themeNumber}`;
     }
-  }
 
-  // Handle dynamic project commands
-  const projectMatch = normalized.match(/^(open\s+)?(project|demo)(\d+)$/);
-  if (projectMatch) {
-    const [, openPrefix, type, num] = projectMatch;
-    if (openPrefix || type === 'project') {
-      return `open ${type}${num}`;
+    const projectMatch = normalized.match(/^(open\s+)?(project|demo)(\d+)$/);
+    if (projectMatch) {
+        const [, openPrefix, type, num] = projectMatch;
+        if (openPrefix || type === 'project') {
+            return `open ${type}${num}`;
+        }
+        return `${type}${num}`;
     }
-    return `${type}${num}`;
-  }
 
-  // Handle shorthand project commands
-  const shorthandMatch = normalized.match(/^(p|op|od)(\d+)$/);
-  if (shorthandMatch) {
-    const [, command, num] = shorthandMatch;
-    switch (command) {
-      case 'p': return `project${num}`;
-      case 'op': return `open project${num}`;
-      case 'od': return `open demo${num}`;
+    const shorthandMatch = normalized.match(/^(p|op|od)(\d+)$/);
+    if (shorthandMatch) {
+        const [, command, num] = shorthandMatch;
+        switch (command) {
+            case 'p':
+                return `project${num}`;
+            case 'op':
+                return `open project${num}`;
+            case 'od':
+                return `open demo${num}`;
+        }
     }
-  }
 
-  const aliases: Record<string, string> = {
-    "skills": "show skills",
-    "about": "home",
-    "info": "home",
-    "whoami": "home",
-    "ls": "help",
-    "dir": "help",
-    "gh": "github",
-    "git": "github",
-    "exp": "timeline",
-    "experience": "timeline",
-    "work": "timeline",
-    "edu": "education",
-    "school": "education",
-    "contact-info": "contact",
-    "reach": "contact",
-    "certs": "certifications",
-    "badges": "certifications",
-    "credentials": "certifications",
-    "cls": "clear",
-    "clr": "clear",
-    "themes": "theme",
-    "colors": "theme",
-    "style": "theme"
-  };
+    const aliases: Record<string, string> = {
+        "about": "home",
+        "info": "home",
+        "whoami": "home",
+        "ls": "help",
+        "dir": "help",
+        "gh": "github",
+        "git": "github",
+        "exp": "timeline",
+        "experience": "timeline",
+        "work": "timeline",
+        "edu": "education",
+        "school": "education",
+        "contact-info": "contact",
+        "reach": "contact",
+        "certs": "certifications",
+        "badges": "certifications",
+        "credentials": "certifications",
+        "wins": "achievements",
+        "milestones": "achievements",
+        "articles": "blog",
+        "posts": "blog",
+        "writing": "blog",
+        "cls": "clear",
+        "clr": "clear",
+        "themes": "theme",
+        "colors": "theme",
+        "style": "theme"
+    };
 
-  return aliases[normalized] || normalized;
+    return aliases[normalized] || normalized;
 }

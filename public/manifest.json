@@ -21,6 +21,10 @@
       "purpose": "maskable any"
     }
   ],
-  "categories": ["portfolio", "developer", "technology"],
+  "categories": [
+    "portfolio",
+    "developer",
+    "technology"
+  ],
   "lang": "en-US"
 }
