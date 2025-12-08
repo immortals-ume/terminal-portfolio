@@ -11,6 +11,9 @@
 /test-results/
 /playwright-report/
 .jest-cache/
+test-report.xml
+junit.xml
+*.xml
 
 # Next.js
 /.next/
@@ -22,6 +25,9 @@
 # Misc
 .DS_Store
 *.pem
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # Debug
 npm-debug.log*
@@ -40,6 +46,7 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+tsconfig.tsbuildinfo
 
 # IDE
 .vscode/
@@ -139,6 +146,15 @@ docker-compose.override.yml
 # Build artifacts
 *.tgz
 *.tar.gz
+
+# Lighthouse
+.lighthouseci/
+lighthouse-report.html
+lighthouse-report.json
+
+# Kiro IDE
+.kiro/specs/*/
+!.kiro/specs/.gitkeep
 
 # MacOS
 .DS_Store
