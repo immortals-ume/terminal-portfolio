@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
         optimizePackageImports: ['react-icons'],
     },
 
+    // Turbopack configuration (Next.js 16+)
+    // Empty config to silence warning - Turbopack handles optimization automatically
+    turbopack: {},
+
     // Performance and Security headers
     async headers() {
         return [

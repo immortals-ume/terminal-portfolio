@@ -29,7 +29,7 @@
  */
 
 "use client";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, useTransition} from "react";
 import styles from "./Terminal.module.css";
 
 import TerminalHeader from "./terminal/TerminalHeader";
@@ -48,6 +48,7 @@ export default function Terminal() {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [inlineHistory, setInlineHistory] = useState<string[]>([]);
+    const [isPending, startTransition] = useTransition();
 
     const {cursorType, setCursorType} = useCursorType();
     const {theme, setTheme} = useTheme();
@@ -141,15 +142,20 @@ export default function Terminal() {
 
     const runCommand = (raw: string) => {
         const key = parseCommand(raw);
+        
+        // Urgent: Update submitted immediately
         setSubmitted((prev) => [...prev, `guest@portfolio:~$ ${raw}`]);
 
         const def = COMMANDS[key];
         if (!def) {
             if (raw.trim()) {
-                setOutput((prev) => [
-                    ...prev,
-                    {type: "text", value: `Command not found: ${raw}. Type 'help'.`},
-                ]);
+                // Non-urgent: Update output (can be interrupted)
+                startTransition(() => {
+                    setOutput((prev) => [
+                        ...prev,
+                        {type: "text", value: `Command not found: ${raw}. Type 'help'.`},
+                    ]);
+                });
             }
             forceScroll();
             setTimeout(() => inputRef.current?.focus(), 100);
@@ -164,7 +170,10 @@ export default function Terminal() {
             return;
         }
 
-        setOutput((prev) => [...prev, ...result]);
+        // Non-urgent: Update output (can be interrupted for better responsiveness)
+        startTransition(() => {
+            setOutput((prev) => [...prev, ...result]);
+        });
         forceScroll();
         setTimeout(() => inputRef.current?.focus(), 100);
     };

@@ -21,13 +21,19 @@
 
 'use client'
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { createGitHubService } from "@/lib/github";
 import { GitHubRepo } from "@/lib/types";
 import { projectService } from "@/lib/projectService";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { useHoverState } from "@/hooks/useHoverState";
+import { useLoadingState } from "@/hooks/useLoadingState";
+import { usePreload } from "@/hooks/usePreload";
 import ProjectCard from "../ui/ProjectCard";
-import { FaRocket, FaSync, FaExclamationTriangle, FaInbox, FaLightbulb } from 'react-icons/fa';
+import LoadingState from "@/components/shared/LoadingState";
+import ErrorState from "@/components/shared/ErrorState";
+import EmptyState from "@/components/shared/EmptyState";
+import { FaRocket, FaInbox, FaLightbulb } from 'react-icons/fa';
 
 /**
  * Props for the Projects component
@@ -54,11 +60,14 @@ export type ProjectsProps = Record<string, never>;
 const Projects: React.FC<ProjectsProps> = () => {
   const colors = useThemeColors();
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const { loading, error, setLoading, setError } = useLoadingState();
+  const { handleEnter, handleLeave, isHovered } = useHoverState<number>();
+  const { preconnect } = usePreload();
 
   useEffect(() => {
+  
+    preconnect('https://api.github.com');
+
     const loadProjects = async (): Promise<void> => {
       try {
         setLoading(true);
@@ -77,76 +86,29 @@ const Projects: React.FC<ProjectsProps> = () => {
     };
 
     loadProjects();
-  }, []);
-
-  const handleMouseEnter = useCallback((index: number) => {
-    setHoveredProject(index);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setHoveredProject(null);
-  }, []);
+  }, [preconnect]);
 
   if (loading) {
-    return (
-      <div
-        className="flex items-center gap-2 text-base text-[var(--color-accent)]"
-        style={{
-          '--color-accent': colors.accent,
-        } as React.CSSProperties}
-        role="status"
-        aria-live="polite"
-        aria-label="Loading projects from GitHub"
-      >
-        <FaSync className="animate-spin" aria-hidden="true" />
-        <span>Loading projects...</span>
-      </div>
-    );
+    return <LoadingState message="Loading projects from GitHub..." />;
   }
 
   if (error) {
     return (
-      <div
-        className="flex flex-col gap-3 text-[var(--color-text-primary)]"
-        style={{
-          '--color-text-primary': colors.textPrimary,
-          '--color-text-secondary': colors.textSecondary,
-        } as React.CSSProperties}
-        role="alert"
-        aria-live="assertive"
-      >
-        <div className="text-xl flex items-center gap-2">
-          <FaExclamationTriangle aria-hidden="true" />
-          <span>Error Loading Projects</span>
-        </div>
-        <div className="text-sm opacity-85 text-[var(--color-text-secondary)]">
-          {error}
-        </div>
-        <div className="text-sm opacity-85 text-[var(--color-text-secondary)]">
-          Please check your internet connection and try refreshing the page.
-        </div>
-      </div>
+      <ErrorState
+        title="Error Loading Projects"
+        message={error}
+        helpText="Please check your internet connection and try refreshing the page."
+      />
     );
   }
 
   if (repos.length === 0) {
     return (
-      <div
-        className="flex flex-col gap-2 text-[var(--color-text-primary)]"
-        style={{
-          '--color-text-primary': colors.textPrimary,
-          '--color-text-secondary': colors.textSecondary,
-        } as React.CSSProperties}
-        role="status"
-        aria-live="polite"
-      >
-        <div className="text-xl mb-2 flex items-center gap-2">
-          <FaInbox aria-hidden="true" /> No projects available
-        </div>
-        <div className="text-sm opacity-75 text-[var(--color-text-secondary)]">
-          Projects will appear here when GitHub repositories are available.
-        </div>
-      </div>
+      <EmptyState
+        icon={FaInbox}
+        title="No projects available"
+        message="Projects will appear here when GitHub repositories are available."
+      />
     );
   }
 
@@ -177,9 +139,9 @@ const Projects: React.FC<ProjectsProps> = () => {
             repo={repo}
             index={index}
             colors={colors}
-            isHovered={hoveredProject === index}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
+            isHovered={isHovered(index)}
+            onMouseEnter={() => handleEnter(index)}
+            onMouseLeave={handleLeave}
           />
         ))}
       </div>

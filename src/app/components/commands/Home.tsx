@@ -20,12 +20,21 @@
 
 'use client'
 
+import { useEffect } from "react";
 import {personalInfo} from "../../../data/portfolio";
 import {useThemeColors} from "../../../hooks/useThemeColors";
+import { usePreload } from "@/hooks/usePreload";
+import CommandPreloader from "@/components/shared/CommandPreloader";
 import { FaHome, FaMapMarkerAlt, FaBuilding, FaCompass, FaLightbulb } from 'react-icons/fa';
 
 export default function Home() {
     const colors = useThemeColors();
+    const { preconnect } = usePreload();
+
+    // Preconnect to GitHub API for faster project loading
+    useEffect(() => {
+        preconnect('https://api.github.com');
+    }, [preconnect]);
 
     return (
         <div className="space-y-4">
@@ -54,22 +63,22 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     <div className="space-y-1">
-                        <div style={{color: colors.textPrimary}}>• <span style={{color: colors.warning}}>skills</span> -
+                        <div style={{color: colors.textPrimary}}>• <CommandPreloader command="skills"><span style={{color: colors.warning}}>skills</span></CommandPreloader> -
                             Technical expertise
                         </div>
-                        <div style={{color: colors.textPrimary}}>• <span
-                            style={{color: colors.warning}}>timeline</span> - Work experience
+                        <div style={{color: colors.textPrimary}}>• <CommandPreloader command="timeline"><span
+                            style={{color: colors.warning}}>timeline</span></CommandPreloader> - Work experience
                         </div>
-                        <div style={{color: colors.textPrimary}}>• <span
-                            style={{color: colors.warning}}>projects</span> - GitHub repositories
+                        <div style={{color: colors.textPrimary}}>• <CommandPreloader command="projects"><span
+                            style={{color: colors.warning}}>projects</span></CommandPreloader> - GitHub repositories
                         </div>
                     </div>
                     <div className="space-y-1">
-                        <div style={{color: colors.textPrimary}}>• <span
-                            style={{color: colors.warning}}>education</span> - Academic background
+                        <div style={{color: colors.textPrimary}}>• <CommandPreloader command="education"><span
+                            style={{color: colors.warning}}>education</span></CommandPreloader> - Academic background
                         </div>
-                        <div style={{color: colors.textPrimary}}>• <span
-                            style={{color: colors.warning}}>certifications</span> - Professional certs
+                        <div style={{color: colors.textPrimary}}>• <CommandPreloader command="certifications"><span
+                            style={{color: colors.warning}}>certifications</span></CommandPreloader> - Professional certs
                         </div>
                         <div style={{color: colors.textPrimary}}>• <span
                             style={{color: colors.warning}}>contact</span> - Get in touch

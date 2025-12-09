@@ -96,12 +96,15 @@ export function ThemeProvider({children}: ThemeProviderProps) {
         saveThemeToStorage(newTheme);
     };
 
+    // Memoize context value to prevent unnecessary re-renders
+    const value = React.useMemo(() => ({ theme, setTheme }), [theme]);
+
     if (!mounted) {
         return <>{children}</>;
     }
 
     return (
-        <ThemeContext.Provider value={{theme, setTheme}}>
+        <ThemeContext.Provider value={value}>
             {children}
         </ThemeContext.Provider>
     );

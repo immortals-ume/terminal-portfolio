@@ -8,22 +8,22 @@
  */
 
 "use client";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Help from "../commands/Help";
 import Contact from "../commands/Contact";
 import Home from "../commands/Home";
-import Projects from "../commands/Projects";
-import Education from "../commands/Education";
-import Timeline from "../commands/Timeline";
-
-import Certifications from "../commands/Certifications";
-import Achievements from "../commands/Achievements";
-import Blog from "../commands/Blog";
 import Cursor, {cursorOptions} from "../commands/Cursor";
 import Theme, {themes} from "../commands/Theme";
-import Stack from "../commands/Stack";
-import Skills from "../commands/Skills";
 import {projectService} from "../../../lib/projectService";
+
+const Projects = lazy(() => import("../commands/Projects"));
+const Education = lazy(() => import("../commands/Education"));
+const Timeline = lazy(() => import("../commands/Timeline"));
+const Certifications = lazy(() => import("../commands/Certifications"));
+const Achievements = lazy(() => import("../commands/Achievements"));
+const Blog = lazy(() => import("../commands/Blog"));
+const Stack = lazy(() => import("../commands/Stack"));
+const Skills = lazy(() => import("../commands/Skills"));
 
 /** Fallback theme count if import fails */
 const THEME_COUNT = 10;
@@ -98,23 +98,63 @@ export const createCommands = (
         },
         skills: {
             description: "Show technical skills by category",
-            action: () => [{type: "component", key: "skills", element: <Skills/>}],
+            action: () => [{
+                type: "component", 
+                key: "skills", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading skills...</div>}>
+                        <Skills/>
+                    </Suspense>
+                )
+            }],
         },
         stack: {
             description: "Show daily tech stack",
-            action: () => [{type: "component", key: "stack", element: <Stack/>}],
+            action: () => [{
+                type: "component", 
+                key: "stack", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading stack...</div>}>
+                        <Stack/>
+                    </Suspense>
+                )
+            }],
         },
         projects: {
             description: "List projects with GitHub links",
-            action: () => [{type: "component", key: "projects", element: <Projects/>}],
+            action: () => [{
+                type: "component", 
+                key: "projects", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading projects...</div>}>
+                        <Projects/>
+                    </Suspense>
+                )
+            }],
         },
         education: {
             description: "Education details",
-            action: () => [{type: "component", key: "education", element: <Education/>}],
+            action: () => [{
+                type: "component", 
+                key: "education", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading education...</div>}>
+                        <Education/>
+                    </Suspense>
+                )
+            }],
         },
         timeline: {
             description: "Work/career timeline",
-            action: () => [{type: "component", key: "timeline", element: <Timeline/>}],
+            action: () => [{
+                type: "component", 
+                key: "timeline", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading timeline...</div>}>
+                        <Timeline/>
+                    </Suspense>
+                )
+            }],
         },
         contact: {
             description: "Contact information",
@@ -122,15 +162,39 @@ export const createCommands = (
         },
         certifications: {
             description: "Show professional certifications",
-            action: () => [{type: "component", key: "certifications", element: <Certifications/>}],
+            action: () => [{
+                type: "component", 
+                key: "certifications", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading certifications...</div>}>
+                        <Certifications/>
+                    </Suspense>
+                )
+            }],
         },
         achievements: {
             description: "Show key achievements and milestones",
-            action: () => [{type: "component", key: "achievements", element: <Achievements/>}],
+            action: () => [{
+                type: "component", 
+                key: "achievements", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading achievements...</div>}>
+                        <Achievements/>
+                    </Suspense>
+                )
+            }],
         },
         blog: {
             description: "View blog posts and articles",
-            action: () => [{type: "component", key: "blog", element: <Blog/>}],
+            action: () => [{
+                type: "component", 
+                key: "blog", 
+                element: (
+                    <Suspense fallback={<div className="text-sm opacity-75">Loading blog...</div>}>
+                        <Blog/>
+                    </Suspense>
+                )
+            }],
         },
         cursor: {
             description: "Change cursor style",

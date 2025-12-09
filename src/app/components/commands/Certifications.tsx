@@ -22,12 +22,16 @@
  */
 
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { certifications } from "@/data/portfolio";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { useHoverState } from "@/hooks/useHoverState";
 import type { Certification } from "@/lib/types";
 import CertificationCard from "./CertificationCard";
+import EmptyState from "@/components/shared/EmptyState";
+import LoadingState from "@/components/shared/LoadingState";
+import { FaScroll } from 'react-icons/fa';
 
 /**
  * Internal component that renders the certifications content
@@ -39,34 +43,14 @@ import CertificationCard from "./CertificationCard";
 const CertificationsContent: React.FC = React.memo(() => {
   const colors = useThemeColors();
   const [mounted, setMounted] = useState(false);
-  const [hoveredCert, setHoveredCert] = useState<number | null>(null);
+  const { handleEnter, handleLeave, isHovered } = useHoverState<number>();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleMouseEnter = useCallback((index: number) => {
-    setHoveredCert(index);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setHoveredCert(null);
-  }, []);
-
   if (!mounted) {
-    return (
-      <div
-        className="flex items-center gap-2 text-base text-[var(--color-accent)]"
-        style={{
-          '--color-accent': colors.accent
-        } as React.CSSProperties}
-        role="status"
-        aria-live="polite"
-      >
-        <span className="animate-pulse" aria-hidden="true">🔄</span>
-        <span>Initializing certifications...</span>
-      </div>
-    );
+    return <LoadingState message="Initializing certifications..." />;
   }
 
   const certificationsList: Certification[] = certifications;
@@ -74,22 +58,11 @@ const CertificationsContent: React.FC = React.memo(() => {
 
   if (!hasCertifications) {
     return (
-      <div
-        className="flex flex-col gap-2 p-8 text-center text-[var(--color-text-primary)]"
-        style={{
-          '--color-text-primary': colors.textPrimary,
-          '--color-text-secondary': colors.textSecondary
-        } as React.CSSProperties}
-        role="status"
-        aria-live="polite"
-      >
-        <div className="text-xl mb-2">
-          <span aria-hidden="true">📜</span> No certifications available
-        </div>
-        <div className="text-sm opacity-75 text-[var(--color-text-secondary)]">
-          Check back later for professional certifications and achievements.
-        </div>
-      </div>
+      <EmptyState
+        icon={FaScroll}
+        title="No certifications available"
+        message="Check back later for professional certifications and achievements."
+      />
     );
   }
 
@@ -120,9 +93,9 @@ const CertificationsContent: React.FC = React.memo(() => {
             certification={cert}
             index={index}
             colors={colors}
-            isHovered={hoveredCert === index}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
+            isHovered={isHovered(index)}
+            onMouseEnter={() => handleEnter(index)}
+            onMouseLeave={handleLeave}
           />
         ))}
       </div>

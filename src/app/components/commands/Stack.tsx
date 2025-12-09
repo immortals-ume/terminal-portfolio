@@ -20,9 +20,10 @@
 
 'use client'
 
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import {skills} from '@/data/portfolio'
 import {useThemeColors} from '@/hooks/useThemeColors'
+import { useHoverState } from '@/hooks/useHoverState';
 import { 
   FaBrain, 
   FaCog, 
@@ -36,9 +37,7 @@ import {
 
 const Stack: React.FC = React.memo(() => {
     const colors = useThemeColors()
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-    // Filter skills with rating >= 8 for daily stack
+    const { handleEnter, handleLeave, isHovered } = useHoverState<number>();
     const dailyStack = skills.filter(skill => skill.rating >= 8).map(skill => skill.name);
 
     const getCategoryInfo = (stackItem: string) => {
@@ -66,14 +65,6 @@ const Stack: React.FC = React.memo(() => {
         return { icon: FaLightbulb, category: 'Other', color: colors.textSecondary };
     };
 
-    const handleMouseEnter = useCallback((index: number) => {
-        setHoveredIndex(index);
-    }, []);
-
-    const handleMouseLeave = useCallback(() => {
-        setHoveredIndex(null);
-    }, []);
-
     return (
         <div 
             className="stack-container"
@@ -82,7 +73,7 @@ const Stack: React.FC = React.memo(() => {
                 '--color-text-secondary': colors.textSecondary,
             } as React.CSSProperties}
         >
-            <div className="text-xl font-bold mb-6 flex items-center gap-2 text-[var(--color-accent)]">
+            <div className="text-xl font-bold mb-6 flex items-center gap-2 text-(--color-accent)">
                 <FaLayerGroup aria-hidden="true" />
                 <span>Daily Tech Stack</span>
                 <span className="text-sm opacity-70 font-normal">
@@ -96,7 +87,7 @@ const Stack: React.FC = React.memo(() => {
                 aria-label={`${dailyStack.length} daily technologies`}
             >
                 {dailyStack.map((stackItem, index) => {
-                    const isHovered = hoveredIndex === index;
+                    const stackIsHovered = isHovered(index);
                     const categoryInfo = getCategoryInfo(stackItem);
 
                     return (
@@ -105,13 +96,13 @@ const Stack: React.FC = React.memo(() => {
                             role="listitem"
                             className="stack-card relative p-4 rounded-lg border transition-all duration-300 cursor-pointer"
                             style={{
-                                backgroundColor: isHovered ? `${colors.accent}10` : `${colors.background}80`,
-                                borderColor: isHovered ? colors.accent : `${colors.textSecondary}30`,
-                                transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
-                                boxShadow: isHovered ? `0 8px 16px ${colors.accent}20` : 'none',
+                                backgroundColor: stackIsHovered ? `${colors.accent}10` : `${colors.bgSecondary}80`,
+                                borderColor: stackIsHovered ? colors.accent : `${colors.textSecondary}30`,
+                                transform: stackIsHovered ? 'translateY(-4px)' : 'translateY(0)',
+                                boxShadow: stackIsHovered ? `0 8px 16px ${colors.accent}20` : 'none',
                             }}
-                            onMouseEnter={() => handleMouseEnter(index)}
-                            onMouseLeave={handleMouseLeave}
+                            onMouseEnter={() => handleEnter(index)}
+                            onMouseLeave={handleLeave}
                             tabIndex={0}
                             aria-label={stackItem}
                         >

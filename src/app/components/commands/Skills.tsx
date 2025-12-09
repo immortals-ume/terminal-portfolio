@@ -21,9 +21,10 @@
 
 'use client'
 
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { skills as skillsData, workExperience } from '@/data/portfolio';
 import { useThemeColors } from '@/hooks/useThemeColors';
+import { useHoverState } from '@/hooks/useHoverState';
 import { 
   FaBrain, 
   FaCog, 
@@ -45,7 +46,7 @@ interface SkillUsage {
 
 const Skills: React.FC = React.memo(() => {
   const colors = useThemeColors();
-  const [hoveredSkill, setHoveredSkill] = useState<number | null>(null);
+  const { handleEnter, handleLeave, isHovered } = useHoverState<number>();
 
   const getSkillUsage = useCallback((skillName: string): SkillUsage[] => {
     const usage: SkillUsage[] = [];
@@ -104,14 +105,6 @@ const Skills: React.FC = React.memo(() => {
     return { icon: FaLightbulb, category: 'Other', color: colors.textSecondary };
   };
 
-  const handleMouseEnter = useCallback((index: number) => {
-    setHoveredSkill(index);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setHoveredSkill(null);
-  }, []);
-
   return (
     <div 
       className="skills-container"
@@ -120,7 +113,7 @@ const Skills: React.FC = React.memo(() => {
         '--color-text-secondary': colors.textSecondary,
       } as React.CSSProperties}
     >
-      <div className="text-xl font-bold mb-6 flex items-center gap-2 text-[var(--color-accent)]">
+      <div className="text-xl font-bold mb-6 flex items-center gap-2 text-(--color-accent)">
         <FaBullseye aria-hidden="true" />
         <span>Technical Skills</span>
         <span className="text-sm opacity-70 font-normal">
@@ -135,7 +128,7 @@ const Skills: React.FC = React.memo(() => {
       >
         {skillsData.map((skill, index) => {
           const usage = getSkillUsage(skill.name);
-          const isHovered = hoveredSkill === index;
+          const skillIsHovered = isHovered(index);
           const categoryInfo = getCategoryInfo(skill.name);
           const ratingColor = getRatingColor(skill.rating);
 
@@ -145,13 +138,13 @@ const Skills: React.FC = React.memo(() => {
               role="listitem"
               className="skill-card relative p-4 rounded-lg border transition-all duration-300 cursor-pointer"
               style={{
-                backgroundColor: isHovered ? `${colors.accent}10` : `${colors.background}80`,
-                borderColor: isHovered ? colors.accent : `${colors.textSecondary}30`,
-                transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
-                boxShadow: isHovered ? `0 8px 16px ${colors.accent}20` : 'none',
+                backgroundColor: skillIsHovered ? `${colors.accent}10` : `${colors.bgSecondary}80`,
+                borderColor: skillIsHovered ? colors.accent : `${colors.textSecondary}30`,
+                transform: skillIsHovered ? 'translateY(-4px)' : 'translateY(0)',
+                boxShadow: skillIsHovered ? `0 8px 16px ${colors.accent}20` : 'none',
               }}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => handleEnter(index)}
+              onMouseLeave={handleLeave}
               tabIndex={0}
               aria-label={`${skill.name}, proficiency ${skill.rating} out of 10`}
             >
@@ -209,8 +202,8 @@ const Skills: React.FC = React.memo(() => {
               <div
                 className="overflow-hidden transition-all duration-300"
                 style={{
-                  maxHeight: isHovered ? '200px' : '0',
-                  opacity: isHovered ? 1 : 0,
+                  maxHeight: skillIsHovered ? '200px' : '0',
+                  opacity: skillIsHovered ? 1 : 0,
                 }}
               >
                 {usage.length > 0 ? (
