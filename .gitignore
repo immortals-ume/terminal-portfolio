@@ -25,9 +25,6 @@ junit.xml
 # Misc
 .DS_Store
 *.pem
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
 # Debug
 npm-debug.log*
