@@ -1,4 +1,5 @@
-import {personalInfo, skills, workExperience} from '@/data/portfolio';
+import {personalInfo, workExperience} from '@/data/portfolio';
+import { getSkillNamesForSEO } from '@/data/skillsData';
 
 export default function StructuredData() {
     const structuredData = {
@@ -6,6 +7,7 @@ export default function StructuredData() {
         "@type": "Person",
         "name": personalInfo.name,
         "jobTitle": personalInfo.role,
+        "description": personalInfo.summary,
         "worksFor": {
             "@type": "Organization",
             "name": personalInfo.company
@@ -21,7 +23,7 @@ export default function StructuredData() {
             `https://linkedin.com/in/${personalInfo.linkedin}`,
             personalInfo.website
         ],
-        "knowsAbout": skills.map(s => s.name),
+        "knowsAbout": getSkillNamesForSEO(),
         "hasOccupation": workExperience.filter(exp => exp.role).map(exp => ({
             "@type": "Occupation",
             "name": exp.role,

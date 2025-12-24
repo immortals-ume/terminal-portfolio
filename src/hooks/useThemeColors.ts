@@ -62,10 +62,4 @@ export function useThemeColors(): ThemeColors {
         return palette;
     }, [theme]);
 }
-
-/**
- * Export theme color keys for type checking
- */
-export type ThemeColorKey = keyof typeof themeColors;
-
 export type {ThemeColors};

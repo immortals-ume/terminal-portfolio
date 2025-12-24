@@ -21,48 +21,18 @@
 'use client'
 
 import React from 'react';
-import {skills} from '@/data/portfolio'
+import { getDailyStackSkills, getTechIcon } from '@/data/skillsData'
 import {useThemeColors} from '@/hooks/useThemeColors'
 import { useHoverState } from '@/hooks/useHoverState';
-import { 
-  FaBrain, 
-  FaCog, 
-  FaPalette, 
-  FaCloud, 
-  FaDatabase, 
-  FaTools, 
-  FaLightbulb,
-  FaLayerGroup
-} from 'react-icons/fa';
+import { FaLayerGroup, FaLightbulb } from 'react-icons/fa';
 
 const Stack: React.FC = React.memo(() => {
     const colors = useThemeColors()
     const { handleEnter, handleLeave, isHovered } = useHoverState<number>();
-    const dailyStack = skills.filter(skill => skill.rating >= 8).map(skill => skill.name);
+    const dailyStack = getDailyStackSkills();
 
     const getCategoryInfo = (stackItem: string) => {
-        const name = stackItem.toLowerCase();
-        
-        if (name.includes('java') || name.includes('javascript') || name.includes('typescript') || name.includes('python')) {
-            return { icon: FaBrain, category: 'Language', color: colors.accent };
-        }
-        if (name.includes('spring') || name.includes('kafka') || name.includes('graphql') || name.includes('api')) {
-            return { icon: FaCog, category: 'Backend', color: colors.success };
-        }
-        if (name.includes('react') || name.includes('html') || name.includes('css') || name.includes('tailwind') || name.includes('next')) {
-            return { icon: FaPalette, category: 'Frontend', color: colors.warning };
-        }
-        if (name.includes('aws') || name.includes('azure') || name.includes('docker') || name.includes('kubernetes') || name.includes('terraform')) {
-            return { icon: FaCloud, category: 'DevOps', color: '#00d4ff' };
-        }
-        if (name.includes('postgres') || name.includes('mysql') || name.includes('mongo') || name.includes('redis')) {
-            return { icon: FaDatabase, category: 'Database', color: '#ff6b6b' };
-        }
-        if (name.includes('git') || name.includes('ci/cd') || name.includes('sonar') || name.includes('jest') || name.includes('junit')) {
-            return { icon: FaTools, category: 'Tools', color: '#a78bfa' };
-        }
-        
-        return { icon: FaLightbulb, category: 'Other', color: colors.textSecondary };
+        return getTechIcon(stackItem, colors.textSecondary);
     };
 
     return (
@@ -133,7 +103,7 @@ const Stack: React.FC = React.memo(() => {
             </div>
 
             <div
-                className="pt-4 text-xs opacity-75 border-t text-[var(--color-text-secondary)]"
+                className="pt-4 text-xs opacity-75 border-t text-(--color-text-secondary)"
                 style={{
                     borderTopColor: `${colors.accent}20`,
                 }}

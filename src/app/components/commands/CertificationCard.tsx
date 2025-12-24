@@ -97,7 +97,6 @@ const CertificationCard: React.FC<CertificationCardProps> = React.memo(({
       } as React.CSSProperties}
       role="listitem"
     >
-      {/* Certification Number Badge */}
       <div
         className="absolute top-2 right-2 rounded px-1.5 py-0.5 text-xs font-semibold"
         style={{
@@ -110,9 +109,8 @@ const CertificationCard: React.FC<CertificationCardProps> = React.memo(({
         #{index + 1}
       </div>
 
-      {/* Certification Name */}
       <div
-        className="text-base font-semibold pr-10 break-words"
+        className="text-base font-semibold pr-10 wrap-break-word"
         style={{ color: colors.textPrimary }}
       >
         {certification.name}
@@ -127,7 +125,6 @@ const CertificationCard: React.FC<CertificationCardProps> = React.memo(({
         <span>{certification.issuer}</span>
       </div>
 
-      {/* Issue Date */}
       <div
         className="text-xs flex items-center gap-1"
         style={{ color: colors.textSecondary }}
@@ -136,7 +133,6 @@ const CertificationCard: React.FC<CertificationCardProps> = React.memo(({
         <span>{certification.month} {certification.year}</span>
       </div>
 
-      {/* Credential ID */}
       {certification.credentialId && (
         <div
           className="text-[0.7rem] opacity-80 font-mono"
@@ -146,7 +142,6 @@ const CertificationCard: React.FC<CertificationCardProps> = React.memo(({
         </div>
       )}
 
-      {/* Skills */}
       {certification.skills && certification.skills.length > 0 && (
         <div
           className="pt-2 border-t"
@@ -178,7 +173,6 @@ const CertificationCard: React.FC<CertificationCardProps> = React.memo(({
         </div>
       )}
 
-      {/* Verification Link */}
       {certification.url && (
         <div className="pt-2 text-[0.8125rem]">
           <ClickableLink
@@ -192,7 +186,6 @@ const CertificationCard: React.FC<CertificationCardProps> = React.memo(({
   );
 });
 
-// Set display name for better debugging
 CertificationCard.displayName = 'CertificationCard';
 
 export default CertificationCard;

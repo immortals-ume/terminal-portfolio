@@ -120,7 +120,7 @@ const Projects: React.FC<ProjectsProps> = () => {
         '--color-text-secondary': colors.textSecondary,
       } as React.CSSProperties}
     >
-      <div className="text-xl font-bold mb-6 flex items-center gap-2 text-[var(--color-accent)]">
+      <div className="text-xl font-bold mb-6 flex items-center gap-2 text-(--color-accent)">
         <FaRocket aria-hidden="true" />
         <span>Projects Portfolio</span>
         <span className="text-sm opacity-70 font-normal">
@@ -147,13 +147,13 @@ const Projects: React.FC<ProjectsProps> = () => {
       </div>
 
       <div
-        className="pt-4 text-xs opacity-75 border-t text-[var(--color-text-secondary)]"
+        className="pt-4 text-xs opacity-75 border-t text-(--color-text-secondary)"
         style={{
           borderTopColor: `${colors.accent}20`,
         }}
         aria-label="Usage tip"
       >
-        <FaLightbulb className="inline mr-1" /> Hover over projects for enhanced view • Type 'project [N]' for detailed information
+        <FaLightbulb className="inline mr-1" /> Hover over projects for enhanced view 
       </div>
     </div>
   );

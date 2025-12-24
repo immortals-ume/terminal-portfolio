@@ -115,7 +115,7 @@ const Blog: React.FC = React.memo(() => {
             </div>
 
             <div
-              className="text-sm leading-6 flex-1 min-h-[2.5rem]"
+              className="text-sm leading-6 flex-1 min-h-10"
               style={{ color: colors.textSecondary }}
             >
               {post.description}

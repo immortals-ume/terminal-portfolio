@@ -1,16 +1,16 @@
 /**
  * usePreload Hook
- * 
+ *
  * Provides functions to preload data and images for better perceived performance.
  * Useful for prefetching resources on hover or before navigation.
- * 
+ *
  * @returns Object with preload functions
- * 
+ *
  * @example
  * ```tsx
  * const { preloadData, preloadImage, preloadComponent } = usePreload();
- * 
- * <a 
+ *
+ * <a
  *   href="/projects"
  *   onMouseEnter={() => preloadData('/api/projects')}
  * >
@@ -51,10 +51,10 @@ export function usePreload() {
    */
   const preloadImage = useCallback((src: string) => {
     if (typeof window === 'undefined') return;
-    
+
     const img = new Image();
     img.src = src;
-    
+
     // Optional: handle load/error events
     img.onload = () => {
       console.debug('Image preloaded:', src);
@@ -67,9 +67,12 @@ export function usePreload() {
   /**
    * Preloads multiple images
    */
-  const preloadImages = useCallback((sources: string[]) => {
-    sources.forEach(src => preloadImage(src));
-  }, [preloadImage]);
+  const preloadImages = useCallback(
+    (sources: string[]) => {
+      sources.forEach(src => preloadImage(src));
+    },
+    [preloadImage]
+  );
 
   /**
    * Preloads a component by triggering its lazy import
@@ -87,7 +90,9 @@ export function usePreload() {
     if (typeof document === 'undefined') return;
 
     // Check if link is already prefetched
-    const existing = document.querySelector(`link[rel="prefetch"][href="${href}"]`);
+    const existing = document.querySelector(
+      `link[rel="prefetch"][href="${href}"]`
+    );
     if (existing) return;
 
     const link = document.createElement('link');
@@ -103,8 +108,9 @@ export function usePreload() {
   const preconnect = useCallback((domain: string) => {
     if (typeof document === 'undefined') return;
 
-    // Check if already exists
-    const existing = document.querySelector(`link[rel="preconnect"][href="${domain}"]`);
+    const existing = document.querySelector(
+      `link[rel="preconnect"][href="${domain}"]`
+    );
     if (existing) return;
 
     const link = document.createElement('link');

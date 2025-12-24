@@ -24,11 +24,10 @@ interface CommandPreloaderProps {
   className?: string;
 }
 
-// Map of commands to their lazy import functions
 const commandImports = {
   projects: () => import('../../app/components/commands/Projects'),
   timeline: () => import('../../app/components/commands/Timeline'),
-  skills: () => import('../../app/components/commands/Skills'),
+  skills: () => import('../../app/components/commands/SimpleSkills'),
   stack: () => import('../../app/components/commands/Stack'),
   education: () => import('../../app/components/commands/Education'),
   certifications: () => import('../../app/components/commands/Certifications'),

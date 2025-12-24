@@ -36,7 +36,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({
 
   return (
     <div
-      className={`flex flex-col gap-3 text-[var(--color-text-primary)] ${className}`}
+      className={`flex flex-col gap-3 text-(--color-text-primary) ${className}`}
       style={{
         '--color-text-primary': colors.textPrimary,
         '--color-text-secondary': colors.textSecondary,
@@ -52,7 +52,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({
         {message}
       </div>
       {helpText && (
-        <div className="text-sm opacity-85 text-[var(--color-text-secondary)]">
+        <div className="text-sm opacity-85 text-(--color-text-secondary)">
           {helpText}
         </div>
       )}

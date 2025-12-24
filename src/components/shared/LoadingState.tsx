@@ -28,7 +28,7 @@ const LoadingState: React.FC<LoadingStateProps> = ({
 
   return (
     <div
-      className={`flex items-center gap-2 text-base text-[var(--color-accent)] ${className}`}
+      className={`flex items-center gap-2 text-base text-(--color-accent) ${className}`}
       style={{
         '--color-accent': colors.accent,
       } as React.CSSProperties}

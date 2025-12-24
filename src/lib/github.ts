@@ -1,3 +1,6 @@
+import { personalInfo } from '@/data/portfolio';
+
+
 export interface GitHubRepo {
     id: number;
     name: string;
@@ -149,7 +152,6 @@ export class GitHubService {
     }
 }
 
-import {personalInfo} from '@/data/portfolio';
 
 export const createGitHubService = () => {
     const username = personalInfo.github;

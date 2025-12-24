@@ -14,11 +14,11 @@ import Blog from '@/app/components/commands/Blog';
 import Certifications from '@/app/components/commands/Certifications';
 import Contact from '@/app/components/commands/Contact';
 import Education from '@/app/components/commands/Education';
-import Skills from '@/app/components/commands/Skills';
+import SimpleSkills from '@/app/components/commands/SimpleSkills';
 import Timeline from '@/app/components/commands/Timeline';
 
 // Mock the useThemeColors hook
-jest.mock('@/app/hooks/useThemeColors', () => ({
+jest.mock('@/hooks/useThemeColors', () => ({
   useThemeColors: () => ({
     accent: '#00ff00',
     textPrimary: '#ffffff',
@@ -81,10 +81,10 @@ describe('Render Performance Tests', () => {
     expect(renderTime).toBeLessThan(RENDER_TIME_THRESHOLD);
   });
 
-  it('should render Skills component within performance threshold', () => {
-    const renderTime = measureRenderTime(<Skills />);
+  it('should render SimpleSkills component within performance threshold', () => {
+    const renderTime = measureRenderTime(<SimpleSkills />);
     
-    console.log(`Skills render time: ${renderTime.toFixed(2)}ms`);
+    console.log(`SimpleSkills render time: ${renderTime.toFixed(2)}ms`);
     expect(renderTime).toBeLessThan(RENDER_TIME_THRESHOLD);
   });
 
@@ -102,7 +102,7 @@ describe('Render Performance Tests', () => {
       <Certifications key="certifications" />,
       <Contact key="contact" />,
       <Education key="education" />,
-      <Skills key="skills" />,
+      <SimpleSkills key="skills" />,
       <Timeline key="timeline" />,
     ];
 

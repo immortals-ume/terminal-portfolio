@@ -107,7 +107,7 @@ export function calculateTotalExperience(experiences: Array<{ period: string }>)
     }
   });
 
-  return Math.floor(totalDays / 365 * 10) / 10; // Round to 1 decimal
+  return Math.floor(totalDays / 365 * 10) / 10;
 }
 
 /**

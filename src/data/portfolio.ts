@@ -1,3 +1,5 @@
+import type { Achievement, BlogPost } from "@/lib/types";
+
 export const personalInfo = {
     name: "Kapil Srivastava",
     email: "kapil.srivastava712@gmail.com",
@@ -9,54 +11,15 @@ export const personalInfo = {
     github: "immortals-ume",
     linkedin: "kapil-srivastava-72911-di",
     leetcode: "Ayanokoji09",
-    website: "https://kapilsrivastava.dev"
+    website: "https://kapilsrivastava.dev",
+    summary: "Experienced Software Development Engineer with 4.6+ years of expertise in building scalable backend systems and microservices. Proven track record of delivering high-impact features that drive 40% engagement increases and optimize system performance by 85%. Skilled in Java, Spring Boot, React, and cloud technologies with experience across e-commerce, fintech, and enterprise domains. Currently pursuing advanced studies in Quantum Computing at IIT Madras while contributing to innovative solutions at Lenskart."
 };
 
-export const skills = [
-    {name: "Java 17", rating: 9},
-    {name: "Spring Boot 3", rating: 9},
-    {name: "Spring Cloud", rating: 8},
-    {name: "Microservices", rating: 8},
-    {name: "System Design", rating: 8},
-    {name: "REST APIs", rating: 9},
-    {name: "GraphQL", rating: 7},
-    {name: "Kafka", rating: 8},
-    {name: "Design Patterns", rating: 8},
-    {name: "Multithreading", rating: 8},
-    {name: "Performance Optimization", rating: 8},
-    {name: "DSA", rating: 8},
-    {name: "ReactJS", rating: 7},
-    {name: "JavaScript (ES6+)", rating: 8},
-    {name: "TypeScript", rating: 7},
-    {name: "HTML5", rating: 7},
-    {name: "CSS", rating: 7},
-    {name: "PostgreSQL", rating: 9},
-    {name: "MySQL", rating: 8},
-    {name: "MongoDB", rating: 7},
-    {name: "Redis", rating: 7},
-    {name: "AWS", rating: 7},
-    {name: "Azure", rating: 6},
-    {name: "Docker", rating: 8},
-    {name: "Kubernetes", rating: 7},
-    {name: "GitHub Actions", rating: 7},
-    {name: "Git", rating: 9},
-    {name: "CI/CD", rating: 8},
-    {name: "Terraform", rating: 6},
-    {name: "Helm", rating: 6},
-    {name: "Grafana", rating: 7},
-    {name: "Micrometer", rating: 7},
-    {name: "SonarQube", rating: 7},
-    {name: "JUnit", rating: 8},
-    {name: "Mockito", rating: 8},
-    {name: "Jest", rating: 7},
-    {name: "IntelliJ", rating: 9},
-    {name: "VS Code", rating: 8},
-    {name: "Postman", rating: 8},
-    {name: "Maven", rating: 8}
-];
-
-
 export const workExperience = [
+    {
+        period: "Aug 2025 - Dec 2025",
+        description: "career Break"
+    },
     {
         period: "Feb 2024 - Jul 2025",
         role: "Software Development Engineer 1 (TECH@LENSKART)",
@@ -285,7 +248,7 @@ export const certifications = [
     }
 ];
 
-import type { Achievement, BlogPost } from "@/lib/types";
+
 
 export const achievements: Achievement[] = [
     {
@@ -376,10 +339,3 @@ export const blogPosts: BlogPost[] = [
         url: ""
     }
 ];
-
-export const languages = [
-    "Hindi - Native",
-    "English - Professional"
-];
-
-export const featuredRepos = [];

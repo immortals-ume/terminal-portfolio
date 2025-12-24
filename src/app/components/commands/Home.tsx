@@ -56,6 +56,25 @@ export default function Home() {
                 Interactive terminal portfolio - explore my professional journey
             </div>
 
+            {/* Professional Summary Section */}
+            <div 
+                className="p-4 rounded-lg border-l-4 my-4"
+                style={{
+                    backgroundColor: `${colors.bgSecondary}30`,
+                    borderLeftColor: colors.accent,
+                }}
+            >
+                <div className="font-semibold mb-2 text-center" style={{color: colors.accent}}>
+                    Professional Summary
+                </div>
+                <p 
+                    className="text-sm leading-relaxed text-center"
+                    style={{ color: colors.textPrimary }}
+                >
+                    {personalInfo.summary}
+                </p>
+            </div>
+
             <div className="pt-4" style={{borderTop: `1px solid ${colors.textSecondary}`}}>
                 <div className="font-semibold mb-3 text-center flex items-center justify-center gap-2" style={{color: colors.accent}}>
                     <FaCompass /> Navigation Commands

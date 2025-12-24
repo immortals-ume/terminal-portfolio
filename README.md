@@ -1,6 +1,7 @@
 # 🚀 Terminal Portfolio
 
-A modern, interactive terminal-style portfolio website built with Next.js 15, React 19, and TypeScript. Features a fully functional command-line interface with customizable themes and cursor styles.
+A modern, interactive terminal-style portfolio website built with Next.js 15, React 19, and TypeScript. Features a fully
+functional command-line interface with customizable themes and cursor styles.
 
 ## ✨ Features
 
@@ -29,36 +30,40 @@ npm run quality          # Run type-check + lint + test:ci (for CI/CD)
 ## 🎮 Available Commands
 
 ### Portfolio Information
-| Command          | Description                              | Aliases                     |
-|------------------|------------------------------------------|-----------------------------|
-| `home`           | About and quick start guide              | `about`, `info`, `whoami`   |
-| `help`           | Show all available commands              | `ls`, `dir`                 |
-| `skills`         | Technical skills by category             | -                           |
-| `stack`          | Daily tech stack overview                | -                           |
-| `projects`       | GitHub projects with live data           | -                           |
-| `education`      | Educational background                   | `edu`, `school`             |
-| `timeline`       | Work experience and career timeline      | `exp`, `experience`, `work` |
-| `contact`        | Contact information                      | `contact-info`, `reach`     |
+
+| Command     | Description                         | Aliases                     |
+|-------------|-------------------------------------|-----------------------------|
+| `home`      | About and quick start guide         | `about`, `info`, `whoami`   |
+| `help`      | Show all available commands         | `ls`, `dir`                 |
+| `skills`    | Technical skills by category        | -                           |
+| `stack`     | Daily tech stack overview           | -                           |
+| `projects`  | GitHub projects with live data      | -                           |
+| `education` | Educational background              | `edu`, `school`             |
+| `timeline`  | Work experience and career timeline | `exp`, `experience`, `work` |
+| `contact`   | Contact information                 | `contact-info`, `reach`     |
 
 ### Achievements & Content
-| Command          | Description                              | Aliases                     |
-|------------------|------------------------------------------|-----------------------------|
-| `certifications` | Professional certifications              | `certs`, `badges`, `credentials` |
-| `achievements`   | Key achievements and milestones          | `wins`, `milestones`        |
-| `blog`           | Blog posts and articles                  | `articles`, `posts`, `writing` |
+
+| Command          | Description                     | Aliases                          |
+|------------------|---------------------------------|----------------------------------|
+| `certifications` | Professional certifications     | `certs`, `badges`, `credentials` |
+| `achievements`   | Key achievements and milestones | `wins`, `milestones`             |
+| `blog`           | Blog posts and articles         | `articles`, `posts`, `writing`   |
 
 ### Customization
-| Command          | Description                              | Aliases                     |
-|------------------|------------------------------------------|-----------------------------|
-| `theme`          | Change terminal theme (10 options)       | `themes`, `colors`, `style` |
-| `theme [1-10]`   | Quick theme selection by number          | -                           |
-| `cursor`         | Change cursor style (9 options)          | -                           |
-| `cursor [1-9]`   | Quick cursor selection by number         | -                           |
+
+| Command        | Description                        | Aliases                     |
+|----------------|------------------------------------|-----------------------------|
+| `theme`        | Change terminal theme (10 options) | `themes`, `colors`, `style` |
+| `theme [1-10]` | Quick theme selection by number    | -                           |
+| `cursor`       | Change cursor style (9 options)    | -                           |
+| `cursor [1-9]` | Quick cursor selection by number   | -                           |
 
 ### System
-| Command          | Description                              | Aliases                     |
-|------------------|------------------------------------------|-----------------------------|
-| `clear`          | Clear the terminal screen                | `cls`, `clr`                |
+
+| Command | Description               | Aliases      |
+|---------|---------------------------|--------------|
+| `clear` | Clear the terminal screen | `cls`, `clr` |
 
 ## 🚀 Quick Start
 
@@ -131,6 +136,7 @@ export const blogPosts = [...];
 ### GitHub Integration
 
 Add `GITHUB_TOKEN` in your `.env.local` for higher API rate limits (5000 vs 60 requests/hour):
+
 - Go to [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
 - Generate a new token with `public_repo` scope
 - Add it as `GITHUB_TOKEN` in `.env.local`
@@ -147,6 +153,7 @@ Add `GITHUB_TOKEN` in your `.env.local` for higher API rate limits (5000 vs 60 r
 ### Component Customization
 
 All command components are in `src/app/components/commands/`:
+
 - `Home.tsx` - About and quick start guide
 - `Help.tsx` - Available commands list
 - `Contact.tsx` - Contact information
@@ -197,6 +204,7 @@ Each theme includes carefully crafted color palettes for optimal readability and
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/immortals-ume/terminal-portfolio)
 
 **Quick Deploy:**
+
 1. Push your code to GitHub
 2. Connect your repository to [Vercel](https://vercel.com)
 3. (Optional) Add `GITHUB_TOKEN` environment variable in Vercel dashboard
@@ -209,18 +217,21 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
 ## 🛠️ Tech Stack
 
 ### Core Technologies
+
 - **Framework**: [Next.js 15.5.0](https://nextjs.org/) - React framework with App Router
 - **Frontend**: [React 19.1.0](https://react.dev/) - Latest React with concurrent features
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org/) - Type-safe development
 - **Styling**: [Tailwind CSS 4.1.16](https://tailwindcss.com/) - Utility-first CSS framework
 
 ### UI & Animations
+
 - **Animations**: [Framer Motion 11.0.0](https://www.framer.com/motion/) - Production-ready animations
 - **Icons**: [React Icons 5.5.0](https://react-icons.github.io/react-icons/) - Popular icon libraries
 - **Canvas**: Custom Matrix rain animation with performance optimization
 - **CSS Optimization**: Critters 0.0.23 for critical CSS inlining
 
 ### Development & Quality
+
 - **Testing**: Jest 29.7.0 + React Testing Library 16.0.0 + Playwright 1.40.0
 - **Linting**: ESLint 9.38.0 with TypeScript support
 - **Code Formatting**: Prettier 3.2.0
@@ -229,6 +240,7 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
 - **Accessibility**: Axe-core Playwright 4.11.0
 
 ### APIs & Integration
+
 - **GitHub API**: Live repository and profile data
 - **Web Vitals**: Real-time performance monitoring (5.1.0)
 
@@ -238,17 +250,17 @@ Optimized for speed and user experience:
 
 - **Lighthouse Score**: 95+ across all metrics (Performance, Accessibility, Best Practices, SEO)
 - **Core Web Vitals**: All green
-  - LCP (Largest Contentful Paint): < 2.5s
-  - FID (First Input Delay): < 100ms
-  - CLS (Cumulative Layout Shift): < 0.1
+    - LCP (Largest Contentful Paint): < 2.5s
+    - FID (First Input Delay): < 100ms
+    - CLS (Cumulative Layout Shift): < 0.1
 - **Bundle Size**: Optimized with code splitting and lazy loading
 - **Load Time**: < 2s on 3G networks
 - **Optimization Features**:
-  - React.memo() for all components
-  - useMemo() and useCallback() for expensive operations
-  - Dynamic imports for heavy components
-  - Optimized Matrix animation with requestAnimationFrame
-  - Image optimization with Next.js Image component
+    - React.memo() for all components
+    - useMemo() and useCallback() for expensive operations
+    - Dynamic imports for heavy components
+    - Optimized Matrix animation with requestAnimationFrame
+    - Image optimization with Next.js Image component
 
 See [PERFORMANCE.md](PERFORMANCE.md) for detailed performance documentation.
 
@@ -303,6 +315,7 @@ Contributions are welcome! Here's how you can help:
 5. Open a Pull Request
 
 Please ensure:
+
 - All tests pass (`npm run quality`)
 - Code follows the existing style
 - TypeScript types are properly defined

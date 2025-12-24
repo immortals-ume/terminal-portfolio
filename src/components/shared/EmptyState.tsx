@@ -37,7 +37,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 
   return (
     <div
-      className={`flex flex-col gap-2 text-[var(--color-text-primary)] ${className}`}
+      className={`flex flex-col gap-2 text-(--color-text-primary) ${className}`}
       style={{
         '--color-text-primary': colors.textPrimary,
         '--color-text-secondary': colors.textSecondary,
@@ -49,7 +49,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
         <Icon aria-hidden="true" /> {title}
       </div>
       {message && (
-        <div className="text-sm opacity-75 text-[var(--color-text-secondary)]">
+        <div className="text-sm opacity-75 text-(--color-text-secondary)">
           {message}
         </div>
       )}

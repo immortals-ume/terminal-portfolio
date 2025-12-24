@@ -23,9 +23,8 @@ const Certifications = lazy(() => import("../commands/Certifications"));
 const Achievements = lazy(() => import("../commands/Achievements"));
 const Blog = lazy(() => import("../commands/Blog"));
 const Stack = lazy(() => import("../commands/Stack"));
-const Skills = lazy(() => import("../commands/Skills"));
+const SimpleSkills = lazy(() => import("../commands/SimpleSkills"));
 
-/** Fallback theme count if import fails */
 const THEME_COUNT = 10;
 
 /**
@@ -103,7 +102,7 @@ export const createCommands = (
                 key: "skills", 
                 element: (
                     <Suspense fallback={<div className="text-sm opacity-75">Loading skills...</div>}>
-                        <Skills/>
+                        <SimpleSkills/>
                     </Suspense>
                 )
             }],
@@ -369,23 +368,23 @@ export const createCommands = (
  * - Numeric shortcuts (e.g., "cursor 3" → "cursor-select-2")
  * - Theme selection (e.g., "theme 5" → "theme-select-5")
  * - Project shortcuts (e.g., "p1" → "project1")
- * - Case-insensitive matching
+ * - Case-sensitive matching
  * 
  * @param {string} input - Raw user input from terminal
  * @returns {string} Parsed command key that matches a command in CommandsMap
  * 
  * @example
  * ```tsx
- * parseCommand("skills") // Returns "show skills"
+ * parseCommand("skills") // Returns "skills"
  * parseCommand("theme 3") // Returns "theme-select-3"
  * parseCommand("p1") // Returns "project1"
- * parseCommand("HELP") // Returns "help"
+ * parseCommand("HELP") // Returns "HELP" (case-sensitive)
  * ```
  */
 export function parseCommand(input: string): string {
-    const normalized = input.trim().toLowerCase();
+    const trimmed = input.trim();
 
-    const cursorMatch = normalized.match(/^cursor\s+(\d+)$/);
+    const cursorMatch = trimmed.match(/^cursor\s+(\d+)$/);
     if (cursorMatch && cursorMatch[1]) {
         const cursorIndex = parseInt(cursorMatch[1]) - 1;
         if (cursorOptions && cursorIndex >= 0 && cursorIndex < cursorOptions.length) {
@@ -393,7 +392,7 @@ export function parseCommand(input: string): string {
         }
     }
 
-    const themeMatch = normalized.match(/^(theme|themes|colors|style)\s+(-?\d+)$/);
+    const themeMatch = trimmed.match(/^(theme|themes|colors|style)\s+(-?\d+)$/);
     if (themeMatch && themeMatch[2]) {
         const themeNumber = parseInt(themeMatch[2]);
         const maxThemes = themes?.length || THEME_COUNT;
@@ -403,7 +402,7 @@ export function parseCommand(input: string): string {
         return `theme-error-${themeNumber}`;
     }
 
-    const projectMatch = normalized.match(/^(open\s+)?(project|demo)(\d+)$/);
+    const projectMatch = trimmed.match(/^(open\s+)?(project|demo)(\d+)$/);
     if (projectMatch) {
         const [, openPrefix, type, num] = projectMatch;
         if (openPrefix || type === 'project') {
@@ -412,7 +411,7 @@ export function parseCommand(input: string): string {
         return `${type}${num}`;
     }
 
-    const shorthandMatch = normalized.match(/^(p|op|od)(\d+)$/);
+    const shorthandMatch = trimmed.match(/^(p|op|od)(\d+)$/);
     if (shorthandMatch) {
         const [, command, num] = shorthandMatch;
         switch (command) {
@@ -455,5 +454,5 @@ export function parseCommand(input: string): string {
         "style": "theme"
     };
 
-    return aliases[normalized] || normalized;
+    return aliases[trimmed] || trimmed;
 }
