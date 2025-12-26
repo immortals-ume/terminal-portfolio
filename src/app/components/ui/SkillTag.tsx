@@ -8,11 +8,11 @@
 
 import React from 'react';
 import { useThemeColors } from '@/hooks/useThemeColors';
-import type { SimpleSkill } from '@/data/skillsData';
+import type { Skill } from '@/data/skillsData';
 import { getTechIcon as getIcon } from '@/data/skillsData';
 
 export interface SkillTagProps {
-  skill: SimpleSkill;
+  skill: Skill;
   className?: string;
 }
 
