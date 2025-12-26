@@ -5,7 +5,7 @@
  * Focuses on clean, scannable presentation without complex interactions.
  */
 
-import { IconType } from 'react-icons';
+import { IconBaseProps, IconType } from 'react-icons';
 import {
   SiAmazonwebservices,
   SiApache,
@@ -30,18 +30,20 @@ import {
   SiPython,
   SiReact,
   SiRedis,
+  SiRedux,
   SiSonarqube,
   SiSpring,
   SiTailwindcss,
   SiTerraform,
   SiTypescript,
 } from 'react-icons/si';
-import { FaCloud, FaCode, FaCog, FaLightbulb } from 'react-icons/fa';
+import { FaCloud, FaCode, FaCog, FaLightbulb, FaVial } from 'react-icons/fa';
+import { ReactNode } from 'react';
 
 /**
  * Represents a simple skill with basic information
  */
-export interface SimpleSkill {
+export interface Skill {
   name: string;
   years: string;
   level: string;
@@ -53,7 +55,7 @@ export interface SimpleSkill {
  */
 export interface SkillCategory {
   name: string;
-  skills: SimpleSkill[];
+  skills: Skill[];
 }
 
 /**
@@ -70,53 +72,112 @@ export interface TechIcon {
  * Add new technologies here and they'll automatically appear in all components
  */
 export const TECH_ICONS: Record<string, TechIcon> = {
+  /* =======================
+   * Languages
+   * ======================= */
   java: { icon: SiOpenjdk, category: 'Language', color: '#f89820' },
+  'java 17': { icon: SiOpenjdk, category: 'Language', color: '#f89820' },
   javascript: { icon: SiJavascript, category: 'Language', color: '#f7df1e' },
   typescript: { icon: SiTypescript, category: 'Language', color: '#3178c6' },
   python: { icon: SiPython, category: 'Language', color: '#3776ab' },
-  'spring boot': { icon: SiSpring, category: 'Backend', color: '#6db33f' },
-  'spring cloud': { icon: SiSpring, category: 'Backend', color: '#6db33f' },
-  spring: { icon: SiSpring, category: 'Backend', color: '#6db33f' },
-  kafka: { icon: SiApachekafka, category: 'Backend', color: '#231f20' },
-  graphql: { icon: SiGraphql, category: 'Backend', color: '#e10098' },
-  'rest apis': { icon: SiPostman, category: 'Backend', color: '#ff6c37' },
-  api: { icon: SiPostman, category: 'Backend', color: '#ff6c37' },
-  microservices: { icon: FaCog, category: 'Backend', color: '#ff6c37' },
-  react: { icon: SiReact, category: 'Frontend', color: '#61dafb' },
-  reactjs: { icon: SiReact, category: 'Frontend', color: '#61dafb' },
-  'next.js': { icon: SiNextdotjs, category: 'Frontend', color: '#000000' },
+  html: { icon: SiHtml5, category: 'Frontend', color: '#e34f26' },
   html5: { icon: SiHtml5, category: 'Frontend', color: '#e34f26' },
   css: { icon: SiCss3, category: 'Frontend', color: '#1572b6' },
+  css3: { icon: SiCss3, category: 'Frontend', color: '#1572b6' },
+
+  /* =======================
+   * Backend / Frameworks
+   * ======================= */
+  spring: { icon: SiSpring, category: 'Backend', color: '#6db33f' },
+  'spring boot': { icon: SiSpring, category: 'Backend', color: '#6db33f' },
+  'spring cloud': { icon: SiSpring, category: 'Backend', color: '#6db33f' },
+  'spring security': { icon: SiSpring, category: 'Backend', color: '#6db33f' },
+  'spring batch': { icon: SiSpring, category: 'Backend', color: '#6db33f' },
+  'spring mail': { icon: SiSpring, category: 'Backend', color: '#6db33f' },
+
+  kafka: { icon: SiApachekafka, category: 'Backend', color: '#231f20' },
+  graphql: { icon: SiGraphql, category: 'Backend', color: '#e10098' },
+
+  api: { icon: SiPostman, category: 'Backend', color: '#ff6c37' },
+  'rest api': { icon: SiPostman, category: 'Backend', color: '#ff6c37' },
+  'rest apis': { icon: SiPostman, category: 'Backend', color: '#ff6c37' },
+
+  microservices: { icon: FaCog, category: 'Backend', color: '#ff6c37' },
+
+  /* =======================
+   * Frontend
+   * ======================= */
+  react: { icon: SiReact, category: 'Frontend', color: '#61dafb' },
+  reactjs: { icon: SiReact, category: 'Frontend', color: '#61dafb' },
+  redux: { icon: SiRedux, category: 'Frontend', color: '#764abc' },
   'tailwind css': {
     icon: SiTailwindcss,
     category: 'Frontend',
     color: '#06b6d4',
   },
+  'next.js': { icon: SiNextdotjs, category: 'Frontend', color: '#000000' },
+
+  /* =======================
+   * Databases & Caching
+   * ======================= */
+  postgresql: { icon: SiPostgresql, category: 'Database', color: '#336791' },
+  mysql: { icon: SiMysql, category: 'Database', color: '#4479a1' },
+  mongodb: { icon: SiMongodb, category: 'Database', color: '#47a248' },
+  redis: { icon: SiRedis, category: 'Database', color: '#dc382d' },
+
+  /* =======================
+   * DevOps & Cloud
+   * ======================= */
   aws: { icon: SiAmazonwebservices, category: 'DevOps', color: '#ff9900' },
+  ec2: { icon: SiAmazonwebservices, category: 'DevOps', color: '#ff9900' },
+  eks: { icon: SiAmazonwebservices, category: 'DevOps', color: '#ff9900' },
+  s3: { icon: SiAmazonwebservices, category: 'DevOps', color: '#ff9900' },
+  rds: { icon: SiAmazonwebservices, category: 'DevOps', color: '#ff9900' },
+
   azure: { icon: FaCloud, category: 'DevOps', color: '#0078d4' },
+  'azure ad': { icon: FaCloud, category: 'DevOps', color: '#0078d4' },
+  'azure active directory': {
+    icon: FaCloud,
+    category: 'DevOps',
+    color: '#0078d4',
+  },
+  'blob storage': { icon: FaCloud, category: 'DevOps', color: '#0078d4' },
+
   docker: { icon: SiDocker, category: 'DevOps', color: '#2496ed' },
   kubernetes: { icon: SiKubernetes, category: 'DevOps', color: '#326ce5' },
+  k8s: { icon: SiKubernetes, category: 'DevOps', color: '#326ce5' },
+
   terraform: { icon: SiTerraform, category: 'DevOps', color: '#7b42bc' },
+
   'github actions': {
     icon: SiGithubactions,
     category: 'DevOps',
     color: '#2088ff',
   },
   'ci/cd': { icon: SiGithubactions, category: 'DevOps', color: '#2088ff' },
-  postgresql: { icon: SiPostgresql, category: 'Database', color: '#336791' },
-  mysql: { icon: SiMysql, category: 'Database', color: '#4479a1' },
-  mongodb: { icon: SiMongodb, category: 'Database', color: '#47a248' },
-  redis: { icon: SiRedis, category: 'Database', color: '#dc382d' },
-  git: { icon: SiGit, category: 'Tools', color: '#f05032' },
-  sonarqube: { icon: SiSonarqube, category: 'Tools', color: '#4e9bcd' },
-  jest: { icon: SiJest, category: 'Tools', color: '#c21325' },
-  intellij: { icon: SiIntellijidea, category: 'Tools', color: '#000000' },
-  'vs code': { icon: FaCode, category: 'Tools', color: '#007acc' },
-  maven: { icon: SiApache, category: 'Tools', color: '#c71a36' },
+
+  /* =======================
+   * Monitoring & Quality
+   * ======================= */
   grafana: { icon: SiGrafana, category: 'Tools', color: '#f46800' },
   micrometer: { icon: FaCog, category: 'Tools', color: '#6db33f' },
+  sonarqube: { icon: SiSonarqube, category: 'Tools', color: '#4e9bcd' },
+
+  // junit: { icon: SiJUnit5, category: 'Tools', color: '#25a162' },
+  mockito: { icon: FaVial, category: 'Tools', color: '#78c257' },
+  jest: { icon: SiJest, category: 'Tools', color: '#c21325' },
+
+  maven: { icon: SiApache, category: 'Tools', color: '#c71a36' },
+  // liquibase: { icon: SiLiquibase, category: 'Tools', color: '#2962ff' },
+
+  git: { icon: SiGit, category: 'Tools', color: '#f05032' },
+  github: { icon: SiGithub, category: 'Tools', color: '#000000' },
   postman: { icon: SiPostman, category: 'Tools', color: '#ff6c37' },
+  intellij: { icon: SiIntellijidea, category: 'Tools', color: '#000000' },
+  'vs code': { icon: FaCode, category: 'Tools', color: '#007acc' },
+  vscode: { icon: FaCode, category: 'Tools', color: '#007acc' },
 };
+
 
 /**
  * Get icon information for a technology
@@ -147,87 +208,119 @@ export const getTechIcon = (
 };
 
 /**
- * Simple skills data organized by technology categories
+ *  skills data organized by technology categories
  * Designed for ATS-friendly, clean presentation
  */
-export const simpleSkillsData: { categories: SkillCategory[] } = {
+export const skillsData: { categories: SkillCategory[] } = {
   categories: [
     {
-      name: 'Languages',
+      name: 'Programming Languages',
       skills: [
         {
-          name: 'Java',
-          years: '5+ years',
+          name: 'Java (Java 17)',
+          years: '4.6+ years',
           level: 'Experienced',
-          role: 'Backend development, microservices, enterprise applications at Lenskart & Infosys',
+          role: 'Backend development, microservices, enterprise applications at Lenskart, Backbase & Infosys',
+        },
+        {
+          name: 'JavaScript',
+          years: '4.6+ years',
+          level: 'Comfortable',
+          role: 'Full-stack development, React UIs, Node.js services, testing frameworks',
         },
         {
           name: 'TypeScript',
           years: '3+ years',
           level: 'Comfortable',
-          role: 'Frontend development, type-safe React applications, API integrations',
-        },
-        {
-          name: 'JavaScript',
-          years: '4+ years',
-          level: 'Comfortable',
-          role: 'Full-stack development, React UIs, Node.js backends, testing frameworks',
+          role: 'Type-safe React applications, scalable frontend architecture, API integrations',
         },
         {
           name: 'Python',
-          years: '2 years',
+          years: '1+ years',
           level: 'Learning',
-          role: 'Data processing, machine learning projects, automation scripts',
+          role: 'Data processing, automation scripts, machine learning & quantum computing projects',
+        },
+        {
+          name: 'HTML5 & CSS3',
+          years: '3+ years',
+          level: 'Comfortable',
+          role: 'Responsive UI development, frontend layout and styling',
         },
       ],
     },
+
     {
-      name: 'Backend',
+      name: 'Backend & Distributed Systems',
       skills: [
         {
           name: 'Spring Boot',
-          years: '5+ years',
+          years: '4.6+ years',
           level: 'Experienced',
-          role: 'Microservices architecture, REST APIs, enterprise applications across all roles',
+          role: 'REST APIs, microservices, enterprise-grade backend systems',
         },
         {
-          name: 'Microservices',
-          years: '4+ years',
+          name: 'Spring Cloud',
+          years: '3+ years',
           level: 'Comfortable',
-          role: 'Distributed systems, service orchestration, scalable architecture design',
+          role: 'Service discovery, configuration management, distributed systems',
+        },
+        {
+          name: 'Spring Security',
+          years: '3+ years',
+          level: 'Comfortable',
+          role: 'Authentication, authorization, OAuth2, JWT-based security',
+        },
+        {
+          name: 'Spring Batch',
+          years: '2+ years',
+          level: 'Comfortable',
+          role: 'Batch processing, ETL jobs, scheduled enterprise workflows',
         },
         {
           name: 'Kafka',
-          years: '3+ years',
-          level: 'Comfortable',
-          role: 'Event-driven architecture, real-time data streaming, notification systems',
-        },
-        {
-          name: 'Redis',
-          years: '3+ years',
-          level: 'Comfortable',
-          role: 'Caching strategies, session management, performance optimization',
-        },
-        {
-          name: 'PostgreSQL',
-          years: '4+ years',
+          years: '4.6+ years',
           level: 'Experienced',
-          role: 'Primary database for enterprise applications, complex queries, data modeling',
+          role: 'Event-driven architecture, async processing, notification systems',
         },
         {
-          name: 'MySQL',
-          years: '4+ years',
-          level: 'Comfortable',
-          role: 'Relational database design, CRUD operations, banking applications',
-        },
-        {
-          name: 'MongoDB',
-          years: '2 years',
-          level: 'Learning',
-          role: 'NoSQL document storage, flexible schema design, modern web applications',
+          name: 'Microservices Architecture',
+          years: '4.6+ years',
+          level: 'Experienced',
+          role: 'Scalable system design, inter-service communication, fault tolerance',
         },
       ],
     },
+
+    {
+      name: 'Databases & Caching',
+      skills: [
+        {
+          name: 'PostgreSQL',
+          years: '4.6+ years',
+          level: 'Experienced',
+          role: 'Primary relational database, data modeling, complex queries',
+        },
+        {
+          name: 'MySQL',
+          years: '4.6+ years',
+          level: 'Experienced',
+          role: 'Relational database design, transactional systems',
+        },
+        {
+          name: 'MongoDB',
+          years: '2+ years',
+          level: 'Comfortable',
+          role: 'NoSQL document databases, flexible schema design',
+        },
+        {
+          name: 'Redis',
+          years: '4.6+ years',
+          level: 'Experienced',
+          role: 'Caching strategies, session management, performance optimization',
+        },
+      ],
+    },
+
     {
       name: 'Frontend',
       skills: [
@@ -235,130 +328,157 @@ export const simpleSkillsData: { categories: SkillCategory[] } = {
           name: 'React',
           years: '3+ years',
           level: 'Comfortable',
-          role: 'Single-page applications, component libraries, user interfaces at Lenskart & Infosys',
-        },
-        {
-          name: 'Next.js',
-          years: '2+ years',
-          level: 'Comfortable',
-          role: 'Server-side rendering, static site generation, modern web applications',
-        },
-        {
-          name: 'Tailwind CSS',
-          years: '2+ years',
-          level: 'Comfortable',
-          role: 'Responsive design, utility-first styling, component styling',
+          role: 'Single-page applications, component-based UI development',
         },
         {
           name: 'Redux',
           years: '2+ years',
           level: 'Comfortable',
-          role: 'State management, complex application flows, data synchronization',
+          role: 'State management, complex UI workflows',
+        },
+        {
+          name: 'Tailwind CSS',
+          years: '2+ years',
+          level: 'Comfortable',
+          role: 'Utility-first CSS, responsive and scalable UI design',
         },
       ],
     },
+
     {
-      name: 'DevOps',
+      name: 'DevOps & Cloud',
       skills: [
         {
           name: 'Docker',
           years: '4+ years',
           level: 'Comfortable',
-          role: 'Containerization, deployment automation, development environment consistency',
+          role: 'Containerization, local & production deployments',
         },
         {
-          name: 'Kubernetes',
+          name: 'Kubernetes (K8s)',
           years: '3+ years',
           level: 'Comfortable',
-          role: 'Container orchestration, scalable deployments, cloud-native applications',
+          role: 'Container orchestration, scalable cloud-native systems',
         },
         {
           name: 'AWS',
           years: '3+ years',
           level: 'Comfortable',
-          role: 'Cloud infrastructure, serverless computing, storage solutions at Backbase',
+          role: 'EC2, EKS, S3, RDS, cloud infrastructure at Backbase',
+        },
+        {
+          name: 'Azure',
+          years: '2+ years',
+          level: 'Comfortable',
+          role: 'Azure Active Directory, Blob Storage, enterprise authentication',
+        },
+        {
+          name: 'Terraform',
+          years: '2+ years',
+          level: 'Comfortable',
+          role: 'Infrastructure as Code, cloud resource automation',
         },
         {
           name: 'GitHub Actions',
           years: '2+ years',
           level: 'Comfortable',
-          role: 'CI/CD pipelines, automated testing, deployment workflows',
+          role: 'CI/CD pipelines, automated testing & deployments',
         },
+      ],
+    },
+
+    {
+      name: 'Monitoring, Logging & Quality',
+      skills: [
         {
           name: 'Grafana',
           years: '2+ years',
           level: 'Comfortable',
-          role: 'Custom monitoring dashboards, performance metrics, system observability',
+          role: 'System dashboards, latency & performance monitoring',
+        },
+        {
+          name: 'Micrometer',
+          years: '2+ years',
+          level: 'Comfortable',
+          role: 'Custom metrics instrumentation in Spring Boot services',
+        },
+        {
+          name: 'SonarQube',
+          years: '2+ years',
+          level: 'Comfortable',
+          role: 'Code quality analysis, technical debt tracking',
         },
       ],
     },
+
     {
-      name: 'System Design',
+      name: 'Testing & Developer Tools',
       skills: [
         {
-          name: 'Event-Driven Architecture',
-          years: '3+ years',
+          name: 'JUnit & Mockito',
+          years: '4+ years',
           level: 'Comfortable',
-          role: 'Scalable system design, loose coupling, real-time processing',
+          role: 'Unit testing, mocking, backend test automation',
         },
         {
-          name: 'API Gateway',
-          years: '3+ years',
-          level: 'Comfortable',
-          role: 'Service mesh, request routing, authentication & authorization',
-        },
-        {
-          name: 'Caching Strategies',
-          years: '3+ years',
-          level: 'Comfortable',
-          role: 'Performance optimization, data layer efficiency, response time improvement',
-        },
-        {
-          name: 'Rate Limiting',
+          name: 'Jest',
           years: '2+ years',
           level: 'Comfortable',
-          role: 'API protection, traffic management, system stability',
+          role: 'Frontend testing for React applications',
         },
         {
-          name: 'SAGA Pattern',
-          years: '2+ years',
-          level: 'Learning',
-          role: 'Distributed transaction management, microservices coordination',
+          name: 'Maven ',
+          years: '4+ years',
+          level: 'Comfortable',
+          role: 'Build automation, database versioning',
+        },
+        {
+          name: 'Liquibase',
+          years: '4+ years',
+          level: 'Comfortable',
+          role: 'Build automation, database versioning',
+        },
+        {
+          name: 'Developer Tools',
+          years: '5+ years',
+          level: 'Experienced',
+          role: 'IntelliJ IDEA, VS Code, Postman, Git, GitHub',
         },
       ],
     },
+
     {
-      name: 'Computer Science',
+      name: 'Computer Science & System Design',
       skills: [
         {
           name: 'Data Structures & Algorithms',
           years: '5+ years',
           level: 'Experienced',
-          role: 'Problem solving, optimization, technical interviews, core programming foundation',
+          role: 'Problem solving, optimization, interview preparation',
         },
         {
           name: 'Object-Oriented Programming',
           years: '5+ years',
           level: 'Experienced',
-          role: 'Code organization, design patterns, maintainable software architecture',
+          role: 'Clean architecture, extensible system design',
         },
         {
-          name: 'SOLID Principles',
+          name: 'SOLID Principles & Design Patterns',
           years: '5+ years',
           level: 'Experienced',
-          role: 'Clean code practices, software design, maintainable enterprise applications',
+          role: 'Maintainable, scalable enterprise software',
         },
         {
-          name: 'Concurrency',
+          name: 'Concurrency & Multithreading',
           years: '4+ years',
           level: 'Comfortable',
-          role: 'Multi-threaded applications, parallel processing, performance optimization',
+          role: 'Thread safety, async processing, performance optimization',
         },
         {
-          name: 'Multithreading',
+          name: 'System Design',
           years: '4+ years',
           level: 'Comfortable',
-          role: 'Concurrent programming, thread safety, high-performance applications',
+          role: 'High-level design, scalability, consistency, fault tolerance',
         },
       ],
     },
@@ -368,50 +488,11 @@ export const simpleSkillsData: { categories: SkillCategory[] } = {
 /**
  * Helper function to get all skills flattened from categories
  */
-export const getAllSimpleSkills = (): SimpleSkill[] => {
-  return simpleSkillsData.categories.flatMap(category => category.skills);
+export const getAllSkills = (): Skill[] => {
+  return skillsData.categories.flatMap(category => category.skills);
 };
 
-/**
- * Legacy skills data structure for backward compatibility
- * Used by Stack.tsx and StructuredData.tsx
- */
-export interface LegacySkill {
-  name: string;
-  rating: number;
+function SiGithub(props: IconBaseProps): ReactNode {
+    throw new Error('Function not implemented.');
 }
 
-/**
- * Convert simple skills to legacy format with ratings
- * Maps experience levels to numeric ratings for backward compatibility
- */
-export const getLegacySkills = (): LegacySkill[] => {
-  const levelToRating = {
-    Experienced: 9,
-    Comfortable: 8,
-    Learning: 7,
-  };
-
-  return getAllSimpleSkills().map(skill => ({
-    name: skill.name,
-    rating: levelToRating[skill.level as keyof typeof levelToRating] || 7,
-  }));
-};
-
-/**
- * Get high-rated skills for daily stack (rating >= 8)
- * Used by Stack.tsx component
- */
-export const getDailyStackSkills = (): string[] => {
-  return getLegacySkills()
-    .filter(skill => skill.rating >= 8)
-    .map(skill => skill.name);
-};
-
-/**
- * Get all skill names for SEO structured data
- * Used by StructuredData.tsx component
- */
-export const getSkillNamesForSEO = (): string[] => {
-  return getAllSimpleSkills().map(skill => skill.name);
-};

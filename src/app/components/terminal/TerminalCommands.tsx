@@ -22,8 +22,7 @@ const Timeline = lazy(() => import("../commands/Timeline"));
 const Certifications = lazy(() => import("../commands/Certifications"));
 const Achievements = lazy(() => import("../commands/Achievements"));
 const Blog = lazy(() => import("../commands/Blog"));
-const Stack = lazy(() => import("../commands/Stack"));
-const SimpleSkills = lazy(() => import("../commands/SimpleSkills"));
+const Skills = lazy(() => import("../commands/./Skills"));
 
 const THEME_COUNT = 10;
 
@@ -102,19 +101,7 @@ export const createCommands = (
                 key: "skills", 
                 element: (
                     <Suspense fallback={<div className="text-sm opacity-75">Loading skills...</div>}>
-                        <SimpleSkills/>
-                    </Suspense>
-                )
-            }],
-        },
-        stack: {
-            description: "Show daily tech stack",
-            action: () => [{
-                type: "component", 
-                key: "stack", 
-                element: (
-                    <Suspense fallback={<div className="text-sm opacity-75">Loading stack...</div>}>
-                        <Stack/>
+                        <Skills/>
                     </Suspense>
                 )
             }],

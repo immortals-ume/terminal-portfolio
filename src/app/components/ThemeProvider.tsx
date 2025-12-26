@@ -25,12 +25,12 @@ interface ThemeProviderProps {
 }
 
 /**
- * Safely loads theme from localStorage with error handling
+ * Safely loads theme from sessionStorage with error handling
  * @returns The stored theme or DEFAULT_THEME on error
  */
 function loadThemeFromStorage(): string {
     try {
-        const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        const storedTheme = sessionStorage.getItem(THEME_STORAGE_KEY);
         if (storedTheme) {
             return storedTheme;
         }
@@ -42,12 +42,12 @@ function loadThemeFromStorage(): string {
 }
 
 /**
- * Safely saves theme to localStorage with error handling
+ * Safely saves theme to sessionStorage with error handling
  * @param theme The theme to save
  */
 function saveThemeToStorage(theme: string): void {
     try {
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
+        sessionStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch (error) {
         if (error instanceof Error && error.name === 'QuotaExceededError') {
             console.warn('Storage quota exceeded, theme will not persist');
@@ -71,12 +71,9 @@ function updateCSSVariables(theme: string): void {
 }
 
 export function ThemeProvider({children}: ThemeProviderProps) {
-    // Initialize theme from storage before first render to prevent flashing
     const [theme, setThemeState] = useState(() => {
-        // Only access storage on client side
         if (typeof window !== 'undefined') {
             const initialTheme = loadThemeFromStorage();
-            // Set theme attribute and CSS variables immediately before render
             document.documentElement.setAttribute("data-theme", initialTheme);
             updateCSSVariables(initialTheme);
             return initialTheme;
@@ -96,7 +93,6 @@ export function ThemeProvider({children}: ThemeProviderProps) {
         saveThemeToStorage(newTheme);
     };
 
-    // Memoize context value to prevent unnecessary re-renders
     const value = React.useMemo(() => ({ theme, setTheme }), [theme]);
 
     if (!mounted) {

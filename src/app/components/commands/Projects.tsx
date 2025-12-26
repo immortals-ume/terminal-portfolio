@@ -31,7 +31,7 @@ import { useLoadingState } from "@/hooks/useLoadingState";
 import { usePreload } from "@/hooks/usePreload";
 import ProjectCard from "../ui/ProjectCard";
 import LoadingState from "@/components/shared/LoadingState";
-import ErrorState from "@/components/shared/ErrorState";
+
 import EmptyState from "@/components/shared/EmptyState";
 import { FaRocket, FaInbox, FaLightbulb } from 'react-icons/fa';
 
@@ -94,11 +94,11 @@ const Projects: React.FC<ProjectsProps> = () => {
 
   if (error) {
     return (
-      <ErrorState
-        title="Error Loading Projects"
-        message={error}
-        helpText="Please check your internet connection and try refreshing the page."
-      />
+      <div className="text-red-500 p-4 border border-red-300 rounded">
+        <h3 className="font-bold mb-2">Error Loading Projects</h3>
+        <p>{error}</p>
+        <p className="text-sm mt-2 opacity-75">Please check your internet connection and try refreshing the page.</p>
+      </div>
     );
   }
 

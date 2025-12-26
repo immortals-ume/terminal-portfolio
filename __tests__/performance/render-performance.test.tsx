@@ -14,7 +14,7 @@ import Blog from '@/app/components/commands/Blog';
 import Certifications from '@/app/components/commands/Certifications';
 import Contact from '@/app/components/commands/Contact';
 import Education from '@/app/components/commands/Education';
-import SimpleSkills from '@/app/components/commands/SimpleSkills';
+import Skills from '@/app/components/commands/Skills';
 import Timeline from '@/app/components/commands/Timeline';
 
 // Mock the useThemeColors hook
@@ -81,8 +81,8 @@ describe('Render Performance Tests', () => {
     expect(renderTime).toBeLessThan(RENDER_TIME_THRESHOLD);
   });
 
-  it('should render SimpleSkills component within performance threshold', () => {
-    const renderTime = measureRenderTime(<SimpleSkills />);
+  it('should render Skills component within performance threshold', () => {
+    const renderTime = measureRenderTime(<Skills />);
     
     console.log(`SimpleSkills render time: ${renderTime.toFixed(2)}ms`);
     expect(renderTime).toBeLessThan(RENDER_TIME_THRESHOLD);
@@ -101,8 +101,7 @@ describe('Render Performance Tests', () => {
       <Blog key="blog" />,
       <Certifications key="certifications" />,
       <Contact key="contact" />,
-      <Education key="education" />,
-      <SimpleSkills key="skills" />,
+      <Skills key="skills" />,
       <Timeline key="timeline" />,
     ];
 

@@ -144,17 +144,6 @@ export const themeCSSVariables: Record<string, Record<string, string>> = {
         '--text-soft': '#ffc966',
     },
 };
-
-/**
- * Converts CSS variable name to camelCase property name
- * Example: '--bg-primary' -> 'bgPrimary'
- */
-function cssVarToCamelCase(cssVar: string): string {
-    return cssVar
-        .replace(/^--/, '')
-        .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-}
-
 /**
  * Theme colors interface for useThemeColors hook
  */

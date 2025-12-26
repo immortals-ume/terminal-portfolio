@@ -105,12 +105,8 @@ export interface Skill {
  * Used by Achievements component.
  */
 export interface Achievement {
-  title: string;
   description: string;
-  category: string;
   impact: string;
-  icon: string;
-  date?: string;
 }
 
 /**

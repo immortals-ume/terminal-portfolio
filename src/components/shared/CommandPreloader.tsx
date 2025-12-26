@@ -1,62 +1,49 @@
-/**
- * CommandPreloader Component
- * 
- * Preloads command components on hover to improve perceived performance.
- * Uses dynamic imports to trigger component loading before execution.
- * 
- * @component
- * @example
- * ```tsx
- * <CommandPreloader command="projects">
- *   <button>View Projects</button>
- * </CommandPreloader>
- * ```
- */
+'use client';
 
-'use client'
-
-import React, { useCallback } from 'react';
+import { memo, useCallback, type ReactNode } from 'react';
 import { usePreload } from '@/hooks/usePreload';
 
+export type Command =
+  | 'projects'
+  | 'timeline'
+  | 'skills'
+  | 'education'
+  | 'certifications'
+  | 'achievements'
+  | 'blog';
+
 interface CommandPreloaderProps {
-  command: 'projects' | 'timeline' | 'skills' | 'stack' | 'education' | 'certifications' | 'achievements' | 'blog';
-  children: React.ReactNode;
+  command: Command;
+  children: ReactNode;
   className?: string;
 }
 
-const commandImports = {
-  projects: () => import('../../app/components/commands/Projects'),
-  timeline: () => import('../../app/components/commands/Timeline'),
-  skills: () => import('../../app/components/commands/SimpleSkills'),
-  stack: () => import('../../app/components/commands/Stack'),
-  education: () => import('../../app/components/commands/Education'),
-  certifications: () => import('../../app/components/commands/Certifications'),
-  achievements: () => import('../../app/components/commands/Achievements'),
-  blog: () => import('../../app/components/commands/Blog'),
+const COMMAND_IMPORTS: Record<Command, () => Promise<unknown>> = {
+  projects: () => import('@/app/components/commands/Projects'),
+  timeline: () => import('@/app/components/commands/Timeline'),
+  skills: () => import('@/app/components/commands/Skills'),
+  education: () => import('@/app/components/commands/Education'),
+  certifications: () => import('@/app/components/commands/Certifications'),
+  achievements: () => import('@/app/components/commands/Achievements'),
+  blog: () => import('@/app/components/commands/Blog'),
 };
 
-const CommandPreloader: React.FC<CommandPreloaderProps> = ({ 
-  command, 
+const CommandPreloader = ({
+  command,
   children,
-  className = ''
-}) => {
+  className = '',
+}: CommandPreloaderProps) => {
   const { preloadComponent } = usePreload();
 
   const handleMouseEnter = useCallback(() => {
-    const importFn = commandImports[command];
-    if (importFn) {
-      preloadComponent(importFn);
-    }
+    preloadComponent(COMMAND_IMPORTS[command]);
   }, [command, preloadComponent]);
 
   return (
-    <span 
-      onMouseEnter={handleMouseEnter}
-      className={className}
-    >
+    <span onMouseEnter={handleMouseEnter} className={className}>
       {children}
     </span>
   );
 };
 
-export default React.memo(CommandPreloader);
+export default memo(CommandPreloader);
