@@ -14,7 +14,7 @@ import Contact from "../commands/Contact";
 import Home from "../commands/Home";
 import Cursor, {cursorOptions} from "../commands/Cursor";
 import Theme, {themes} from "../commands/Theme";
-import {projectService} from "../../../lib/projectService";
+import {projectService} from '@/lib/projectService';
 
 const Projects = lazy(() => import("../commands/Projects"));
 const Education = lazy(() => import("../commands/Education"));

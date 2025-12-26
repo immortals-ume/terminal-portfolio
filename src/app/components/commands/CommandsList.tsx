@@ -11,7 +11,6 @@ export default function CommandsList() {
             commands: [
                 {cmd: "home", desc: "About me and quick start guide", aliases: ["about", "info", "whoami"]},
                 {cmd: "skills", desc: "Technical skills by category", aliases: []},
-                {cmd: "stack", desc: "Daily tech stack", aliases: []},
                 {cmd: "projects", desc: "Portfolio projects with GitHub links", aliases: []},
                 {cmd: "education", desc: "Educational background", aliases: ["edu", "school"]},
                 {cmd: "timeline", desc: "Work experience and career path", aliases: ["exp", "experience", "work"]},
