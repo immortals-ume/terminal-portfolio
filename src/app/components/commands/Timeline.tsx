@@ -22,31 +22,50 @@ import { workExperience } from '@/data/portfolio';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { FaBuilding, FaClock, FaFileAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
+function calculateMonthDifference(
+  parseDate: (dateStr: string) => Date,
+  start: string,
+  end: string,
+  currentTime: Date
+) {
+  const startDate = parseDate(start.trim());
+  const endDate = end ? parseDate(end.trim()) : currentTime;
+
+  const startYear = startDate.getFullYear();
+  const startMonth = startDate.getMonth();
+  const endYear = endDate.getFullYear();
+  const endMonth = endDate.getMonth();
+
+  return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+}
+
 const Timeline: React.FC = React.memo(() => {
   const colors = useThemeColors();
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // Helper function to check if an experience entry should be excluded from experience calculation
   const shouldExcludeFromExperience = (exp: any): boolean => {
     const period = exp.period?.toLowerCase() || '';
     const description = exp.description?.toLowerCase() || '';
     const role = exp.role?.toLowerCase() || '';
     const type = exp.type?.toLowerCase() || '';
-    
-    // Exclude career breaks
-    const isCareerBreak = period.includes('career break') || description.includes('career break');
-    
-    // Exclude internships
-    const isInternship = role.includes('intern') || type.includes('internship') || description.includes('internship');
-    
+
+    const isCareerBreak =
+      period.includes('career break') || description.includes('career break');
+
+    const isInternship =
+      role.includes('intern') ||
+      type.includes('internship') ||
+      description.includes('internship');
+
     return isCareerBreak || isInternship;
   };
 
-  // Helper function to check if an experience entry is a career break (for display purposes)
   const isCareerBreak = (exp: any): boolean => {
     const period = exp.period?.toLowerCase() || '';
     const description = exp.description?.toLowerCase() || '';
-    return period.includes('career break') || description.includes('career break');
+    return (
+      period.includes('career break') || description.includes('career break')
+    );
   };
 
   useEffect(() => {
@@ -62,8 +81,18 @@ const Timeline: React.FC = React.memo(() => {
    */
   const parseDate = (dateStr: string): Date => {
     const months = {
-      jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
-      jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11,
+      jan: 0,
+      feb: 1,
+      mar: 2,
+      apr: 3,
+      may: 4,
+      jun: 5,
+      jul: 6,
+      aug: 7,
+      sep: 8,
+      oct: 9,
+      nov: 10,
+      dec: 11,
     };
 
     const [month, year] = dateStr.toLowerCase().split(' ');
@@ -76,29 +105,24 @@ const Timeline: React.FC = React.memo(() => {
    */
   const calculateDuration = (
     period: string,
-    showDays: boolean = false,
+    _showDays: boolean = false,
     expItem?: any
   ): string => {
-    // Check if this is a career break entry
     if (expItem && isCareerBreak(expItem)) {
       return '4 months (career break)';
     }
-    
-    // Fallback check for period only
+
     if (period.toLowerCase().includes('career break')) {
       return '4 months (career break)';
     }
 
     const [start, end] = period.split(' - ');
-    const startDate = parseDate(start.trim());
-    const endDate = end ? parseDate(end.trim()) : currentTime;
-
-    const startYear = startDate.getFullYear();
-    const startMonth = startDate.getMonth();
-    const endYear = endDate.getFullYear();
-    const endMonth = endDate.getMonth();
-
-    const diffMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+    const diffMonths = calculateMonthDifference(
+      parseDate,
+      start,
+      end,
+      currentTime
+    );
 
     if (!end) {
       const years = Math.floor(diffMonths / 12);
@@ -135,16 +159,12 @@ const Timeline: React.FC = React.memo(() => {
     workExperience.forEach(exp => {
       if (exp.period && !shouldExcludeFromExperience(exp)) {
         const [start, end] = exp.period.split(' - ');
-        const startDate = parseDate(start.trim());
-        const endDate = end ? parseDate(end.trim()) : currentTime;
-
-        const startYear = startDate.getFullYear();
-        const startMonth = startDate.getMonth();
-        const endYear = endDate.getFullYear();
-        const endMonth = endDate.getMonth();
-
-        // Calculate months between start and end (inclusive)
-        const diffMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+        const diffMonths = calculateMonthDifference(
+          parseDate,
+          start,
+          end,
+          currentTime
+        );
         totalMonths += diffMonths;
       }
     });
@@ -174,8 +194,20 @@ const Timeline: React.FC = React.memo(() => {
     }
     return 'Open to new opportunities';
   };
+  const getCareerProgression = (workExperience: any[]) => {
+    return workExperience
+      .slice()
+      .reverse()
+      .filter(item => item.role)
+      .map(item => item.role)
+      .filter((role, index, self) => self.indexOf(role) === index) // dedupe
+      .join(' → ');
+  };
   const totalExp = totalExperience();
   const currentStatus = getCurrentStatus();
+  const careerProgression = getCareerProgression(workExperience);
+
+
 
   return (
     <div
@@ -320,7 +352,7 @@ const Timeline: React.FC = React.memo(() => {
                         {item.achievements.map((achievement, i) => (
                           <li
                             key={i}
-                            className="mb-1.5 relative pl-[15px] before:content-['•'] before:absolute before:left-0 before:text-[var(--bullet-color)]"
+                            className="mb-1.5 relative pl-[15px] before:content-['•'] before:absolute before:left-0 before:text-(--bullet-color)"
                             style={{
                               color: colors.textPrimary,
                             }}
@@ -354,7 +386,7 @@ const Timeline: React.FC = React.memo(() => {
                         {item.projects.map((project, i) => (
                           <li
                             key={i}
-                            className="mb-1.5 relative pl-[15px] before:content-['•'] before:absolute before:left-0 before:text-[var(--bullet-color)]"
+                            className="mb-1.5 relative pl-[15px] before:content-['•'] before:absolute before:left-0 before:text-(--bullet-color)"
                             style={{
                               color: colors.textPrimary,
                             }}
@@ -381,20 +413,10 @@ const Timeline: React.FC = React.memo(() => {
             color: colors.textSecondary,
           }}
         >
+          <div className="mb-[5px]">📈 Total Experience: {totalExp}</div>
+          <div className="mb-[5px]">👤 Current Status: {currentStatus}</div>
           <div className="mb-[5px]">
-            📈 Total Experience: {totalExp || 'N/A'} (excluding career breaks and internships)
-          </div>
-          <div className="mb-[5px]">
-            👤 Current Status: {currentStatus || 'Status unknown'}
-          </div>
-          <div className="mb-[5px]">
-            🎯 Career Progression: Engineering Intern → Systems Engineer →
-            Senior Systems Engineer → Backend Engineer → Software Development
-            Engineer 1
-          </div>
-          <div className="mb-[5px]">
-            🚀 Core Expertise: Java/Spring Boot, Microservices, Cloud
-            Architecture, Full-Stack Development
+            🎯 Career Progression:{careerProgression}
           </div>
         </div>
       </>

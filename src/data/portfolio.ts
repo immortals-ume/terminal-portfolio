@@ -18,7 +18,7 @@ export const personalInfo = {
 
 export const workExperience = [
   {
-    period: 'Aug 2025 - Present',
+    period: 'Aug 2025 - Dec 2025',
     description:
       'Career Break , Professional Development Focused on structured upskilling through industry-recognized certifications and hands-on learning in AI, Machine Learning, Generative AI, Quantum Computing',
   },
